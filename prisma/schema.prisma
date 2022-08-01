@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite" // NOTE: sqlite does not work with NextAuth.js
+  provider = "postgresql" // NOTE: sqlite does not work with NextAuth.js
   url      = env("DATABASE_URL")
 }
 
@@ -47,9 +47,44 @@ model User {
   lastName      String
   email         String    @unique
   emailVerified DateTime?
-  image         String?
+  password      String
+  createdAt     DateTime  @default(now())
+  profile       Profile?
   accounts      Account[]
   sessions      Session[]
+}
+
+model Profile {
+  id       String   @id @default(cuid())
+  userName String   @unique @default(cuid())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String   @unique
+  links    Links?
+  liked    String[]
+  cards    Card[]
+}
+
+model Card {
+  id        String   @id @default(cuid())
+  creator   Profile  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String   @unique
+  likedBy   String[]
+  name      String   @unique
+}
+
+model Links {
+  id        String  @id @default(cuid())
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId String  @unique
+  linkedin  String?
+  github    String?
+  youtube   String?
+  portfolio String?
+  instagram String?
+  twitter   String?
+  facebook  String?
+  discord   String?
+  company   String?
 }
 
 model VerificationToken {
