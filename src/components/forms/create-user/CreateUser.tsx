@@ -1,17 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/router';
+import { BaseSyntheticEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import regexSP from '../../../utils/regex/regex-strings';
+import {
+  CreateUserSchema,
+  createUserSchema,
+} from '../../../schema/user-schema';
+import { trpc } from '../../../utils/trpc';
 
 export interface ICreateUser {}
-
-const schema = z.object({
-  firstName: z.string().min(2).max(30),
-  lastName: z.string().min(2).max(30),
-  email: z.string().email().max(50),
-  password: z.string().min(8).max(30),
-  confirmPassword: z.string(),
-});
 
 const CreateUser: React.FC<ICreateUser> = () => {
   const {
@@ -19,67 +16,105 @@ const CreateUser: React.FC<ICreateUser> = () => {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(schema),
+  } = useForm<CreateUserSchema>({
+    resolver: zodResolver(createUserSchema),
   });
-
+  const router = useRouter();
   const checkPassword: Boolean = watch('password') === watch('confirmPassword');
 
-  function fieldCheck(input: string, reg: RegExp): Boolean {
-    const hasTyped: Boolean = watch(`${input}`)?.length === 0;
-    const search: Boolean = hasTyped ? false : watch(`${input}`)?.search(reg);
-    return search;
+  //dynamic error function for users when filling out form, not working because of
+  //readonly typing. Future fix.
+  // function fieldCheck(input: String, reg: RegExp): Boolean {
+  //   const data = input;
+  //   const hasTyped: Boolean = watch(`${data}`)?.length === 0;
+  //   const search: Boolean = hasTyped ? false : watch(`${input}`)?.search(reg);
+  //   return search;
+  // }
+
+  const { mutate, error } = trpc.useMutation(['user.create-account'], {
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: () => {
+      router.push('/registered');
+    },
+  });
+
+  function onSubmit(values: CreateUserSchema, e?: BaseSyntheticEvent) {
+    const { password, confirmPassword } = values;
+    if (password === confirmPassword) {
+      mutate(values);
+    }
   }
+
+  const inputErrorStyle: string = 'focus:ring-red-400 focus:border-red-400';
 
   return (
     <div className="grid place-items-center h-screen">
-      <div className="bg-white p-10 w-1/4 rounded-lg drop-shadow-lg mx-auto text-center">
+      <div className="bg-white p-10 w-full lg:w-1/4 rounded-lg drop-shadow-lg mx-auto text-center">
         <h1 className="align-middle text-3xl">Create Account</h1>
         <form
-          onSubmit={handleSubmit((d) => console.log(d))}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col text-left "
         >
+          {error && error.message}
           <label className="flex flex-col mb-1">
             First Name
-            <input type="text" {...register('firstName')} />
-            {!fieldCheck('firstName', regexSP.name) ? (
-              <span className="text-gray-400 text-center">2-30 letters</span>
-            ) : (
+            <input
+              className={errors?.firstName ? inputErrorStyle : ''}
+              type="text"
+              {...register('firstName')}
+            />
+            {errors?.firstName ? (
               <span className="text-red-400">2-30 letters</span>
+            ) : (
+              <span className="text-gray-400 text-center">2-30 letters</span>
             )}
           </label>
 
           <label className="flex flex-col mb-1">
             Last Name
-            <input type="text" {...register('lastName')} />
-            {!fieldCheck('lastName', regexSP.name) ? (
-              <span className="text-gray-400 text-center">2-30 letters</span>
-            ) : (
+            <input
+              className={errors?.lastName ? inputErrorStyle : ''}
+              type="text"
+              {...register('lastName')}
+            />
+            {errors?.lastName ? (
               <span className="text-red-400">2-30 letters</span>
+            ) : (
+              <span className="text-gray-400 text-center">2-30 letters</span>
             )}
           </label>
 
           <label className="flex flex-col mb-1">
             Email
-            <input type="email" {...register('email')} />
-            {!fieldCheck('email', regexSP.email) ? (
+            <input
+              className={errors?.email ? inputErrorStyle : ''}
+              type="email"
+              {...register('email')}
+            />
+            {errors?.email ? (
+              <span className="text-red-400">Not a valid email</span>
+            ) : (
               <span className="text-gray-400 text-center">
                 must include @ and .com
               </span>
-            ) : (
-              <span className="text-red-400">Not a valid email</span>
             )}
           </label>
 
           <label className="flex flex-col mb-1">
             Password
-            <input type="password" {...register('password')} />
-            {!fieldCheck('password', regexSP.password) ? (
-              <span className="text-gray-400 text-center">
+            <input
+              className={errors?.password ? inputErrorStyle : ''}
+              type="password"
+              {...register('password')}
+            />
+            {errors?.password ? (
+              <span className="text-red-400">
                 min 6-30 characters, 1 number, 1 special character
               </span>
             ) : (
-              <span className="text-red-400">
+              <span className="text-gray-400 text-center">
                 min 6-30 characters, 1 number, 1 special character
               </span>
             )}

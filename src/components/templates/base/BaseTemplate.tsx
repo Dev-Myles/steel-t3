@@ -3,7 +3,7 @@ export interface IBaseTemplate {
 }
 
 const BaseTemplate: React.FC<IBaseTemplate> = ({ sampleTextProp }) => {
-  return <div>{sampleTextProp}</div>;
+  return <div className="h-screen">{sampleTextProp}</div>;
 };
 
 export default BaseTemplate;
