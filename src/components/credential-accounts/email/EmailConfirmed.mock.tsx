@@ -1,7 +1,8 @@
-import { IEmailConfirmed } from './EmailConfirmed';
+// import { IEmailConfirmed } from './EmailConfirmed';
 
-const base: IEmailConfirmed = {};
+// const base: IEmailConfirmed = {};
 
-export const mockRegisteredProps = {
-  base,
-};
+// export const mockRegisteredProps = {
+//   base,
+// };
+export {};
