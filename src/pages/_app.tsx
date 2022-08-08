@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import superjson from 'superjson';
 import Footer from '../components/structure/Footer';
+import HeadTags from '../components/structure/HeadTags';
 import Navbar from '../components/structure/Navbar';
 import type { AppRouter } from '../server/router';
 import '../styles/globals.css';
@@ -14,6 +15,7 @@ const MyApp: AppType = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <HeadTags />
       <Navbar />
       <Component {...pageProps} />
       <Footer />

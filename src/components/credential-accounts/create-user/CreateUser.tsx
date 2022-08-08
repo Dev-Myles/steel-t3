@@ -23,7 +23,7 @@ const CreateUser: React.FC<ICreateUser> = () => {
   const checkPassword: Boolean = watch('password') === watch('confirmPassword');
 
   //dynamic error function for users when filling out form, not working because of
-  //readonly typing. Future fix.
+  //readonly typing. Future fix maybe.
   // function fieldCheck(input: String, reg: RegExp): Boolean {
   //   const data = input;
   //   const hasTyped: Boolean = watch(`${data}`)?.length === 0;
@@ -57,7 +57,9 @@ const CreateUser: React.FC<ICreateUser> = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col text-left "
         >
-          {error && error.message}
+          {error && error.message ? (
+            <span className="text-gray-400 text-center">{error.message}</span>
+          ) : null}
           <label className="flex flex-col mb-1">
             First Name
             <input

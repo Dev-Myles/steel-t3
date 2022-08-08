@@ -17,3 +17,4 @@ export const createUserDataSchema = z.object({
 
 export type CreateUserSchema = z.TypeOf<typeof createUserSchema>;
 export type CreateUserDataSchema = z.TypeOf<typeof createUserDataSchema>;
+export type NodemailerData = Pick<CreateUserDataSchema, 'email' | 'firstName'>;

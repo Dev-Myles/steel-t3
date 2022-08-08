@@ -4,8 +4,8 @@ import Link from 'next/link';
 const Footer: React.FC<IFooter> = () => {
   return (
     <footer className="border-t-2 text-cyan-600 h-fit ">
-      <div className="flex flex-row justify-between text-lg">
-        <div className="p-6 ml-40 text-3xl">
+      <div className="flex flex-col lg:flex-row justify-between text-lg">
+        <div className="p-6 mx-auto lg:mx-0 text-3xl">
           <span>Logo</span>
         </div>
         <div className="p-2">
