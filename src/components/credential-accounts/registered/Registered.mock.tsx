@@ -1,7 +1,9 @@
-import { IRegistered } from './Registered';
+// import { IRegistered } from './Registered';
 
-const base: IRegistered = {};
+// const base: IRegistered = {};
 
-export const mockRegisteredProps = {
-  base,
-};
+// export const mockRegisteredProps = {
+//   base,
+// };
+
+export {};

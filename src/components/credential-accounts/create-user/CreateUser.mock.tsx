@@ -1,7 +1,8 @@
-import { ICreateUser } from './CreateUser';
+// import { ICreateUser } from './CreateUser';
 
-const base: ICreateUser = {};
+// const base: ICreateUser = {};
 
-export const mockCreateUserProps = {
-  base,
-};
+// export const mockCreateUserProps = {
+//   base,
+// };
+export {};
