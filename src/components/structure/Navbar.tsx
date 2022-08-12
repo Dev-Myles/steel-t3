@@ -7,13 +7,15 @@ import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { FaRegIdCard } from 'react-icons/fa';
 import { MdOutlineAccountCircle, MdOutlineCreate } from 'react-icons/md';
 import { VscSignOut } from 'react-icons/vsc';
+import defaultUser from '../../public/images/user/default-user.png';
 
 const Navbar: React.FC = () => {
   const [isHover, setHover] = useState(false);
   const [isMenu, setMenu] = useState(false);
   const { data: session } = useSession();
   const user = session?.user;
-  const imageScr = user?.image;
+  const usersImage = user?.image;
+  const imageScr = usersImage || defaultUser;
   const name = user?.name;
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const Navbar: React.FC = () => {
   }, [isMenu]);
 
   const UserImage: React.FC = () => {
-    return imageScr ? (
+    return (
       <div
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -82,7 +84,7 @@ const Navbar: React.FC = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/">
+                  <Link href="/account">
                     <a>
                       <span className="flex items-center">
                         Account
@@ -103,10 +105,6 @@ const Navbar: React.FC = () => {
           </motion.div>
         )}
       </div>
-    ) : (
-      <Link href="/auth/signin">
-        <a>Account</a>
-      </Link>
     );
   };
 
@@ -188,11 +186,15 @@ const Navbar: React.FC = () => {
           <a>Logo</a>
         </Link>
       </div>
-      {session ? (
+      {user ? (
         <UserImage />
       ) : (
         <div className="flex flex-row justify-around w-fit [&>*:hover]:text-cyan-700 [&>*]:ease-in-out duration-300">
-          <div className="p-2 cursor-pointer">Sign In/Up</div>
+          <Link href="/auth/signin">
+            <a>
+              <span className="flex items-center">Sign In/Up</span>
+            </a>
+          </Link>
         </div>
       )}
     </div>

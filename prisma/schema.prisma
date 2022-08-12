@@ -17,7 +17,7 @@ model Example {
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            String @unique
   type              String
   provider          String
   providerAccountId String
@@ -59,15 +59,17 @@ model Profile {
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String   @unique
   links    Links?
-  liked    String[]
-  cards    Card[]
+  private  Boolean @default(false)
+  liked    String[] @default([])
+  cards    Card[] 
 }
 
 model Card {
   id        String   @id @default(cuid())
-  creator   Profile  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creator   Profile  @relation(fields: [creatorId], references: [userName], onDelete: Cascade)
   creatorId String   @unique
   likedBy   String[]
+  private   Boolean @default(false)
   name      String   @unique
 }
 
@@ -75,15 +77,15 @@ model Links {
   id        String  @id @default(cuid())
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId String  @unique
-  linkedin  String?
-  github    String?
-  youtube   String?
-  portfolio String?
-  instagram String?
-  twitter   String?
-  facebook  String?
-  discord   String?
-  company   String?
+  linkedin  String @default("none")
+  github    String @default("none")
+  youtube   String @default("none")
+  portfolio String @default("none")
+  instagram String @default("none")
+  twitter   String @default("none")
+  facebook  String @default("none")
+  discord   String @default("none")
+  company   String @default("none")
 }
 
 model VerificationToken {

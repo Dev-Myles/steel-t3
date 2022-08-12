@@ -1,10 +1,35 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import loadingGif from '../../public/gifs/loading.svg';
+import pic from '../../public/images/user/default-user.png';
+import { trpc } from '../../utils/trpc';
 
-const AccountInfo: React.FC = () => {
+const AccountInfo: React.FC<{ userId: string | undefined }> = ({ userId }) => {
   const { data: session } = useSession();
-  const user = session?.user;
-  const imageScr = user?.image;
+  const imageScr = session?.user?.image || '/images/user/default-user.png';
+  const name = session?.user?.name;
+  const email = session?.user?.email;
+  const id = userId || 'run';
+  const { isLoading, data } = trpc.useQuery([
+    'account.get-profile',
+    { userId: id },
+  ]);
+  const privateAccount = data?.private;
+
+  const LoadingGif: React.FC = () => {
+    return (
+      <div className="mx-auto">
+        <Image
+          src={loadingGif}
+          alt="loading"
+          height={70}
+          width={70}
+          layout="fixed"
+        />
+      </div>
+    );
+  };
+
   const userImage = imageScr ? (
     <Image
       src={imageScr}
@@ -14,32 +39,53 @@ const AccountInfo: React.FC = () => {
       layout="fixed"
       className="rounded-full"
     />
-  ) : null;
+  ) : (
+    <Image
+      src={pic}
+      alt="User Image"
+      height={70}
+      width={70}
+      layout="fixed"
+      className="rounded-full"
+    />
+  );
   return (
-    <div className="h-screen grid place-items-center">
-      {session && imageScr ? (
-        <div className="flex flex-col p-8 justify-around  bg-white rounded-lg shadow-lg">
-          <h1 className="text-center font-bold text-5xl text-cyan-600">
+    <div className="w-fit">
+      <div>
+        <div className="flex flex-col p-8 justify-around  bg-gray-50 rounded-lg shadow-lg">
+          <h1 className="text-center font-bold text-5xl mb-3 text-cyan-600">
             Accout Info
           </h1>
-          <div className="mx-auto">
-            {userImage ? (
-              userImage
-            ) : (
-              <div className="h-20 w-20 bg-slate-300 rounded-full grid place-content-center">
-                <span className="h-fit text-3xl font-bold">A</span>
-              </div>
-            )}
+          <div className="mx-auto">{userImage}</div>
+          <div>
+            <div className="m-3">
+              <span className="text-cyan-600 font-bold text-4xl">Name</span>
+              <span className="block font-semibold text-xl">{name}</span>
+            </div>
+            <div className="m-3">
+              <span className="text-cyan-600 font-bold text-4xl">Email</span>
+              <span className="block font-semibold text-xl">{email}</span>
+            </div>
+            <div>
+              <span className="text-cyan-600 font-bold text-xl">
+                Profile Visability
+              </span>
+              <span>
+                Current Status: {privateAccount ? 'private' : 'public'}
+              </span>
+              {isLoading ? (
+                <LoadingGif />
+              ) : (
+                <div className="flex items-center">
+                  <span className="font-bold">Public</span>
+                  <button className="bg-cyan-600 h-4 w-10 rounded-full"></button>
+                  <span className="font-bold">Private</span>
+                </div>
+              )}
+            </div>
           </div>
-
-          <h2>{user?.name}</h2>
-          <h2>{user?.email}</h2>
         </div>
-      ) : (
-        <div>
-          <h1>You must be logged in to view your account.</h1>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
