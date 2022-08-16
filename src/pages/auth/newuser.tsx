@@ -29,8 +29,7 @@ const NewUser: NextPage = () => {
   });
 
   useEffect(() => {
-    if (userId) mutate({ userId });
-    return;
+    if (userId) mutate();
   }, [userId]);
 
   const userPic = (
