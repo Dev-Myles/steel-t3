@@ -1,15 +1,20 @@
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
 import AccountInfo from '../components/account/AccountInfo';
+import { AccountLikes } from '../components/account/AccountLikes';
 import AccountLinks from '../components/account/AccountLinks';
-import loadingGif from '../public/gifs/loading.svg';
+import { LoadingGif } from '../components/util/LoadingGif';
+import { trpc } from '../utils/trpc';
 
 const Account: NextPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const userId = session?.user?.id;
+
+  const { isLoading, data } = trpc.useQuery(['account.get-profile']);
+
+  const props = data ? data : {};
 
   function redirect() {
     setTimeout(() => {
@@ -18,17 +23,7 @@ const Account: NextPage = () => {
   }
 
   if (status === 'loading') {
-    return (
-      <div className="h-screen grid place-items-center">
-        <Image
-          src={loadingGif}
-          alt="Loading"
-          layout="fixed"
-          height={100}
-          width={100}
-        />
-      </div>
-    );
+    return <LoadingGif />;
   }
 
   if (!session) {
@@ -41,10 +36,16 @@ const Account: NextPage = () => {
   }
 
   return (
-    <div className="h-screen grid place-items-center">
-      <div>
-        <AccountInfo userId={userId} />
-        <AccountLinks userId={userId} />
+    <div className="h-min-screen h-fit flex flex-col">
+      <div className="flex flex-row">
+        <AccountInfo
+          key={uuidv4()}
+          session={session}
+          props={props}
+          isLoading={isLoading}
+        />
+        <AccountLinks key={uuidv4()} props={props} isLoading={isLoading} />
+        <AccountLikes key={uuidv4()} />
       </div>
     </div>
   );

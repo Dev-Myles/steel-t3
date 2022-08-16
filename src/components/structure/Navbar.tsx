@@ -1,29 +1,28 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { FaRegIdCard } from 'react-icons/fa';
 import { MdOutlineAccountCircle, MdOutlineCreate } from 'react-icons/md';
 import { VscSignOut } from 'react-icons/vsc';
-import defaultUser from '../../public/images/user/default-user.png';
+import UserImage from '../util/UserImage';
 
 const Navbar: React.FC = () => {
   const [isHover, setHover] = useState(false);
   const [isMenu, setMenu] = useState(false);
   const { data: session } = useSession();
   const user = session?.user;
-  const usersImage = user?.image;
-  const imageScr = usersImage || defaultUser;
+
   const name = user?.name;
+  const redirectUrl = 'http://localhost:3000/auth/signout';
 
   useEffect(() => {
     const body = document?.querySelector('body');
     if (body) body.style.overflow = isMenu ? 'hidden' : 'auto';
   }, [isMenu]);
 
-  const UserImage: React.FC = () => {
+  const User: React.FC = () => {
     return (
       <div
         onMouseEnter={() => setHover(true)}
@@ -42,14 +41,7 @@ const Navbar: React.FC = () => {
                   : 'border-2 border-grey-200  rounded-full h-fit grid place-content-center'
               }
             >
-              <Image
-                src={imageScr}
-                alt="User Image"
-                height={40}
-                width={40}
-                layout="fixed"
-                className="rounded-full"
-              />
+              <UserImage h={40} w={40} />
             </div>
           </a>
         </Link>
@@ -95,8 +87,8 @@ const Navbar: React.FC = () => {
                 </li>
               </ul>
               <button
-                className="flex items-center mx-auto hover:bg-cyan-700 bg-cyan-600 text-white py-1 px-6 rounded-full mt-4"
-                onClick={() => signOut()}
+                className=" flex items-center mx-auto  py-1 px-6  mt-4"
+                onClick={() => signOut({ callbackUrl: `${redirectUrl}` })}
               >
                 Sign Out
                 <VscSignOut />
@@ -171,8 +163,8 @@ const Navbar: React.FC = () => {
               </li>
             </ul>
             <button
-              className="flex items-center mx-auto bg-cyan-600 text-white py-3 px-6 rounded-full mb-4"
-              onClick={() => signOut()}
+              className="flex items-center mx-auto py-3 px-6  mb-4"
+              onClick={() => signOut({ callbackUrl: `${redirectUrl}` })}
             >
               Sign Out
               <VscSignOut />
@@ -187,7 +179,7 @@ const Navbar: React.FC = () => {
         </Link>
       </div>
       {user ? (
-        <UserImage />
+        <User />
       ) : (
         <div className="flex flex-row justify-around w-fit [&>*:hover]:text-cyan-700 [&>*]:ease-in-out duration-300">
           <Link href="/auth/signin">

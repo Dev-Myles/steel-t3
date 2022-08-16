@@ -67,7 +67,7 @@ model Profile {
 model Card {
   id        String   @id @default(cuid())
   creator   Profile  @relation(fields: [creatorId], references: [userName], onDelete: Cascade)
-  creatorId String   @unique
+  creatorId String   
   likedBy   String[]
   private   Boolean @default(false)
   name      String   @unique

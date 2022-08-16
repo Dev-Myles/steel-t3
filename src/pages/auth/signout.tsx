@@ -1,7 +1,13 @@
 import { NextPage } from 'next';
 
 const SignOut: NextPage = () => {
-  return <div className="h-screen">You have been logged out</div>;
+  return (
+    <div className="h-screen grid place-items-center">
+      <p>
+        <span className="text-cyan-700 text-4xl">You have been signed out</span>
+      </p>
+    </div>
+  );
 };
 
 export default SignOut;

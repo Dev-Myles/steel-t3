@@ -5,20 +5,7 @@ import { mockBaseTemplateProps } from '../components/templates/base/BaseTemplate
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
-  return (
-    <>
-      <BaseTemplate {...mockBaseTemplateProps.base} />
-    </>
-  );
+  return <BaseTemplate {...mockBaseTemplateProps.base} />;
 };
-
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//   const session = await getSession();
-//   return {
-//     props: {
-//       session,
-//     },
-//   };
-// };
 
 export default Home;

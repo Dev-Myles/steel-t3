@@ -1,44 +1,19 @@
-import type { GetServerSideProps } from 'next';
-import { getProviders, signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { IconContext } from 'react-icons';
 import { BsGithub } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
-
+import IconProvider from '../../providers/IconProvider';
 const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
   const { data: session } = useSession();
   const router = useRouter();
   if (session) {
     router.push('/');
   }
-  const logo = {
-    google: (
-      <IconContext.Provider
-        value={{
-          size: '1.5em',
-          className: 'inline',
-          style: { verticalAlign: 'center', marginLeft: '5px' },
-        }}
-      >
-        <div>
-          <FcGoogle />
-        </div>
-      </IconContext.Provider>
-    ),
 
-    github: (
-      <IconContext.Provider
-        value={{
-          size: '1.5em',
-          className: 'inline',
-          style: { verticalAlign: 'center', marginLeft: '5px' },
-        }}
-      >
-        <div>
-          <BsGithub />
-        </div>
-      </IconContext.Provider>
-    ),
+  const logo = {
+    google: <IconProvider icon={<FcGoogle />} />,
+
+    github: <IconProvider icon={<BsGithub />} />,
   };
 
   function findLogo(provider: string) {
@@ -54,10 +29,10 @@ const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
           return (
             <div
               key={name}
-              className="border-2 hover:shadow-lg hover:cursor-pointer hover:border-cyan-700 ease-in-out duration-300 border-gray-300 rounded-lg text-cyan-600 font-bold py-3 px-10 text-lg m-2"
+              className="border-2 hover:shadow-lg hover:cursor-pointer hover:border-cyan-700 ease-in-out duration-300 border-gray-300 rounded-lg py-3 px-10 text-lg m-2"
             >
               <button
-                className="flex items-center 
+                className="flex items-center shadow-none bg-inherit text-cyan-600 hover:bg-inherit
                 "
                 onClick={() => signIn(provider.id)}
               >
@@ -70,15 +45,6 @@ const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
       </div>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const providers = await getProviders();
-  return {
-    props: {
-      providers,
-    },
-  };
 };
 
 export default SignInForm;

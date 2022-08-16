@@ -1,14 +1,10 @@
-import z from 'zod';
-import { createRouter } from './context';
+import { createProtectedRouter } from './protected-router';
 
-export const accountRouter = createRouter()
+export const accountRouter = createProtectedRouter()
   .query('get-profile', {
-    input: z.object({
-      userId: z.string(),
-    }),
-    async resolve({ ctx, input }) {
+    async resolve({ ctx }) {
+      const userId = ctx.session.user.id as string;
       try {
-        const { userId } = input;
         const profile = await ctx.prisma?.profile.findUnique({
           where: {
             userId,
@@ -24,13 +20,35 @@ export const accountRouter = createRouter()
       }
     },
   })
-  .mutation('create-profile', {
-    input: z.object({
-      userId: z.string(),
-    }),
-    async resolve({ ctx, input }) {
+  .query('get-liked-cards', {
+    async resolve({ ctx }) {
+      const userId = ctx.session.user.id as string;
       try {
-        const { userId } = input;
+        const profile = await ctx.prisma?.profile.findUnique({
+          where: {
+            userId,
+          },
+        });
+        if (profile?.liked.length) {
+          const cardLikes = [...profile.liked];
+          const likedCards = await ctx.prisma.card.findMany({
+            where: {
+              id: {
+                in: cardLikes,
+              },
+            },
+          });
+          return likedCards;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
+  .mutation('create-profile', {
+    async resolve({ ctx }) {
+      const userId = ctx.session.user.id as string;
+      try {
         const newProfile = await ctx.prisma?.profile
           .create({
             data: {
