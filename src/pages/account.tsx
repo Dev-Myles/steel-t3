@@ -2,8 +2,9 @@ import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
+import AccountCards from '../components/account/AccountCards';
 import AccountInfo from '../components/account/AccountInfo';
-import { AccountLikes } from '../components/account/AccountLikes';
+import AccountLikes from '../components/account/AccountLikes';
 import AccountLinks from '../components/account/AccountLinks';
 import { LoadingGif } from '../components/util/LoadingGif';
 import { trpc } from '../utils/trpc';
@@ -12,9 +13,13 @@ const Account: NextPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const { isLoading, data } = trpc.useQuery(['account.get-profile']);
-
-  const props = data ? data : {};
+  const { isLoading, data } = trpc.useQuery(['account.get-profile'], {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+  const cards = data?.cards;
+  const links = data?.links;
+  const props = data || {};
 
   function redirect() {
     setTimeout(() => {
@@ -36,16 +41,28 @@ const Account: NextPage = () => {
   }
 
   return (
-    <div className="h-min-screen h-fit flex flex-col">
-      <div className="flex flex-row">
-        <AccountInfo
-          key={uuidv4()}
-          session={session}
-          props={props}
-          isLoading={isLoading}
-        />
-        <AccountLinks key={uuidv4()} props={props} isLoading={isLoading} />
-        <AccountLikes key={uuidv4()} />
+    <div className="h-min-screen sm:w-screen mx-auto lg:w-fit h-fit flex flex-col border-x-2 border-gray-200 p-7 my-4">
+      <div className="lg:flex">
+        <div className="flex justify-around flex-col">
+          <div className="mt-3">
+            <AccountInfo
+              key={uuidv4()}
+              session={session}
+              props={props}
+              isLoading={isLoading}
+            />
+          </div>
+
+          <div className="mt-3">
+            <AccountLikes key={uuidv4()} />
+          </div>
+        </div>
+        <div className="mt-3 lg:ml-2">
+          <AccountLinks key={uuidv4()} links={links} isLoading={isLoading} />
+        </div>
+      </div>
+      <div className="mt-3">
+        <AccountCards key={uuidv4()} isLoading={isLoading} cards={cards} />
       </div>
     </div>
   );

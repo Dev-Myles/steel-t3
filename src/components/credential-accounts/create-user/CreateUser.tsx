@@ -22,14 +22,14 @@
 //   const router = useRouter();
 //   const checkPassword: Boolean = watch('password') === watch('confirmPassword');
 
-//   //dynamic error function for users when filling out form, not working because of
-//   //readonly typing. Future fix maybe.
-//   // function fieldCheck(input: String, reg: RegExp): Boolean {
-//   //   const data = input;
-//   //   const hasTyped: Boolean = watch(`${data}`)?.length === 0;
-//   //   const search: Boolean = hasTyped ? false : watch(`${input}`)?.search(reg);
-//   //   return search;
-//   // }
+//   dynamic error function for users when filling out form, not working because of
+//   readonly typing. Future fix maybe.
+//   function fieldCheck(input: String, reg: RegExp): Boolean {
+//     const data = input;
+//     const hasTyped: Boolean = watch(`${data}`)?.length === 0;
+//     const search: Boolean = hasTyped ? false : watch(`${input}`)?.search(reg);
+//     return search;
+//   }
 
 //   const { mutate, error } = trpc.useMutation(['user.create-account'], {
 //     onError: (error) => {

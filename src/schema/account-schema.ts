@@ -1,21 +1,21 @@
 import z from 'zod';
 
 export const accountSchema = z.object({
-  name: z.string().optional(),
-  email: z.string().optional(),
-  imageSrc: z.string().url().optional(),
+  name: z.string(),
+  email: z.string(),
+  imageSrc: z.string().url(),
 });
 
 export const linksSchema = z.object({
-  Github: z.string().optional(),
-  Instagram: z.string().optional(),
-  Discord: z.string().optional(),
-  Facebook: z.string().optional(),
-  Portfolio: z.string().optional(),
-  Twitter: z.string().optional(),
-  Linkedin: z.string().optional(),
-  Youtube: z.string().optional(),
-  Company: z.string().optional(),
+  Github: z.string(),
+  Instagram: z.string(),
+  Discord: z.string(),
+  Facebook: z.string(),
+  Portfolio: z.string(),
+  Twitter: z.string(),
+  Linkedin: z.string(),
+  Youtube: z.string(),
+  Company: z.string(),
 });
 
 export type AccountSchema = z.TypeOf<typeof accountSchema>;

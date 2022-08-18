@@ -4,6 +4,9 @@ module.exports = {
   theme: {
     extend: {
       textColor: ['first'],
+      boxShadow: {
+        DEFAULT: '0 0 5px silver',
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],
