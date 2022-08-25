@@ -10,9 +10,11 @@ export const AccountLikes: React.FC = () => {
   });
   const likedCards = data;
   const totalLikes = data?.length;
+
   if (isLoading) {
     return (
       <div className=" rounded-lg  bg-white h-fit w-fit p-8">
+        <h3 className="text-2xl">Liked Cards</h3>
         <LoadingGif />
       </div>
     );
@@ -31,7 +33,7 @@ export const AccountLikes: React.FC = () => {
       return (
         <div
           key={uuidv4()}
-          className=" rounded-lg border-2 border-cyan-400 bg-white p-8 m-2"
+          className=" rounded-lg border-2 border-cyan-400 truncate bg-white p-8 m-2"
         >
           <span>{e.creatorId}</span>
           <br />
@@ -43,7 +45,7 @@ export const AccountLikes: React.FC = () => {
 
   return (
     <div className="rounded-lg shadow bg-white h-fit p-4 pr-2">
-      <EditButton />
+      <EditButton editFn={null} />
       <h3 className="text-2xl">
         Liked Cards -{' '}
         <span className="text-gray-400 font-thin text-sm">

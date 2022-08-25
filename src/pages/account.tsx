@@ -19,6 +19,7 @@ const Account: NextPage = () => {
   });
   const cards = data?.cards;
   const links = data?.links;
+  const profileId = data?.id;
   const props = data || {};
 
   function redirect() {
@@ -41,7 +42,7 @@ const Account: NextPage = () => {
   }
 
   return (
-    <div className="h-min-screen sm:w-screen mx-auto lg:w-fit h-fit flex flex-col border-x-2 border-gray-200 p-7 my-4">
+    <div className="h-min-screen w-screen mx-auto lg:w-fit h-fit flex flex-col border-x-2 border-gray-200 p-4 my-4">
       <div className="lg:flex">
         <div className="flex justify-around flex-col">
           <div className="mt-3">
@@ -58,7 +59,12 @@ const Account: NextPage = () => {
           </div>
         </div>
         <div className="mt-3 lg:ml-2">
-          <AccountLinks key={uuidv4()} links={links} isLoading={isLoading} />
+          <AccountLinks
+            key={uuidv4()}
+            profileId={profileId}
+            links={links}
+            isLoading={isLoading}
+          />
         </div>
       </div>
       <div className="mt-3">

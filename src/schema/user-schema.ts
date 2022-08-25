@@ -15,6 +15,12 @@ export const createUserDataSchema = z.object({
   password: z.string().min(8).max(30),
 });
 
+export const userNameSchema = z.object({
+  userName: z.string().min(2).max(32),
+});
+
+export type UserNameSchema = z.TypeOf<typeof userNameSchema>;
+
 export type CreateUserSchema = z.TypeOf<typeof createUserSchema>;
 export type CreateUserDataSchema = z.TypeOf<typeof createUserDataSchema>;
 export type NodemailerData = Pick<CreateUserDataSchema, 'email' | 'firstName'>;

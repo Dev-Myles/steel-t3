@@ -9,12 +9,12 @@ export const AccountCards: React.FC<{
 }> = ({ cards, isLoading }) => {
   if (isLoading) {
     return (
-      <div>
+      <div className="bg-white shadow rounded-lg h-fit p-4 pr-2">
+        <h3 className=" text-2xl">Your Cards</h3>
         <LoadingGif />
       </div>
     );
   }
-
   const totalCards = cards?.length;
 
   if (!totalCards) {
@@ -42,7 +42,7 @@ export const AccountCards: React.FC<{
 
   return (
     <div className="bg-white shadow rounded-lg h-fit p-4 pr-2">
-      <EditButton />
+      <EditButton editFn={null} />
       <h3 className=" text-2xl">
         Your Cards -{' '}
         <span className="text-gray-400 text-sm font-thin">
