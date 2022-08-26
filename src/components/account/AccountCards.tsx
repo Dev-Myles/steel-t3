@@ -1,6 +1,6 @@
 import { Card } from '@prisma/client';
+import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
-import EditButton from '../buttons/EditButton';
 import { LoadingGif } from '../util/LoadingGif';
 
 export const AccountCards: React.FC<{
@@ -19,18 +19,24 @@ export const AccountCards: React.FC<{
 
   if (!totalCards) {
     return (
-      <div>
+      <div className="bg-white h-40 grid place-content-center shadow rounded-lg p-4 pr-2 ">
         <h3>You have not created any Cards</h3>
+        <Link href="/card/create-card">
+          <a className="w-fit mx-auto">
+            <button className="p-2 mt-2 text-xlg">Create a Card</button>
+          </a>
+        </Link>
       </div>
     );
   }
 
   function mapCards() {
-    return cards?.map((card) => {
+    const threeCards = cards ? cards.slice(0, 3) : undefined;
+    return threeCards?.map((card) => {
       return (
         <div
           key={uuidv4()}
-          className="bg-white border-2 border-emerald-600 shadow-lg truncate m-4 rounded-lg p-8"
+          className="bg-white m-2 w-28 h-32 text-center p-2 border-2 sm:w-40 border-emerald-600 shadow-lg truncate  rounded-lg"
         >
           <span>{card.name}</span>
           <br />
@@ -42,14 +48,31 @@ export const AccountCards: React.FC<{
 
   return (
     <div className="bg-white shadow rounded-lg h-fit p-4 pr-2">
-      <EditButton editFn={null} />
-      <h3 className=" text-2xl">
-        Your Cards -{' '}
-        <span className="text-gray-400 text-sm font-thin">
-          total cards: {totalCards}
-        </span>
-      </h3>
-      <div className="flex justify-center">{mapCards()}</div>
+      <div className="flex justify-between">
+        <h3 className=" text-2xl">
+          Your Cards -{' '}
+          <span className="text-gray-400 text-sm font-thin">
+            total cards: {totalCards}
+          </span>
+        </h3>
+        <Link href="/account/cards">
+          <a>
+            <span className="text-gray-400">View all</span>
+          </a>
+        </Link>
+      </div>
+      <div className="flex flex-wrap items-center justify-center">
+        {mapCards()}
+        {totalCards > 3 ? (
+          <Link href="/account/cards">
+            <a>
+              <span className="text-gray-400 text-4xl">
+                + {totalCards - 3} <br /> more...
+              </span>
+            </a>
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 };

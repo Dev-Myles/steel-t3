@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
             <div className="absolute bg-gray-50 shadow-lg border-l-2 border-gray-200 py-4 px-1 right-0 rounded-b-lg">
               <ul className="[&>*]:ease-in-out [&>*]:duration-200 [&>*:hover]:text-cyan-700 [&>*]:py-3 px-8">
                 <li>
-                  <Link href="/">
+                  <Link href="/card/create-card">
                     <a>
                       <span className="flex items-center">
                         Create Card
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/">
+                  <Link href="/account/cards">
                     <a>
                       <span className="flex items-center">
                         Cards
@@ -132,7 +132,7 @@ const Navbar: React.FC = () => {
           >
             <ul className="w-screen h-full flex  flex-col [&>*]:p-4 [&>*]:text-3xl">
               <li>
-                <Link href="/create-card">
+                <Link href="/card/create-card">
                   <a>
                     <span className="flex items-center">
                       Create Card
@@ -142,7 +142,7 @@ const Navbar: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/">
+                <Link href="/account/cards">
                   <a>
                     <span className="flex items-center">
                       Cards

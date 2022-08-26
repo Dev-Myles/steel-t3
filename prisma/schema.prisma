@@ -71,6 +71,11 @@ model Card {
   likedBy   String[]
   private   Boolean @default(false)
   name      String   @unique
+  projectType ProjectType
+  level Level
+  openSource Boolean @default(true)
+  description String
+  uses      String
 }
 
 model Links {
@@ -94,4 +99,28 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum ProjectType {
+  WEBSITE
+  WEBAPP
+  VIDEOGAME
+  FRAMEWORK
+  APPLICATION
+  CRYPTO
+  ALGORITHM
+  AI
+  PACKAGE
+  LIBRARY
+  OS
+  BOT
+  SCRIPT
+  LANGUAGE
+  OTHER
+}
+
+enum Level {
+  PROFESSIONAL
+  HOBBY
+  PORTFOLIO
 }
