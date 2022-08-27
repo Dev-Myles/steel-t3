@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import defaultUser from '../../public/images/user/default-user.png';
 import { trpc } from '../../utils/trpc';
 
 const NewUser: NextPage = () => {
@@ -18,7 +17,7 @@ const NewUser: NextPage = () => {
   const name = session?.user?.name;
   const pic = session?.user?.image;
   const id = session?.user?.id;
-  const imageSrc = pic || defaultUser;
+  const imageSrc = pic || '/images/user/default-user.png';
   const userId = id;
 
   const { mutate, error } = trpc.useMutation(['account.create-profile'], {
