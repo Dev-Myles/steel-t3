@@ -1,13 +1,12 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import defaultUserPic from '../../public/images/user/default-user.png';
 
 export const UserImage: React.FC<{
   h?: number;
   w?: number;
 }> = ({ h = 70, w = 70 }) => {
   const { data: session } = useSession();
-  const imageUrl = session?.user?.image || defaultUserPic;
+  const imageUrl = session?.user?.image || '/images/user/default-user.png';
 
   return (
     <Image
