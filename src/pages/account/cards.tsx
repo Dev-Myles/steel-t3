@@ -53,29 +53,32 @@ export const AccountCards: NextPage = () => {
     }
     return cards?.map((card) => {
       return (
-        <Link key={uuidv4()} href={`/card/${card.id}`}>
-          <a>
-            <Card
-              projectType={card.projectType}
-              creatorId={card.creatorId}
-              privateStatus={card.private}
-              name={card.name}
-              likes={card.likedBy}
-              level={card.level}
-              openSource={card.openSource}
-              description={card.description}
-              uses={card.uses}
-            />
-          </a>
-        </Link>
+        <div key={uuidv4()} className="sm:w-1/4 m-2">
+          <Link href={`/card/${card.id}`}>
+            <a>
+              <Card
+                projectType={card.projectType}
+                creatorId={card.creatorId}
+                privateStatus={card.private}
+                name={card.name}
+                likes={card.likedBy}
+                level={card.level}
+                openSource={card.openSource}
+                description={card.description}
+                uses={card.uses}
+              />
+            </a>
+          </Link>
+        </div>
       );
     });
   }
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <Options />
       <div className="flex flex-wrap justify-center w-full sm:w-11/12 mx-auto">
+        {mapCards()}
         {mapCards()}
       </div>
     </div>

@@ -57,7 +57,7 @@ export const AccountLikes: NextPage = () => {
   }
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <Options />
       <div className="flex flex-wrap justify-center w-full sm:w-11/12 mx-auto">
         {mapCards()}

@@ -27,6 +27,7 @@ const Navbar: React.FC = () => {
       <div
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
+        className="z-10"
       >
         <Link href="/account">
           <a className=" h-fit w-fit flex mr-5 justify-center items-center">
