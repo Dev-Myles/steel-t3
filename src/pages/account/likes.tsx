@@ -1,13 +1,17 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
+import Card from '../../components/cards/Card';
 import { LoadingGif } from '../../components/util/LoadingGif';
 import { useSessionCheck } from '../../utils/session/checkSession';
 import { trpc } from '../../utils/trpc';
 
 export const AccountLikes: NextPage = () => {
   const sess = useSessionCheck();
-  const { data, isLoading } = trpc.useQuery(['account.get-liked-cards']);
+  const { data, isLoading } = trpc.useQuery(['account.get-liked-cards'], {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
   const cards = data;
 
   const Options: React.FC = () => {
@@ -19,7 +23,11 @@ export const AccountLikes: NextPage = () => {
   };
 
   if (sess.status === 'loading') {
-    return <div className="h-screen"></div>;
+    return (
+      <div className="h-screen">
+        <LoadingGif />
+      </div>
+    );
   }
 
   if (isLoading) {
@@ -33,25 +41,38 @@ export const AccountLikes: NextPage = () => {
     );
   }
 
+  if (!cards) {
+    return (
+      <div className="grid place-content-center h-screen">
+        <h1 className="text-red-400 text-4xl">
+          You have not liked any cards...
+        </h1>
+      </div>
+    );
+  }
+
   function mapCards() {
-    if (!cards?.length) {
-      return (
-        <div className="text-center">
-          <h3 className="text-2xl mt-10">You have not liked any cards...</h3>
-        </div>
-      );
-    }
     return cards?.map((card) => {
       return (
-        <Link key={uuidv4()} href={`/card/${card.id}`}>
-          <a>
-            <div className="border-2 w-32 h-44 rounded-lg truncate border-gray-600 p-2 m-2">
-              <span>{card.name}</span>
-              <br />
-              <span>{card.creatorId}</span>
-            </div>
-          </a>
-        </Link>
+        <div key={uuidv4()} className="w-11/12 sm:w-1/4 mt-12">
+          <Link href={`/card/${card.id}`}>
+            <a>
+              <Card
+                cardId={card.id}
+                projectType={card.projectType}
+                creatorId={card.creatorId}
+                privateStatus={card.private}
+                name={card.name}
+                likes={card.likedBy}
+                level={card.level}
+                openSource={card.openSource}
+                description={card.description}
+                uses={card.uses}
+                stateStatus={false}
+              />
+            </a>
+          </Link>
+        </div>
       );
     });
   }

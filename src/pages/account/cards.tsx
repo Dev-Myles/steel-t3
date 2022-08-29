@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
 import Card from '../../components/cards/Card';
@@ -9,7 +8,10 @@ import { trpc } from '../../utils/trpc';
 
 export const AccountCards: NextPage = () => {
   const sess = useSessionCheck();
-  const { data, isLoading } = trpc.useQuery(['account.get-profile']);
+  const { data, isLoading } = trpc.useQuery(['account.get-profile'], {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
   const cards = data?.cards;
 
   const Options: React.FC = () => {
@@ -27,7 +29,11 @@ export const AccountCards: NextPage = () => {
   };
 
   if (sess.status === 'loading') {
-    return <div className="h-screen"></div>;
+    return (
+      <div className="h-screen">
+        <LoadingGif />
+      </div>
+    );
   }
 
   if (isLoading) {
@@ -53,10 +59,11 @@ export const AccountCards: NextPage = () => {
     }
     return cards?.map((card) => {
       return (
-        <div key={uuidv4()} className="sm:w-1/4 m-2">
+        <div key={uuidv4()} className="w-11/12 sm:w-1/4 mt-12">
           <Link href={`/card/${card.id}`}>
             <a>
               <Card
+                cardId={card.id}
                 projectType={card.projectType}
                 creatorId={card.creatorId}
                 privateStatus={card.private}
@@ -66,6 +73,7 @@ export const AccountCards: NextPage = () => {
                 openSource={card.openSource}
                 description={card.description}
                 uses={card.uses}
+                stateStatus={false}
               />
             </a>
           </Link>
@@ -77,8 +85,7 @@ export const AccountCards: NextPage = () => {
   return (
     <div className="min-h-screen">
       <Options />
-      <div className="flex flex-wrap justify-center w-full sm:w-11/12 mx-auto">
-        {mapCards()}
+      <div className="flex flex-wrap justify-center w-screen sm:w-11/12 mx-auto">
         {mapCards()}
       </div>
     </div>

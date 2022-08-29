@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="absolute bg-gray-50 shadow-lg border-l-2 border-gray-200 py-4 px-1 right-0 rounded-b-lg">
+            <div className="absolute bg-white shadow  py-4 px-1 right-0 rounded-b-lg">
               <ul className="[&>*]:ease-in-out [&>*]:duration-200 [&>*:hover]:text-cyan-700 [&>*]:py-3 px-8">
                 <li>
                   <Link href="/card/create-card">
