@@ -53,6 +53,8 @@ export const AccountLikes: NextPage = () => {
 
   function mapCards() {
     return cards?.map((card) => {
+      const links = card.links || { github: '', website: '' };
+
       return (
         <div key={uuidv4()} className="w-11/12 sm:w-1/4 mt-12">
           <Link href={`/card/${card.id}`}>
@@ -69,6 +71,8 @@ export const AccountLikes: NextPage = () => {
                 description={card.description}
                 uses={card.uses}
                 stateStatus={false}
+                links={links}
+                tags={card.tags}
               />
             </a>
           </Link>

@@ -1,7 +1,16 @@
+import { CardLinks } from '@prisma/client';
 import Image from 'next/image';
-import { useReducer } from 'react';
-import { AiFillGithub, AiFillHeart, AiOutlineClose } from 'react-icons/ai';
+import { ReactElement, useReducer } from 'react';
+import {
+  AiFillGithub,
+  AiFillHeart,
+  AiOutlineMinus,
+  AiOutlineTag,
+} from 'react-icons/ai';
+import { BiWrench } from 'react-icons/bi';
 import { FiLink } from 'react-icons/fi';
+import { HiOutlineMenuAlt2 } from 'react-icons/hi';
+import { v4 as uuidv4 } from 'uuid';
 
 const initalState = { tab: 'MAIN' };
 
@@ -32,6 +41,8 @@ export const Card: React.FC<{
   description: string;
   uses: string;
   stateStatus: boolean;
+  tags: string[];
+  links: CardLinks | { github: string; website: string };
 }> = ({
   projectType,
   creatorId,
@@ -39,98 +50,14 @@ export const Card: React.FC<{
   name,
   likes,
   level,
+  tags,
   openSource,
   description,
   uses,
   stateStatus,
+  links,
 }) => {
   const [state, dispatch] = useReducer(reducer, initalState);
-
-  const SeeMore: React.FC<{ type: string; stateStatus: boolean }> = ({
-    type,
-    stateStatus,
-  }) => {
-    return (
-      <div
-        onClick={() => {
-          stateStatus ? dispatch({ type: `${type}` }) : null;
-        }}
-      >
-        <span className={`${text} cursor-pointer hover:underline`}>
-          read more
-        </span>
-      </div>
-    );
-  };
-
-  const borderMap = new Map([
-    ['WEBSITE', 'border-green-500'],
-    ['WEBAPP', 'border-blue-400'],
-    ['VIDEOGAME', 'border-zinc-400'],
-    ['FRAMEWORK', 'border-red-400'],
-    ['APPLICATION', 'border-indigo-400'],
-    ['CRYPTO', 'border-purple-700'],
-    ['ALGORITHM', 'border-yellow-400'],
-    ['AI', 'border-blue-700'],
-    ['PACKAGE', 'border-brown-400'],
-    ['LIBRARY', 'border-slate-400'],
-    ['OS', 'border-gray-300'],
-    ['BOT', 'border-blue-500'],
-    ['LANGUAGE', 'border-orange-700'],
-    ['OTHER', 'border-black'],
-    ['SCRIPT', 'border-white'],
-  ]);
-
-  const textMap = new Map([
-    ['WEBSITE', 'text-green-500'],
-    ['WEBAPP', 'text-blue-400'],
-    ['VIDEOGAME', 'text-zinc-400'],
-    ['FRAMEWORK', 'text-red-400'],
-    ['APPLICATION', 'text-indigo-400'],
-    ['CRYPTO', 'text-purple-700'],
-    ['ALGORITHM', 'text-yellow-400'],
-    ['AI', 'text-blue-700'],
-    ['PACKAGE', 'text-brown-400'],
-    ['LIBRARY', 'text-slate-400'],
-    ['OS', 'text-gray-300'],
-    ['BOT', 'text-blue-500'],
-    ['LANGUAGE', 'text-orange-700'],
-    ['OTHER', 'text-black'],
-    ['SCRIPT', 'text-black'],
-  ]);
-
-  const bgMap = new Map([
-    ['WEBSITE', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200'],
-    ['WEBAPP', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    [
-      'VIDEOGAME',
-      'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 ',
-    ],
-    [
-      'FRAMEWORK',
-      'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 ',
-    ],
-    [
-      'APPLICATION',
-      'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 ',
-    ],
-    ['CRYPTO', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    [
-      'ALGORITHM',
-      'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 ',
-    ],
-    ['AI', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    ['PACKAGE', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    ['LIBRARY', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    ['OS', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    ['BOT', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    [
-      'LANGUAGE',
-      'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 ',
-    ],
-    ['OTHER', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-    ['SCRIPT', 'bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 '],
-  ]);
 
   const imageMap = new Map([
     ['WEBSITE', '/images/card-pics/website.svg'],
@@ -150,10 +77,30 @@ export const Card: React.FC<{
     ['SCRIPT', '/images/card-pics/script.svg'],
   ]);
 
-  const border = `${borderMap.get(projectType)}`;
-  const text = `${textMap.get(projectType)}`;
   const imageSrc = `${imageMap.get(projectType)}`;
-  const background = `${bgMap.get(projectType)}`;
+
+  const SeeMore: React.FC<{
+    type: string;
+    stateStatus: boolean;
+    name: string;
+    icon: ReactElement;
+    color: string;
+  }> = ({ type, name, color, stateStatus, icon }) => {
+    return (
+      <div
+        className="flex items-center hover:cursor-pointer"
+        onClick={() => {
+          stateStatus ? dispatch({ type: `${type}` }) : null;
+        }}
+      >
+        <div className={`${color} rounded-lg p-1 text-white text-3xl shadow`}>
+          {icon}
+        </div>
+
+        <h4 className={` text-xl ml-2 font-Hind text-gray-700`}>{name}</h4>
+      </div>
+    );
+  };
 
   const CardImage: React.FC = () => {
     return (
@@ -167,6 +114,104 @@ export const Card: React.FC<{
     );
   };
 
+  const MappedTags: React.FC<{ array: string[]; stateStatus: boolean }> = ({
+    array,
+    stateStatus,
+  }) => {
+    const color = [
+      '#8b5cf6',
+      '#6366f1',
+      '#14b8a6',
+      '#fb923c',
+      '#ef4444',
+      '#404040',
+      '#65a30d',
+      '#2563eb',
+      '#f59e0b',
+      '#9f1239',
+    ];
+
+    const sliced = array.slice(0, 3);
+    const slicedMap = sliced.map((t) => {
+      const aColor = Math.floor(Math.random() * color.length);
+
+      const style = {
+        backgroundColor: color[aColor],
+      };
+      return (
+        <span
+          key={uuidv4()}
+          style={style}
+          className={`px-2  shadow text-white rounded-full font-bold m-[2px]`}
+        >
+          {t}
+        </span>
+      );
+    });
+    const map = array.map((t) => {
+      const aColor = Math.floor(Math.random() * color.length);
+
+      const style = {
+        backgroundColor: color[aColor],
+      };
+      return (
+        <span
+          key={uuidv4()}
+          style={style}
+          className={`px-2  shadow text-white rounded-full font-bold m-[2px]`}
+        >
+          {t}
+        </span>
+      );
+    });
+
+    if (!array.length) {
+      return <span className="font-bold">No Tags</span>;
+    }
+
+    if (!stateStatus || state.tab === 'MAIN') {
+      const numOfTags = array.length;
+      if (numOfTags > 3)
+        return (
+          <div className="flex flex-wrap flex-col">
+            <div className="flex items-center">
+              <SeeMore
+                color="bg-blue-500"
+                icon={<AiOutlineTag />}
+                stateStatus={stateStatus}
+                name="Tags"
+                type={'TAGS'}
+              />
+              <span className="font-bold text-sm ml-2">
+                +{numOfTags - 3} more...
+              </span>
+            </div>
+
+            <div className="flex flex-wrap justify-center my-2">
+              {slicedMap}
+            </div>
+          </div>
+        );
+    }
+    return (
+      <div className="flex flex-col flex-wrap">
+        {state.tab === 'TAGS' ? null : (
+          <div className="flex items-center">
+            <SeeMore
+              icon={<AiOutlineTag />}
+              color="bg-blue-500"
+              stateStatus={stateStatus}
+              name="Tags"
+              type={'TAGS'}
+            />
+          </div>
+        )}
+
+        <div className="flex flex-wrap justify-center my-2">{map}</div>
+      </div>
+    );
+  };
+
   const Content: React.FC<{ currState: string; stateStatus: boolean }> = ({
     currState,
     stateStatus,
@@ -174,51 +219,37 @@ export const Card: React.FC<{
     if (currState === 'MAIN' || !stateStatus) {
       return (
         <>
-          <div className={`mx-auto block w-3/4 text-center  ${text} `}>
-            <div className="flex justify-between items-center my-3">
-              <span className="font-bold">
-                {' '}
-                {openSource ? 'Open-Source' : 'Close-Source'}{' '}
-              </span>
-              <div className="flex justify-around text-white">
-                <a href="">
-                  <div className="bg-gray-400 mx-3 flex shadow justify-center items-center w-6 h-6 rounded-lg">
-                    <FiLink />
-                  </div>
-                </a>
-                <a href="">
-                  <div className="bg-gray-400 flex justify-center items-center shadow mx-3 h-6 w-6 rounded-lg">
-                    <AiFillGithub />
-                  </div>
-                </a>
-              </div>
-            </div>
+          <div className={`mx-auto block w-3/4 text-center   `}>
+            <div className="flex justify-between items-center my-3"></div>
 
             <CardImage />
           </div>
           <div className="flex flex-col w-full">
-            <div>
-              <h4 className={`${text} text-xl`}>Description</h4>
-              <p className=" w-80 line-clamp-3">{description}</p>
-              <SeeMore stateStatus={stateStatus} type={'DESC'} />
+            <div className="h-[50px]">
+              <div className="flex items-center">
+                <SeeMore
+                  color="bg-indigo-500"
+                  icon={<HiOutlineMenuAlt2 />}
+                  stateStatus={stateStatus}
+                  type={'DESC'}
+                  name="Description"
+                />
+              </div>
             </div>
-            <div>
-              <h4 className={`${text} text-xl`}>Uses</h4>
-              <p className="line-clamp-3 w-80">
-                {uses.concat(
-                  'fdsfsaff fdsdf fsdf sfsdfs fsdfsdf ffsdfsdf  fsdfsdfsdfsdf sdfs sdfsd fsdf fsdf ss'
-                )}
-              </p>
-              <SeeMore stateStatus={stateStatus} type={'USES'} />
+            <div className="h-[50px]">
+              <div className="flex items-center">
+                <SeeMore
+                  icon={<BiWrench />}
+                  color="bg-amber-500"
+                  stateStatus={stateStatus}
+                  type={'USES'}
+                  name="Uses"
+                />
+              </div>
             </div>
-
-            <p className="truncate w-80 font-bold">
-              <span className={`${text} text-lg`}>Tags: </span>
-              wert wwert wert wert wert wert wert wert wert wert wert
-            </p>
+            <MappedTags stateStatus={stateStatus} array={tags} />
             <div className="font-bold flex justify-between">
               <span className="truncate">Creator: {creatorId}</span>
-              <span> {!privateStatus ? 'public' : 'private'}</span>
             </div>
           </div>
         </>
@@ -228,13 +259,18 @@ export const Card: React.FC<{
     if (currState === 'DESC') {
       return (
         <>
-          <div className="">
-            <h4 className={`${text} text-xl`}>Description</h4>
-            <div onClick={() => dispatch({ type: 'MAIN' })}>
-              <AiOutlineClose />
-            </div>
+          <div
+            className="flex items-center hover:cursor-pointer"
+            onClick={() => dispatch({ type: 'MAIN' })}
+          >
+            <h4 className={` text-xl mr-2 font-Poppins text-gray-400`}>
+              Description
+            </h4>
+            <AiOutlineMinus />
           </div>
-          <p className="w-full overflow-y-scroll h-[553px] ">{description}</p>
+          <p className="w-full font-Hind overflow-y-scroll h-[553px] ">
+            {description}
+          </p>
         </>
       );
     }
@@ -242,13 +278,14 @@ export const Card: React.FC<{
     if (currState === 'USES') {
       return (
         <>
-          <div>
-            <h4 className={`${text} text-xl`}>Uses</h4>
-            <div onClick={() => dispatch({ type: 'MAIN' })}>
-              <AiOutlineClose />
-            </div>
+          <div
+            className="flex items-center hover:cursor-pointer"
+            onClick={() => dispatch({ type: 'MAIN' })}
+          >
+            <h4 className={` text-xl mr-2 font-Poppins text-gray-400`}>Uses</h4>
+            <AiOutlineMinus />
           </div>
-          <p className="w-full overflow-y-scroll h-[553px]">{uses}</p>
+          <p className="w-full font-Hind overflow-y-scroll h-[553px]">{uses}</p>
         </>
       );
     }
@@ -256,15 +293,16 @@ export const Card: React.FC<{
     if (currState === 'TAGS') {
       return (
         <>
-          <div>
-            <h4 className={`${text} text-xl`}>Tags</h4>
-            <div onClick={() => dispatch({ type: 'MAIN' })}>
-              <AiOutlineClose />
-            </div>
+          <div
+            className="flex items-center hover:cursor-pointer"
+            onClick={() => dispatch({ type: 'MAIN' })}
+          >
+            <h4 className={` text-xl mr-2 font-Poppins text-gray-400`}>Tags</h4>
+            <AiOutlineMinus />
           </div>
-          <p className="w-full overflow-y-scroll h-[553px]">
-            werwer, rewer, werwerw, wer, wer, fsfs
-          </p>
+          <div className="w-full overflow-y-scroll h-[553px]">
+            <MappedTags stateStatus={stateStatus} array={tags} />
+          </div>
         </>
       );
     }
@@ -276,25 +314,50 @@ export const Card: React.FC<{
   };
 
   return (
-    <fieldset
-      className={`p-2 rounded-lg mx-auto w-full sm:w-96 flex flex-col shadow  sm:h-fit
-       ${background} border-2 ${border}`}
+    <div
+      className={`p-2 relative rounded-3xl bg-neutral-50 mx-auto w-full sm:w-96 flex flex-col shadow  sm:h-fit
+      `}
     >
-      <legend
-        className={`text-xl p-1 font-bold border-2 bg-white rounded-lg ${border}`}
-      >
-        {level} - {projectType}
-      </legend>
-      <div className="flex w-full justify-between border-gray-300 border-b-2">
-        <h3 className={`text-3xl truncate ${text}`}>{name}</h3>
-
-        <span className="text-red-400 font-bold h-fit flex items-center justify-center">
-          {likes.length} <AiFillHeart className="inline" />
-        </span>
+      <div className="flex w-full justify-between items-center">
+        <div className="w-full">
+          <span className={`text-sm p-1 font-extrabold `}>
+            {level.toLowerCase()} -{' '}
+            {openSource ? 'open-source' : 'closed-source'} -{' '}
+            {projectType.toLowerCase()}
+          </span>
+          <div className="flex justify-between items-center">
+            <h3
+              className={`text-3xl font-thin font-Poppins text-gray-600 truncate p-1 `}
+            >
+              {name}
+            </h3>
+            <span className="text-red-400 font-bold h-fit flex items-center justify-center">
+              {likes.length + 10} <AiFillHeart className="inline" />
+            </span>
+          </div>
+        </div>
       </div>
+      <div className="absolute top-[75px] right-0">
+        <div className="flex flex-col text-lg justify-around text-white">
+          {links.website.length ? (
+            <a href={`${links.website}`}>
+              <div className="bg-lime-500 mx-2 my-2 flex shadow justify-center items-center p-2 rounded-full">
+                <FiLink />
+              </div>
+            </a>
+          ) : null}
 
+          {links.github.length ? (
+            <a href={`${links.github}`}>
+              <div className="bg-black flex justify-center items-center shadow p-2  mx-2 my-2 rounded-full">
+                <AiFillGithub />
+              </div>
+            </a>
+          ) : null}
+        </div>
+      </div>
       <Content stateStatus={stateStatus} currState={state.tab} />
-    </fieldset>
+    </div>
   );
 };
 

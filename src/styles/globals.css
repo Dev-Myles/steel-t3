@@ -38,3 +38,13 @@ button {
 body {
   @apply text-gray-600;
 }
+
+@font-face {
+  font-family: 'Poppins-Medium';
+  src: url('/fonts/Poppins-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'HindSiliguri-Regular';
+  src: url('/fonts/HindSiliguri-Regular.ttf');
+}

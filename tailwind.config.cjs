@@ -7,6 +7,10 @@ module.exports = {
       boxShadow: {
         DEFAULT: '0 0 5px silver',
       },
+      fontFamily: {
+        Poppins: ['Poppins-Medium'],
+        Hind: ['HindSiliguri-Regular'],
+      },
     },
   },
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/line-clamp')],

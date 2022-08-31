@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { CardLinks, PrismaClient } from '@prisma/client';
 import { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 
@@ -14,9 +14,12 @@ interface CardType {
   openSource: boolean;
   description: string;
   uses: string;
+  links: CardLinks | { github: string; website: string };
+  tags: string[];
 }
 
 export const CardPage: NextPage<{ card: CardType }> = ({ card }) => {
+  const links = card.links ? card.links : { github: '', website: '' };
   if (!card) {
     return (
       <div className="grid h-screen place-content-center">
@@ -46,6 +49,8 @@ export const CardPage: NextPage<{ card: CardType }> = ({ card }) => {
           description={card.description}
           uses={card.uses}
           stateStatus={true}
+          links={links}
+          tags={card.tags}
         />
       </div>
     </div>
@@ -62,6 +67,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     card = await prisma?.card.findUnique({
       where: {
         id,
+      },
+      include: {
+        links: true,
       },
     });
   }

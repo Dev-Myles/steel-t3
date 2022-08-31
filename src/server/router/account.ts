@@ -14,7 +14,11 @@ export const accountRouter = createProtectedRouter()
           },
           include: {
             links: true,
-            cards: true,
+            cards: {
+              include: {
+                links: true,
+              },
+            },
           },
         });
         return profile;
@@ -40,6 +44,9 @@ export const accountRouter = createProtectedRouter()
                 in: cardLikes,
               },
             },
+            include: {
+              links: true,
+            },
           });
           return likedCards;
         }
@@ -52,7 +59,7 @@ export const accountRouter = createProtectedRouter()
     async resolve({ ctx }) {
       const userId = ctx.session.user.id as string;
       try {
-        const newProfile = await ctx.prisma?.profile
+        await ctx.prisma?.profile
           .create({
             data: {
               userId,

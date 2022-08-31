@@ -3,13 +3,11 @@ import { IconContext } from 'react-icons';
 
 export const IconProvider: React.FC<{
   icon: ReactElement;
-  color?: string | undefined;
-}> = ({ icon, color }) => {
+}> = ({ icon }) => {
   return (
     <IconContext.Provider
       value={{
-        color: 'red',
-        size: '3em',
+        size: '1.5em',
         className: 'inline',
         style: {
           verticalAlign: 'center',

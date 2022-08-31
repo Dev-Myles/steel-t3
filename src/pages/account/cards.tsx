@@ -58,6 +58,7 @@ export const AccountCards: NextPage = () => {
       );
     }
     return cards?.map((card) => {
+      const links = card.links || { github: '', website: '' };
       return (
         <div key={uuidv4()} className="w-11/12 sm:w-1/4 mt-12">
           <Link href={`/card/${card.id}`}>
@@ -74,6 +75,8 @@ export const AccountCards: NextPage = () => {
                 description={card.description}
                 uses={card.uses}
                 stateStatus={false}
+                links={links}
+                tags={card.tags}
               />
             </a>
           </Link>
@@ -83,7 +86,7 @@ export const AccountCards: NextPage = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen mb-20">
       <Options />
       <div className="flex flex-wrap justify-center w-screen sm:w-11/12 mx-auto">
         {mapCards()}
