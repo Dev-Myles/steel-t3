@@ -1,5 +1,6 @@
 import { CardLinks } from '@prisma/client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ReactElement, useReducer } from 'react';
 import {
   AiFillGithub,
@@ -79,6 +80,90 @@ export const Card: React.FC<{
 
   const imageSrc = `${imageMap.get(projectType)}`;
 
+  const CardButtons: React.FC<{ stateStatus: boolean }> = ({ stateStatus }) => {
+    return (
+      <>
+        <SeeMore
+          color="bg-zinc-400"
+          icon={<HiOutlineMenuAlt2 />}
+          stateStatus={stateStatus}
+          type={'DESC'}
+          name="Description"
+        />
+
+        <SeeMore
+          icon={<BiWrench />}
+          color="bg-amber-500"
+          stateStatus={stateStatus}
+          type={'USES'}
+          name="Uses"
+        />
+
+        <SeeMore
+          color="bg-blue-600"
+          icon={<AiOutlineTag />}
+          stateStatus={stateStatus}
+          name="Tags"
+          type={'TAGS'}
+        />
+      </>
+    );
+  };
+
+  const OutSideLinks: React.FC<{ stateStatus: boolean }> = ({
+    stateStatus,
+  }) => {
+    if (!stateStatus) {
+      return (
+        <>
+          {links.website.length ? (
+            <div className="flex items-center hover:cursor-pointer ">
+              <div className="bg-lime-500 border-gray-200 border-2 rounded-full p-2 text-white shadow">
+                <FiLink />
+              </div>
+            </div>
+          ) : null}
+
+          {links.github.length ? (
+            <div className="flex items-center hover:cursor-pointer ">
+              <div className="bg-black border-gray-200 border-2 rounded-full p-2 text-white shadow ">
+                <AiFillGithub />
+              </div>
+            </div>
+          ) : null}
+
+          <CardButtons stateStatus={stateStatus} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        {links.website.length ? (
+          <div className="flex items-center hover:cursor-pointer ">
+            <a href={`${links.website}`}>
+              <div className="bg-lime-500 border-gray-200 border-2 rounded-full p-2 text-white  shadow">
+                <FiLink />
+              </div>
+            </a>
+          </div>
+        ) : null}
+
+        {links.github.length ? (
+          <div className="flex items-center  hover:cursor-pointer ">
+            <a href={`${links.github}`}>
+              <div className="bg-black border-gray-200 border-2 rounded-full p-2 text-white  shadow">
+                <AiFillGithub />
+              </div>
+            </a>
+          </div>
+        ) : null}
+
+        <CardButtons stateStatus={stateStatus} />
+      </>
+    );
+  };
+
   const SeeMore: React.FC<{
     type: string;
     stateStatus: boolean;
@@ -93,11 +178,13 @@ export const Card: React.FC<{
           stateStatus ? dispatch({ type: `${type}` }) : null;
         }}
       >
-        <div className={`${color} rounded-lg p-1 text-white text-3xl shadow`}>
+        <div
+          className={`${color} rounded-full p-2 border-gray-200 border-2 text-white  shadow`}
+        >
           {icon}
         </div>
 
-        <h4 className={` text-xl ml-2 font-Hind text-gray-700`}>{name}</h4>
+        {/* <h4 className={` text-xl ml-2 font-Hind text-gray-700`}>{name}</h4> */}
       </div>
     );
   };
@@ -142,7 +229,7 @@ export const Card: React.FC<{
         <span
           key={uuidv4()}
           style={style}
-          className={`px-2  shadow text-white rounded-full font-bold m-[2px]`}
+          className={`px-2  text-white rounded-full font-bold m-[2px]`}
         >
           {t}
         </span>
@@ -158,7 +245,7 @@ export const Card: React.FC<{
         <span
           key={uuidv4()}
           style={style}
-          className={`px-2  shadow text-white rounded-full font-bold m-[2px]`}
+          className={`px-2  text-white rounded-full font-bold m-[2px]`}
         >
           {t}
         </span>
@@ -174,39 +261,17 @@ export const Card: React.FC<{
       if (numOfTags > 3)
         return (
           <div className="flex flex-wrap flex-col">
-            <div className="flex items-center">
-              <SeeMore
-                color="bg-blue-500"
-                icon={<AiOutlineTag />}
-                stateStatus={stateStatus}
-                name="Tags"
-                type={'TAGS'}
-              />
+            <div className="flex flex-wrap items-center justify-center my-2">
+              {slicedMap}
               <span className="font-bold text-sm ml-2">
                 +{numOfTags - 3} more...
               </span>
-            </div>
-
-            <div className="flex flex-wrap justify-center my-2">
-              {slicedMap}
             </div>
           </div>
         );
     }
     return (
       <div className="flex flex-col flex-wrap">
-        {state.tab === 'TAGS' ? null : (
-          <div className="flex items-center">
-            <SeeMore
-              icon={<AiOutlineTag />}
-              color="bg-blue-500"
-              stateStatus={stateStatus}
-              name="Tags"
-              type={'TAGS'}
-            />
-          </div>
-        )}
-
         <div className="flex flex-wrap justify-center my-2">{map}</div>
       </div>
     );
@@ -225,32 +290,25 @@ export const Card: React.FC<{
             <CardImage />
           </div>
           <div className="flex flex-col w-full">
-            <div className="h-[50px]">
-              <div className="flex items-center">
-                <SeeMore
-                  color="bg-indigo-500"
-                  icon={<HiOutlineMenuAlt2 />}
-                  stateStatus={stateStatus}
-                  type={'DESC'}
-                  name="Description"
-                />
-              </div>
-            </div>
-            <div className="h-[50px]">
-              <div className="flex items-center">
-                <SeeMore
-                  icon={<BiWrench />}
-                  color="bg-amber-500"
-                  stateStatus={stateStatus}
-                  type={'USES'}
-                  name="Uses"
-                />
-              </div>
+            <div className="font-bold my-3 text-2xl truncate">
+              {stateStatus ? (
+                <>
+                  <h4 className="text-black">Created By:</h4>
+                  <Link href={`/profile/${creatorId}`}>
+                    <a className="hover:underline">
+                      <span className="truncate  text-lg">{creatorId}</span>
+                    </a>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <h4 className="text-black">Created By:</h4>
+
+                  <span className="truncate text-lg">{creatorId}</span>
+                </>
+              )}
             </div>
             <MappedTags stateStatus={stateStatus} array={tags} />
-            <div className="font-bold flex justify-between">
-              <span className="truncate">Creator: {creatorId}</span>
-            </div>
           </div>
         </>
       );
@@ -315,7 +373,7 @@ export const Card: React.FC<{
 
   return (
     <div
-      className={`p-2 relative rounded-3xl bg-neutral-50 mx-auto w-full sm:w-96 flex flex-col shadow  sm:h-fit
+      className={`p-2 relative rounded-3xl bg-gray-200 mx-auto w-full sm:w-96 flex flex-col shadow  sm:h-fit
       `}
     >
       <div className="flex w-full justify-between items-center">
@@ -332,30 +390,25 @@ export const Card: React.FC<{
               {name}
             </h3>
             <span className="text-red-400 font-bold h-fit flex items-center justify-center">
-              {likes.length + 10} <AiFillHeart className="inline" />
+              {likes.length} <AiFillHeart className="inline" />
             </span>
           </div>
         </div>
       </div>
-      <div className="absolute top-[75px] right-0">
-        <div className="flex flex-col text-lg justify-around text-white">
-          {links.website.length ? (
-            <a href={`${links.website}`}>
-              <div className="bg-lime-500 mx-2 my-2 flex shadow justify-center items-center p-2 rounded-full">
-                <FiLink />
-              </div>
-            </a>
-          ) : null}
 
-          {links.github.length ? (
-            <a href={`${links.github}`}>
-              <div className="bg-black flex justify-center items-center shadow p-2  mx-2 my-2 rounded-full">
-                <AiFillGithub />
-              </div>
-            </a>
-          ) : null}
+      {state.tab !== 'MAIN' ? (
+        <div className="absolute bottom-10 right-1 w-full">
+          <div className="flex flex-row text-2xl  justify-around  w-full text-white">
+            <OutSideLinks stateStatus={stateStatus} />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="absolute top-[75px] right-1">
+          <div className="flex flex-col text-2xl justify-around h-[300px]  w-full text-white">
+            <OutSideLinks stateStatus={stateStatus} />
+          </div>
+        </div>
+      )}
       <Content stateStatus={stateStatus} currState={state.tab} />
     </div>
   );

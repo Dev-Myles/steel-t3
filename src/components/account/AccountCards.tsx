@@ -47,7 +47,7 @@ export const AccountCards: React.FC<{
   }
 
   return (
-    <div className="bg-white shadow rounded-lg h-fit p-4 pr-2">
+    <div className="bg-panel shadow rounded-lg h-fit p-4 pr-2">
       <div className="flex justify-between">
         <h3 className=" text-2xl">
           Your Cards -{' '}

@@ -39,7 +39,7 @@ export const AccountLinks: React.FC<{
   if (isLoading) {
     return (
       <div
-        className="max-w-sm h-fit p-4 pr-2 bg-white 
+        className="max-w-sm h-fit p-4 pr-2 bg-panel
     rounded-lg shadow"
       >
         <h2 className=" text-2xl">Links</h2>
@@ -52,7 +52,7 @@ export const AccountLinks: React.FC<{
     return Object.entries(mapLinks).map((e) => {
       return (
         <div key={uuidv4()} className="truncate block m-4 text-start">
-          <span className="font-bold text-2xl text-cyan-600">{e[0]}</span>
+          <span className="font-bold text-2xl text-main">{e[0]}</span>
           <br />
           <span className="font-bold ">{e[1]}</span>
         </div>
@@ -78,7 +78,7 @@ export const AccountLinks: React.FC<{
 
   return (
     <div
-      className=" w-full sm:w-60 h-fit p-4 pr-2 bg-white 
+      className=" w-full sm:w-60 h-fit p-4 pr-2 bg-panel
       rounded-lg shadow truncate"
     >
       <h2 className=" text-2xl">
@@ -90,8 +90,9 @@ export const AccountLinks: React.FC<{
           onSubmit={handleSubmit(onSubmit)}
         >
           <label>
-            GitHub
+            <span className="font-bold"> GitHub </span>
             <input
+              className="flex flex-col "
               type="text"
               defaultValue={mapLinks.GitHub}
               {...register('github', {
@@ -101,8 +102,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            Company
+            <span className="font-bold"> Company</span>
             <input
+              className="flex flex-col"
               defaultValue={mapLinks.Company}
               type="text"
               {...register('company', {
@@ -112,8 +114,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            Discord
+            <span className="font-bold"> Discord</span>
             <input
+              className="flex flex-col"
               type="text"
               defaultValue={mapLinks.Discord}
               {...register('discord', {
@@ -123,8 +126,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            Facebook
+            <span className="font-bold">Facebook</span>
             <input
+              className="flex flex-col"
               defaultValue={mapLinks.Facebook}
               type="text"
               {...register('facebook', {
@@ -134,8 +138,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            Instagram
+            <span className="font-bold"> Instagram</span>
             <input
+              className="flex flex-col"
               defaultValue={mapLinks.Instagram}
               type="text"
               {...register('instagram', {
@@ -145,8 +150,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            LinkedIn
+            <span className="font-bold"> LinkedIn</span>
             <input
+              className="flex flex-col"
               defaultValue={mapLinks.LinkedIn}
               type="text"
               {...register('linkedin', {
@@ -156,8 +162,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            Portfolio
+            <span className="font-bold">Portfolio</span>
             <input
+              className="flex flex-col"
               defaultValue={mapLinks.Portfolio}
               type="text"
               {...register('portfolio', {
@@ -167,8 +174,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            Twitter
+            <span className="font-bold"> Twitter </span>
             <input
+              className="flex flex-col"
               defaultValue={mapLinks.Twitter}
               type="text"
               {...register('twitter', {
@@ -178,8 +186,9 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            Youtube
+            <span className="font-bold"> Youtube</span>
             <input
+              className="flex flex-col"
               defaultValue={mapLinks.Youtube}
               type="text"
               {...register('youtube', {
@@ -189,7 +198,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <button
-            className="bg-gray-600 p-2 w-fit mx-auto mt-2
+            className="p-2 w-fit mx-auto mt-2
           "
             type="submit"
           >

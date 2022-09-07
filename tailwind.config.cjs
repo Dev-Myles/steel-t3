@@ -5,7 +5,11 @@ module.exports = {
     extend: {
       textColor: ['first'],
       boxShadow: {
-        DEFAULT: '0 0 5px silver',
+        DEFAULT: '0 0 5px #141414',
+      },
+      colors: {
+        panel: '#121314',
+        main: 'rgb(16 185 129)',
       },
       fontFamily: {
         Poppins: ['Poppins-Medium'],

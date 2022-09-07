@@ -33,7 +33,7 @@ const Account: NextPage = () => {
   }
 
   return (
-    <div className="h-min-screen w-screen mx-auto lg:w-fit h-fit flex flex-col border-x-2 border-gray-200 p-4 my-4">
+    <div className="h-min-screen w-screen mx-auto lg:w-fit h-fit flex flex-col  p-4 my-4">
       <div className="lg:flex">
         <div className="flex justify-around flex-col">
           <div className="mt-3">

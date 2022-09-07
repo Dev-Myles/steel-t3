@@ -13,7 +13,7 @@ export const AccountLikes: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className=" rounded-lg  bg-white h-fit w-fit p-8">
+      <div className=" rounded-lg  bg-panel h-fit w-fit p-8">
         <h3 className="text-2xl">Liked Cards</h3>
         <LoadingGif />
       </div>
@@ -22,7 +22,7 @@ export const AccountLikes: React.FC = () => {
 
   if (!totalLikes) {
     return (
-      <div className="bg-white  rounded-lg h-48 grid place-content-center shadow">
+      <div className="bg-panel  rounded-lg h-48 grid place-content-center shadow">
         <h3>You have liked no cards...</h3>
       </div>
     );
@@ -33,7 +33,7 @@ export const AccountLikes: React.FC = () => {
     return (
       <div
         key={uuidv4()}
-        className=" rounded-lg border-2 w-32 h-36 border-cyan-400 truncate bg-white p-2 m-2"
+        className=" rounded-lg border-2 w-32 h-36 border-cyan-400 truncate bg-panel p-2 m-2"
       >
         <span>{card?.creatorId}</span>
         <br />
@@ -43,7 +43,7 @@ export const AccountLikes: React.FC = () => {
   }
 
   return (
-    <div className="rounded-lg shadow bg-white h-fit p-4 pr-2">
+    <div className="rounded-lg shadow bg-panel h-fit p-4 pr-2">
       <div className="flex justify-between">
         <h3 className="text-2xl">
           Liked Cards -{' '}

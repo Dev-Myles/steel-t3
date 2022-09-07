@@ -7,6 +7,10 @@ import { z } from 'zod';
  */
 export const serverSchema = z.object({
   DATABASE_URL: z.string(),
+  RAILWAY_DATABASE_URL: z.string(),
+  SUPABASE_DATABASE_URL: z.string(),
+  LOCAL_DATABASE_URL: z.string(),
+  STAGE_TYPE: z.string(),
   DATABASE_PASS: z.string(),
   NODE_ENV: z.enum(['development', 'test', 'production']),
   NEXTAUTH_SECRET: z.string(),

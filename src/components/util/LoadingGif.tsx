@@ -2,9 +2,9 @@ import Image from 'next/image';
 
 export const LoadingGif: React.FC = () => {
   return (
-    <div className="h-screen grid place-items-center">
+    <div className="h-screen grid bg-inherit place-items-center">
       <Image
-        src="/gifs/loading.svg"
+        src="/gifs/785.svg"
         alt="Loading"
         layout="fixed"
         height={100}

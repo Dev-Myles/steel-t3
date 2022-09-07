@@ -59,7 +59,7 @@ const AccountInfo: React.FC<{
   };
 
   return (
-    <div className="w-full bg-white  p-2 rounded-lg shadow h-fit">
+    <div className="w-full bg-panel  p-2 rounded-lg shadow h-fit">
       <h1 className="text-center font-bold text-5xl ">Account Info</h1>
       {isLoading ? (
         <LoadingGif />
@@ -70,13 +70,13 @@ const AccountInfo: React.FC<{
           </div>
           <div>
             <div className="m-3">
-              <span className=" font-bold text-4xl text-cyan-600">Name</span>
+              <span className=" font-bold text-4xl text-main">Name</span>
               <span className="block font-semibold text-xl truncate">
                 {name}
               </span>
             </div>
             <div className="m-3 border-b-2 border-gray-400 pb-5">
-              <span className=" font-bold text-4xl text-cyan-600">Email</span>
+              <span className=" font-bold text-4xl text-main">Email</span>
               <span className="block font-semibold text-xl truncate">
                 {email}
               </span>
@@ -84,7 +84,7 @@ const AccountInfo: React.FC<{
 
             <div className="lg:flex lg:justify-between [&>*]:inline-block [&>*]:m-3 [&>*]:text-start ">
               <div className="font-bold w-72">
-                <span className=" text-xl text-cyan-600">
+                <span className=" text-xl text-main">
                   Username <EditFieldButton editFn={editName} />
                 </span>
                 <br />
@@ -120,9 +120,7 @@ const AccountInfo: React.FC<{
                 ) : null}
               </div>
               <div className="font-bold">
-                <span className=" text-xl text-cyan-600">
-                  Profile Visability
-                </span>
+                <span className=" text-xl text-main">Profile Visability</span>
                 <br />
 
                 <div className="flex justify-center">

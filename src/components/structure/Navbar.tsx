@@ -33,13 +33,13 @@ const Navbar: React.FC = () => {
           <a className=" h-fit w-fit flex mr-5 justify-center items-center">
             <span className="text-gray-400 text-xs w-fit p-3 text-center">
               Signed in as: <br />
-              <span className="text-cyan-600 font-bold text-sm">{name}</span>
+              <span className="text-main font-bold text-sm">{name}</span>
             </span>
             <div
               className={
                 isHover
-                  ? 'border-2 border-cyan-600 rounded-full h-fit grid place-content-center'
-                  : 'border-2 border-grey-200  rounded-full h-fit grid place-content-center'
+                  ? 'border-2 border-main rounded-full h-fit grid place-content-center'
+                  : 'border-2 border-[#14161c]  rounded-full h-fit grid place-content-center'
               }
             >
               <UserImage h={40} w={40} />
@@ -54,8 +54,8 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="absolute bg-white shadow  py-4 px-1 right-0 rounded-b-lg">
-              <ul className="[&>*]:ease-in-out [&>*]:duration-200 [&>*:hover]:text-cyan-700 [&>*]:py-3 px-8">
+            <div className="absolute bg-[#14161c] shadow  py-4 px-1 right-0 rounded-b-lg">
+              <ul className="[&>*]:ease-in-out [&>*]:duration-200 [&>*:hover]:text-emerald-700 [&>*]:py-3 px-8">
                 <li>
                   <Link href="/card/create-card">
                     <a>
@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-row text-cyan-600 justify-between place-items-center border-b-2  text-2xl">
+    <div className="flex flex-row text-main justify-between place-items-center   text-2xl">
       {session ? (
         <div
           onClick={() => {
@@ -116,10 +116,10 @@ const Navbar: React.FC = () => {
 
       <AnimatePresence initial={false} />
       {isMenu && (
-        <div className="absolute h-screen z-10 top-0 left-0 flex flex-col  bg-gray-50 ">
+        <div className="absolute h-screen z-20 top-0 left-0 flex flex-col  bg-panel ">
           <div
             onClick={() => setMenu(false)}
-            className="p-2 h-fit flex justify-between items-center border-b-2 border-gray-200"
+            className="p-2 mt-3 h-fit flex justify-between items-center "
           >
             <span>Menu</span>
             <AiOutlineClose />
@@ -174,7 +174,7 @@ const Navbar: React.FC = () => {
         </div>
       )}
 
-      <div className="p-2 [&>*:hover]:text-cyan-700 [&>*]:ease-in-out duration-300cursor-pointer">
+      <div className="p-2 [&>*:hover]:text-emerald-700 [&>*]:ease-in-out duration-300 cursor-pointer">
         <Link href="/">
           <a>Logo</a>
         </Link>
@@ -182,7 +182,7 @@ const Navbar: React.FC = () => {
       {user ? (
         <User />
       ) : (
-        <div className="flex flex-row justify-around w-fit [&>*:hover]:text-cyan-700 [&>*]:ease-in-out duration-300">
+        <div className="flex flex-row justify-around w-fit [&>*:hover]:text-emerald-700 [&>*]:ease-in-out duration-300">
           <Link href="/auth/signin">
             <a>
               <span className="flex items-center">Sign In/Up</span>
