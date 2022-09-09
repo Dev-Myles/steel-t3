@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { FaRegIdCard } from 'react-icons/fa';
+import { GoSignIn } from 'react-icons/go';
 import { MdOutlineAccountCircle, MdOutlineCreate } from 'react-icons/md';
 import { VscSignOut } from 'react-icons/vsc';
+import MainLogo from '../util/MainLogo';
 import UserImage from '../util/UserImage';
 
 const Navbar: React.FC = () => {
@@ -102,7 +104,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-row text-main justify-between place-items-center   text-2xl">
+    <div className="flex flex-row text-main justify-between place-items-center font-mono  text-2xl">
       {session ? (
         <div
           onClick={() => {
@@ -176,7 +178,9 @@ const Navbar: React.FC = () => {
 
       <div className="p-2 [&>*:hover]:text-emerald-700 [&>*]:ease-in-out duration-300 cursor-pointer">
         <Link href="/">
-          <a>Logo</a>
+          <a>
+            <MainLogo h={50} w={50} />
+          </a>
         </Link>
       </div>
       {user ? (
@@ -185,7 +189,10 @@ const Navbar: React.FC = () => {
         <div className="flex flex-row justify-around w-fit [&>*:hover]:text-emerald-700 [&>*]:ease-in-out duration-300">
           <Link href="/auth/signin">
             <a>
-              <span className="flex items-center">Sign In/Up</span>
+              <span className="flex text-sm sm:text-lg items-center">
+                <GoSignIn />
+                In/Out
+              </span>
             </a>
           </Link>
         </div>

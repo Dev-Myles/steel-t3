@@ -49,6 +49,11 @@ body {
   src: url('/fonts/HindSiliguri-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'PTMono-Regular';
+  src: url('/fonts/PTMono-Regular.ttf');
+}
+
 :root {
   --panel: #121314;
   --background: #0a0a0c;

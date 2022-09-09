@@ -2,7 +2,8 @@ import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { BsGithub } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
-import IconProvider from '../../providers/IconProvider';
+import { v4 as uuidv4 } from 'uuid';
+
 const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -11,9 +12,9 @@ const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
   }
 
   const logo = {
-    google: <IconProvider icon={<FcGoogle />} />,
+    google: <FcGoogle />,
 
-    github: <IconProvider icon={<BsGithub />} />,
+    github: <BsGithub />,
   };
 
   function findLogo(provider: string) {
@@ -21,25 +22,26 @@ const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
   }
 
   return (
-    <div className="h-screen grid items-center">
-      <div className="mx-auto p-8 shadow-md bg-white rounded-lg text-center">
-        <h1 className="font-bold text-3xl text-cyan-600">Sign In/Up</h1>
+    <div className="h-screen grid items-center bg-repeat-round  bg-[url('/images/logos/logo.svg')]">
+      <div className="mx-auto p-8 shadow-md bg-panel w-screen sm:w-fit rounded-2xl text-center">
+        <h1 className="font-bold font-PTMono text-3xl border-b-2 border-dashed border-slate-100 pb-4 ">
+          Sign In/Up
+        </h1>
+        <div className="my-3">
+          <span className="font-bold">Create an account with one click!</span>
+        </div>
         {Object.values(providers).map((provider) => {
           const name = provider.name;
           return (
-            <div
-              key={name}
-              className="border-2 hover:shadow-lg hover:cursor-pointer hover:border-cyan-700 ease-in-out duration-300 border-gray-300 rounded-lg py-3 px-10 text-lg m-2"
-            >
-              <button
-                className="flex items-center shadow-none bg-inherit text-cyan-600 hover:bg-inherit
+            <button
+              key={uuidv4()}
+              className="flex p-2 px-5 mx-auto my-3 text-xl items-center shadow-none bg-inherit hover:text-gray-300 hover:bg-inherit
                 "
-                onClick={() => signIn(provider.id)}
-              >
-                <span className="h-fit ">Sign in with {name}</span>
-                {findLogo(name)}
-              </button>
-            </div>
+              onClick={() => signIn(provider.id)}
+            >
+              <span className="h-fit mr-2">Sign in with {name}</span>
+              {findLogo(name)}
+            </button>
           );
         })}
       </div>

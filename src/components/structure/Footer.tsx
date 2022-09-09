@@ -1,12 +1,17 @@
 export interface IFooter {}
 import Link from 'next/link';
+import MainLogo from '../util/MainLogo';
 
 const Footer: React.FC<IFooter> = () => {
   return (
     <footer className=" text-main h-fit ">
       <div className="flex flex-col lg:flex-row justify-between text-lg">
         <div className="p-6 mx-auto lg:mx-0 text-3xl">
-          <span>Logo</span>
+          <Link href="/">
+            <a>
+              <MainLogo h={75} w={75} />
+            </a>
+          </Link>
         </div>
         <div className="p-2">
           <ul className="text-center [&>*:hover]:text-emerald-700 [&>*]:ease-in-out duration-300 cursor-pointer [&>*]:inline-block [&>*]:p-4">

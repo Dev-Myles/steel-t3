@@ -14,6 +14,7 @@ module.exports = {
       fontFamily: {
         Poppins: ['Poppins-Medium'],
         Hind: ['HindSiliguri-Regular'],
+        PTMono: ['PTMono-Regular'],
       },
     },
   },
