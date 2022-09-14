@@ -36,11 +36,9 @@ export const AccountCards: React.FC<{
       return (
         <div
           key={uuidv4()}
-          className="bg-white m-2 w-28 h-32 text-center p-2 border-2 sm:w-40 border-emerald-600 shadow-lg truncate  rounded-lg"
+          className="bg-zinc-800 flex items-center justify-center m-2 w-28 h-32 text-center p-2 border-2 sm:w-40 border-emerald-600 shadow-lg truncate  rounded-lg"
         >
-          <span>{card.name}</span>
-          <br />
-          <span>{card.creatorId}</span>
+          <span className="truncate text-xl">{card.name}</span>
         </div>
       );
     });

@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         panel: '#121314',
         main: 'rgb(16 185 129)',
+        second: 'rgb(99 102 241)',
       },
       fontFamily: {
         Poppins: ['Poppins-Medium'],

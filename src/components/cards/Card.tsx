@@ -12,6 +12,10 @@ import { BiWrench } from 'react-icons/bi';
 import { FiLink } from 'react-icons/fi';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { v4 as uuidv4 } from 'uuid';
+import { LikeSchema } from '../../schema/like-schema';
+import { useSessionCheck } from '../../utils/session/checkSession';
+import { trpc } from '../../utils/trpc';
+import { LoadingGif } from '../util/LoadingGif';
 
 const initalState = { tab: 'MAIN' };
 
@@ -37,7 +41,7 @@ export const Card: React.FC<{
   name: string;
   likes: string[];
   level: string;
-  cardId?: string;
+  cardId: string;
   openSource: boolean;
   description: string;
   uses: string;
@@ -49,6 +53,7 @@ export const Card: React.FC<{
   creatorId,
   privateStatus,
   name,
+  cardId,
   likes,
   level,
   tags,
@@ -59,6 +64,28 @@ export const Card: React.FC<{
   links,
 }) => {
   const [state, dispatch] = useReducer(reducer, initalState);
+  const { isLoading, data } = trpc.useQuery(['account.get-profile-id'], {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  const { mutate } = trpc.useMutation(['card.like-card']);
+
+  function likeCard(data: LikeSchema) {
+    if (!sess.session) {
+      return;
+    } else {
+      mutate(data);
+    }
+  }
+
+  const sess = useSessionCheck();
+
+  if (isLoading) {
+    return <LoadingGif />;
+  }
+
+  const liked = data?.id ? likes.includes(data.id) : false;
 
   const imageMap = new Map([
     ['WEBSITE', '/images/card-pics/website.svg'],
@@ -79,6 +106,24 @@ export const Card: React.FC<{
   ]);
 
   const imageSrc = `${imageMap.get(projectType)}`;
+
+  const LikeButton: React.FC = () => {
+    return (
+      <button
+        className="border-none shadow-none hover:border-none hover:shadow-none hover:bg-inherit "
+        disabled={sess.session ? false : true}
+        onClick={() => likeCard({ liked: liked, cardId: cardId })}
+      >
+        <span
+          className={`${
+            liked ? 'text-red-900' : 'text-red-400'
+          }  font-bold h-fit flex items-center justify-center`}
+        >
+          {likes.length} <AiFillHeart className="inline" />
+        </span>
+      </button>
+    );
+  };
 
   const CardButtons: React.FC<{ stateStatus: boolean }> = ({ stateStatus }) => {
     return (
@@ -141,7 +186,7 @@ export const Card: React.FC<{
       <>
         {links.website.length ? (
           <div className="flex items-center hover:cursor-pointer ">
-            <a href={`${links.website}`}>
+            <a href={`//${links.website}`}>
               <div className="bg-lime-500 border-gray-200 border-2 rounded-full p-2 text-white  shadow">
                 <FiLink />
               </div>
@@ -151,7 +196,7 @@ export const Card: React.FC<{
 
         {links.github.length ? (
           <div className="flex items-center  hover:cursor-pointer ">
-            <a href={`${links.github}`}>
+            <a href={`//${links.github}`}>
               <div className="bg-black border-gray-200 border-2 rounded-full p-2 text-white  shadow">
                 <AiFillGithub />
               </div>
@@ -183,8 +228,6 @@ export const Card: React.FC<{
         >
           {icon}
         </div>
-
-        {/* <h4 className={` text-xl ml-2 font-Hind text-gray-700`}>{name}</h4> */}
       </div>
     );
   };
@@ -389,9 +432,7 @@ export const Card: React.FC<{
             >
               {name}
             </h3>
-            <span className="text-red-400 font-bold h-fit flex items-center justify-center">
-              {likes.length} <AiFillHeart className="inline" />
-            </span>
+            <LikeButton />
           </div>
         </div>
       </div>

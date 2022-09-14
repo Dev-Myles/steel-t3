@@ -1,24 +1,12 @@
-import { CardLinks, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 
 import Card from '../../components/cards/Card';
 
-interface CardType {
-  creatorId: string;
-  likedBy: string[];
-  private: boolean;
-  name: string;
-  projectType: string;
-  level: string;
-  openSource: boolean;
-  description: string;
-  uses: string;
-  links: CardLinks | { github: string; website: string };
-  tags: string[];
-}
+import ICard from '../../types/card';
 
-export const CardPage: NextPage<{ card: CardType }> = ({ card }) => {
+export const CardPage: NextPage<{ card: ICard }> = ({ card }) => {
   const links = card.links ? card.links : { github: '', website: '' };
   if (!card) {
     return (
@@ -39,6 +27,7 @@ export const CardPage: NextPage<{ card: CardType }> = ({ card }) => {
     <div className="mx-auto min-h-screen   w-screen py-20">
       <div className="mx-auto w-11/12">
         <Card
+          cardId={card.id}
           projectType={card.projectType}
           creatorId={card.creatorId}
           privateStatus={card.private}
@@ -74,6 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     });
   }
 
+  await prisma.$disconnect();
   return {
     props: {
       card,

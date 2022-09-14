@@ -7,14 +7,6 @@ export const cardSchema = z.object({
   private: z.boolean(),
 });
 
-export const profileSchema = z.object({
-  userName: z.string().min(2).max(25),
-  links: z.array(z.string()).max(9).optional(),
-  private: z.boolean(),
-  liked: z.array(z.string()).max(200),
-  cards: z.array(cardSchema).optional(),
-});
-
 export const linksSchema = z.object({
   github: z.string().max(100).default('none'),
   company: z.string().max(100).default('none'),
@@ -32,7 +24,6 @@ export const linkUpdateSchema = z.object({
   data: linksSchema,
 });
 
-export type LoginSchema = z.TypeOf<typeof profileSchema>;
 export type CardSchema = z.TypeOf<typeof cardSchema>;
 export type LinksSchema = z.TypeOf<typeof linksSchema>;
 export type LinksUpdateSchema = z.TypeOf<typeof linkUpdateSchema>;

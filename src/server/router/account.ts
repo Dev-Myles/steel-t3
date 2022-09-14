@@ -4,6 +4,29 @@ import { userNameSchema } from '../../schema/user-schema';
 import { createProtectedRouter } from './protected-router';
 
 export const accountRouter = createProtectedRouter()
+  .query('get-profile-id', {
+    async resolve({ ctx }) {
+      const userId = ctx.session.user.id as string;
+      try {
+        const profileId = await ctx.prisma?.profile.findUnique({
+          where: {
+            userId,
+          },
+          select: {
+            id: true,
+          },
+        });
+        await ctx.prisma.$disconnect();
+        if (profileId) {
+          return profileId;
+        } else {
+          return null;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
   .query('get-profile', {
     async resolve({ ctx }) {
       const userId = ctx.session.user.id as string;
@@ -21,6 +44,8 @@ export const accountRouter = createProtectedRouter()
             },
           },
         });
+        await ctx.prisma.$disconnect();
+
         return profile;
       } catch (error) {
         console.log(error);
@@ -48,6 +73,8 @@ export const accountRouter = createProtectedRouter()
               links: true,
             },
           });
+          await ctx.prisma.$disconnect();
+
           return likedCards;
         }
       } catch (error) {
@@ -72,6 +99,7 @@ export const accountRouter = createProtectedRouter()
                 profileId,
               },
             });
+            await ctx.prisma.$disconnect();
           });
       } catch (error) {
         console.log(error);
@@ -91,6 +119,7 @@ export const accountRouter = createProtectedRouter()
             private: input,
           },
         });
+        await ctx.prisma.$disconnect();
       } catch (error) {
         console.log(error);
       }
@@ -109,6 +138,7 @@ export const accountRouter = createProtectedRouter()
             userName: input.userName,
           },
         });
+        await ctx.prisma.$disconnect();
       } catch (error) {
         console.log(error);
       }
@@ -139,7 +169,7 @@ export const accountRouter = createProtectedRouter()
             ...links,
           },
         });
-        console.log(links);
+        await ctx.prisma.$disconnect();
       } catch (error) {
         console.log(error);
       }

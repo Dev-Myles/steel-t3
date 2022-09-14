@@ -1,8 +1,7 @@
-export interface IFooter {}
 import Link from 'next/link';
 import MainLogo from '../util/MainLogo';
 
-const Footer: React.FC<IFooter> = () => {
+const Footer: React.FC = () => {
   return (
     <footer className=" text-main h-fit ">
       <div className="flex flex-col lg:flex-row justify-between text-lg">

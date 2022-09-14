@@ -51,10 +51,10 @@ const AccountInfo: React.FC<{
 
   const activeStyle = {
     private: {
-      backgroundColor: privateStatus ? '#0891B2' : '',
+      backgroundColor: privateStatus ? 'rgb(16 185 129)' : '',
     },
     public: {
-      backgroundColor: !privateStatus ? '#0891B2' : '',
+      backgroundColor: !privateStatus ? 'rgb(16 185 129)' : '',
     },
   };
 
@@ -123,7 +123,7 @@ const AccountInfo: React.FC<{
                 <span className=" text-xl text-main">Profile Visability</span>
                 <br />
 
-                <div className="flex justify-center">
+                <div className="flex justify-around">
                   <button
                     style={activeStyle.public}
                     className="px-2 active:bg-red-500"
