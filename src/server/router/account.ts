@@ -14,6 +14,7 @@ export const accountRouter = createProtectedRouter()
           },
           select: {
             id: true,
+            userName: true,
           },
         });
         await ctx.prisma.$disconnect();

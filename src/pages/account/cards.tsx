@@ -16,12 +16,14 @@ export const AccountCards: NextPage = () => {
 
   const Options: React.FC = () => {
     return (
-      <div className="flex justify-around items-center m-4 ">
-        <h1 className="text-3xl">Your Cards</h1>
+      <div className="flex justify-around sm:flex-row flex-col items-center m-4 ">
+        <h1 className="text-3xl bg-background rounded-full">Your Cards</h1>
 
         <Link href="/card/create-card">
           <a className="w-fit">
-            <button className="px-2 text-xl">Create Card</button>
+            <button className="px-2 mt-4 sm:mt-0 bg-background text-xl">
+              Create Card
+            </button>
           </a>
         </Link>
       </div>

@@ -76,6 +76,7 @@ export const Card: React.FC<{
       return;
     } else {
       mutate(data);
+      window.location.reload();
     }
   }
 
@@ -420,7 +421,7 @@ export const Card: React.FC<{
       `}
     >
       <div className="flex w-full justify-between items-center">
-        <div className="w-full">
+        <div className="w-full truncate">
           <span className={`text-sm p-1 font-extrabold `}>
             {level.toLowerCase()} -{' '}
             {openSource ? 'open-source' : 'closed-source'} -{' '}

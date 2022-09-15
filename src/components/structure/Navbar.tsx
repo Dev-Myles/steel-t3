@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
               <ul className="[&>*]:ease-in-out [&>*]:duration-200 [&>*:hover]:text-emerald-700 [&>*]:py-3 px-8">
                 <li>
                   <Link href="/card/create-card">
-                    <a>
+                    <a onClick={() => setMenu(false)}>
                       <span className="flex items-center">
                         Create Card
                         <MdOutlineCreate />
@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
                 </li>
                 <li>
                   <Link href="/account/cards">
-                    <a>
+                    <a onClick={() => setMenu(false)}>
                       <span className="flex items-center">
                         Cards
                         <FaRegIdCard />
@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
                 </li>
                 <li>
                   <Link href="/account">
-                    <a>
+                    <a onClick={() => setMenu(false)}>
                       <span className="flex items-center">
                         Account
                         <MdOutlineAccountCircle />
@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
             <ul className="w-screen h-full flex  flex-col [&>*]:p-4 [&>*]:text-3xl">
               <li>
                 <Link href="/card/create-card">
-                  <a>
+                  <a onClick={() => setMenu(false)}>
                     <span className="flex items-center">
                       Create Card
                       <MdOutlineCreate />
@@ -146,7 +146,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <Link href="/account/cards">
-                  <a>
+                  <a onClick={() => setMenu(false)}>
                     <span className="flex items-center">
                       Cards
                       <FaRegIdCard />
@@ -156,7 +156,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <Link href="/account">
-                  <a>
+                  <a onClick={() => setMenu(false)}>
                     <span className="flex items-center">
                       Account
                       <MdOutlineAccountCircle />

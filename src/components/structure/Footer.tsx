@@ -3,7 +3,7 @@ import MainLogo from '../util/MainLogo';
 
 const Footer: React.FC = () => {
   return (
-    <footer className=" text-main h-fit ">
+    <footer className=" text-main h-fit bg-background ">
       <div className="flex flex-col lg:flex-row justify-between text-lg">
         <div className="p-6 mx-auto lg:mx-0 text-3xl">
           <Link href="/">

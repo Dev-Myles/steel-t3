@@ -33,10 +33,8 @@ export const AccountLikes: React.FC = () => {
     return (
       <div
         key={uuidv4()}
-        className=" rounded-lg border-2 w-32 h-36 border-cyan-400 truncate bg-panel p-2 m-2"
+        className="bg-gradient-to-r font-bold  from-zinc-800 rounded-lg border-2 w-32 h-36 border-main truncate flex justify-center items-center p-2 m-2"
       >
-        <span>{card?.creatorId}</span>
-        <br />
         <span>{card?.name}</span>
       </div>
     );
@@ -48,7 +46,7 @@ export const AccountLikes: React.FC = () => {
         <h3 className="text-2xl">
           Liked Cards -{' '}
           <span className="text-gray-400 font-thin text-sm">
-            total: {totalLikes}
+            total likes: {totalLikes}
           </span>
         </h3>
         <Link href="/account/likes">

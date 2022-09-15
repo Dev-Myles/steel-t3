@@ -8,6 +8,7 @@ module.exports = {
         DEFAULT: '0 0 5px #141414',
       },
       colors: {
+        background: '#0a0a0c',
         panel: '#121314',
         main: 'rgb(16 185 129)',
         second: 'rgb(99 102 241)',

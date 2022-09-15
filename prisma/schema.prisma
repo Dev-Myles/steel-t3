@@ -84,8 +84,8 @@ model CardLinks {
    id  String  @id @default(cuid())
    card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
    cardId String @unique
-  github String @default("")
-  website String @default("")
+  github String? @default("")
+  website String? @default("")
 }
 
 model Links {

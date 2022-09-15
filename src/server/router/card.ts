@@ -1,8 +1,39 @@
 import z from 'zod';
+import { createCardDataSchema } from '../../schema/create-card-schema';
 import { likeSchema } from '../../schema/like-schema';
 import { createRouter } from './context';
 
 export const cardRouter = createRouter()
+  .mutation('create-card', {
+    input: createCardDataSchema,
+    async resolve({ ctx, input }) {
+      try {
+        const newCard = await ctx.prisma.card.create({
+          data: {
+            creatorId: input.creatorId,
+            description: input.description,
+            private: input.private,
+            name: input.name,
+            projectType: input.projectType,
+            level: input.level,
+            openSource: input.openSource,
+            uses: input.uses,
+            tags: input.tags,
+          },
+        });
+        const newLinks = await ctx.prisma.cardLinks.create({
+          data: {
+            cardId: newCard.id,
+            github: input.links.github,
+            website: input.links.website,
+          },
+        });
+        await ctx.prisma.$disconnect();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
   .query('get-card', {
     input: z.string(),
     async resolve({ ctx, input }) {

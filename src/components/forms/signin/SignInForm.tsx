@@ -22,7 +22,7 @@ const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
   }
 
   return (
-    <div className="h-screen grid items-center bg-repeat-round  bg-[url('/images/logos/logo.svg')]">
+    <div className="h-screen grid items-center">
       <div className="mx-auto p-8 shadow-md bg-panel w-screen sm:w-fit rounded-2xl text-center">
         <h1 className="font-bold font-PTMono text-3xl border-b-2 border-dashed border-slate-100 pb-4 ">
           Sign In/Up

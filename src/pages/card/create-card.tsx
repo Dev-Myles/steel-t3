@@ -1,11 +1,10 @@
 import { NextPage } from 'next';
+import CreateCardForm from '../../components/forms/create-card/CreateCardForm';
 
 export const CreateCard: NextPage = () => {
   return (
-    <div className="h-screen grid place-content-center">
-      <div>
-        <h1> Create new Card</h1>
-      </div>
+    <div className="min-h-screen">
+      <CreateCardForm />
     </div>
   );
 };
