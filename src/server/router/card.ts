@@ -29,6 +29,7 @@ export const cardRouter = createRouter()
           },
         });
         await ctx.prisma.$disconnect();
+        return newCard.id;
       } catch (error) {
         console.log(error);
       }

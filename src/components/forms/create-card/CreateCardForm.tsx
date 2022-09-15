@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import {
   AiFillGithub,
@@ -22,9 +23,14 @@ const CreateCardForm: React.FC = () => {
     formState: { errors },
   } = useForm<CreateCardSchema>();
   const sess = useSessionCheck();
+  const router = useRouter();
 
   const { data } = trpc.useQuery(['account.get-profile-id']);
-  const { mutate, error } = trpc.useMutation(['card.create-card']);
+  const { mutate, error } = trpc.useMutation(['card.create-card'], {
+    onSuccess: (data) => {
+      router.push(`/card/${data}`);
+    },
+  });
 
   const onSubmit = handleSubmit((data) => {
     const {
@@ -54,12 +60,11 @@ const CreateCardForm: React.FC = () => {
       tags: filterTags,
       links,
     };
-    console.log('submitted');
     mutate(moddedData);
   });
 
   return (
-    <div className="bg-panel my-8 flex justify-center items-center flex-col w-screen sm:w-1/2 p-3 sm:py-4 mx-auto rounded-2xl">
+    <div className="bg-panel my-8 flex justify-center items-center flex-col w-screen sm:w-1/2 p-3 sm:p-1 sm:py-4 shadow rounded-2xl">
       {error ? (
         <span className="text-xl text-red-500">
           Error creating card on server
@@ -80,8 +85,25 @@ const CreateCardForm: React.FC = () => {
           <input
             className=""
             type="text"
-            {...register('name', { required: true, maxLength: 20 })}
+            {...register('name', {
+              required: 'Name is required',
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'can only contain letters',
+              },
+              maxLength: {
+                value: 25,
+                message: 'Max of 25 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
           />
+          <div className="text-center h-4">
+            <span className="text-red-500">{errors?.name?.message}</span>
+          </div>
         </label>
 
         <label className="flex relative flex-col">
@@ -92,8 +114,25 @@ const CreateCardForm: React.FC = () => {
           <textarea
             spellCheck={true}
             className=" p-3 pr-8 sm:pr-6 h-[250px] focus:border-main hover:border-main  overflow-y-scroll resize-none bg-panel"
-            {...register('description', { required: true, maxLength: 3000 })}
+            {...register('description', {
+              required: 'Description is required',
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'can only contain letters',
+              },
+              maxLength: {
+                value: 2000,
+                message: 'Max of 2000 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
           />
+          <div className="text-center h-4">
+            <span className="text-red-500">{errors?.description?.message}</span>
+          </div>
         </label>
 
         <div className="flex my-2 flex-wrap justify-between items-center ">
@@ -175,8 +214,25 @@ const CreateCardForm: React.FC = () => {
           <span className="font-bold text-lg">Uses</span>
           <textarea
             className="p-3 pr-6 h-[200px] focus:border-main hover:border-main  overflow-y-scroll resize-none bg-panel"
-            {...register('uses', { required: true, maxLength: 1000 })}
+            {...register('uses', {
+              required: 'Uses is required',
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 1000,
+                message: 'Max of 1000 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
           />
+          <div className="text-center h-4">
+            <span className="text-red-500">{errors?.uses?.message}</span>
+          </div>
         </label>
 
         <label className="relative my-2 ">
@@ -187,8 +243,28 @@ const CreateCardForm: React.FC = () => {
           <input
             type="text"
             placeholder="www.github.com"
-            {...register('links.github', { required: false, maxLength: 1000 })}
+            {...register('links.github', {
+              required: false,
+              pattern: {
+                value:
+                  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%. ~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_.~#?&=]*)$/,
+                message: 'Must be a vaild url',
+              },
+              maxLength: {
+                value: 150,
+                message: 'Max of 25 characters',
+              },
+              minLength: {
+                value: 12,
+                message: 'Min of 2 characters',
+              },
+            })}
           />
+          <div className="text-center h-4">
+            <span className="text-red-500">
+              {errors?.links?.github?.message}
+            </span>
+          </div>
         </label>
 
         <label className="relative my-2 ">
@@ -199,60 +275,212 @@ const CreateCardForm: React.FC = () => {
           <input
             type="text"
             placeholder="www.mysite.com"
-            {...register('links.website', { required: false, maxLength: 1000 })}
+            {...register('links.website', {
+              required: false,
+              pattern: {
+                value:
+                  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%. ~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_.~#?&=]*)$/,
+
+                message: 'Must be a vaild url',
+              },
+              maxLength: {
+                value: 150,
+                message: 'Max of 150 characters',
+              },
+              minLength: {
+                value: 12,
+                message: 'Min of 12 characters',
+              },
+            })}
           />
+          <div className="text-center h-4">
+            <span className="text-red-500">
+              {errors?.links?.website?.message}
+            </span>
+          </div>
         </label>
 
         <div>
-          <h3>Tags</h3>
+          <h3>Tags- must be at least 2-15 characters long</h3>
+
           <input
             className="w-[100px] m-2"
-            {...register('tags.0', { maxLength: 20 })}
+            {...register('tags.0', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.1', { maxLength: 20 })}
+            {...register('tags.1', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.2', { maxLength: 20 })}
+            {...register('tags.2', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.3', { maxLength: 20 })}
+            {...register('tags.3', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.4', { maxLength: 20 })}
+            {...register('tags.4', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.5', { maxLength: 20 })}
+            {...register('tags.5', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.6', { maxLength: 20 })}
+            {...register('tags.6', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.7', { maxLength: 20 })}
+            {...register('tags.7', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.8', { maxLength: 20 })}
+            {...register('tags.8', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
           <input
             className="w-[100px] m-2"
-            {...register('tags.9', { maxLength: 20 })}
+            {...register('tags.9', {
+              pattern: {
+                value: /^[A-Za-z0-9]+$/i,
+                message: 'Can only contain letters and numbers',
+              },
+              maxLength: {
+                value: 15,
+                message: 'Max of 15 characters',
+              },
+              minLength: {
+                value: 2,
+                message: 'Min of 2 characters',
+              },
+            })}
             type="text"
           />
         </div>
@@ -260,7 +488,7 @@ const CreateCardForm: React.FC = () => {
         <input
           type="submit"
           value="Create Card!"
-          className="rounded-lg w-fit mx-auto mt-3 font-bold text-xl text-indigo-300 hover:text-indigo-500 hover:border-indigo-800 ease-in-out duration-300 hover:cursor-pointer  p-3 border-2 border-second"
+          className="rounded-lg w-fit mx-auto mt-5 font-bold text-xl text-indigo-300 hover:text-indigo-500 hover:border-indigo-800 ease-in-out duration-300 hover:cursor-pointer  p-3 border-2 border-second"
         />
       </form>
     </div>
