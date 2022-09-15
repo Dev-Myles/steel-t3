@@ -162,7 +162,7 @@ export const Card: React.FC<{
     if (!stateStatus) {
       return (
         <>
-          {links.website.length ? (
+          {links?.website?.length ? (
             <div className="flex items-center hover:cursor-pointer ">
               <div className="bg-lime-500 border-gray-200 border-2 rounded-full p-2 text-white shadow">
                 <FiLink />
@@ -170,7 +170,7 @@ export const Card: React.FC<{
             </div>
           ) : null}
 
-          {links.github.length ? (
+          {links?.github?.length ? (
             <div className="flex items-center hover:cursor-pointer ">
               <div className="bg-black border-gray-200 border-2 rounded-full p-2 text-white shadow ">
                 <AiFillGithub />
