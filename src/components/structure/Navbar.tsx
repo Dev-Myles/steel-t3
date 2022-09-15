@@ -3,6 +3,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { BsSearch } from 'react-icons/bs';
 import { FaRegIdCard } from 'react-icons/fa';
 import { GoSignIn } from 'react-icons/go';
 import { MdOutlineAccountCircle, MdOutlineCreate } from 'react-icons/md';
@@ -183,10 +184,15 @@ const Navbar: React.FC = () => {
           </a>
         </Link>
       </div>
+      <Link href="/search">
+        <a className="ml-[50%]">
+          <BsSearch />
+        </a>
+      </Link>
       {user ? (
         <User />
       ) : (
-        <div className="flex flex-row justify-around w-fit [&>*:hover]:text-emerald-700 [&>*]:ease-in-out duration-300">
+        <div className="flex mr-2 flex-row justify-around w-fit [&>*:hover]:text-emerald-700 [&>*]:ease-in-out duration-300">
           <Link href="/auth/signin">
             <a>
               <span className="flex text-sm sm:text-lg items-center">

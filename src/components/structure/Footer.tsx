@@ -29,16 +29,6 @@ const Footer: React.FC = () => {
                 <li>Policy</li>
               </a>
             </Link>
-            <Link href="/about">
-              <a>
-                <li>About</li>
-              </a>
-            </Link>
-            <Link href="/contact">
-              <a>
-                <li>Contact</li>
-              </a>
-            </Link>
           </ul>
         </div>
       </div>
