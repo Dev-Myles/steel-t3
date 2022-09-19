@@ -1,5 +1,4 @@
-import { Links, User } from '@prisma/client';
-import ICard from './card';
+import { Card, Links, User } from '@prisma/client';
 
 interface IProfile {
   id: string;
@@ -9,7 +8,7 @@ interface IProfile {
   private: boolean;
   user: User;
   liked: String[];
-  cards: ICard[];
+  cards: Card[];
 }
 
 export default IProfile;
