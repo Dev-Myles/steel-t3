@@ -89,7 +89,7 @@ const CreateCardForm: React.FC = () => {
               required: 'Name is required',
               pattern: {
                 value: /^[A-Za-z0-9]+$/i,
-                message: 'can only contain letters',
+                message: 'can only contain letters or numbers',
               },
               maxLength: {
                 value: 25,

@@ -36,7 +36,7 @@ export const AccountCards: React.FC<{
       return (
         <div
           key={uuidv4()}
-          className="bg-gradient-to-r from-zinc-800 flex items-center justify-center m-2 w-28 h-32 text-center p-2 border-2 sm:w-40 border-emerald-600 shadow-lg truncate  rounded-lg"
+          className="bg-gradient-to-r from-zinc-800 flex items-center justify-center m-2 w-28 h-36 text-center p-2 border-2 sm:w-32 border-emerald-600 shadow-lg truncate  rounded-lg"
         >
           <span className="truncate text-xl">{card.name}</span>
         </div>

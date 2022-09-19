@@ -185,7 +185,7 @@ const Navbar: React.FC = () => {
         </Link>
       </div>
       <Link href="/search">
-        <a className="ml-[50%]">
+        <a className="sm:ml-[50%]">
           <BsSearch />
         </a>
       </Link>

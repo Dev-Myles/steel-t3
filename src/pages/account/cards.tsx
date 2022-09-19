@@ -1,8 +1,8 @@
+import { Card } from '@prisma/client';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { v4 as uuidv4 } from 'uuid';
-import Card from '../../components/cards/Card';
 import { LoadingGif } from '../../components/util/LoadingGif';
+import { mapCardsLink } from '../../components/util/mapCards';
 import { useSessionCheck } from '../../utils/session/checkSession';
 import { trpc } from '../../utils/trpc';
 
@@ -49,7 +49,7 @@ export const AccountCards: NextPage = () => {
     );
   }
 
-  function mapCards() {
+  function mapCards(cards?: Card[]) {
     if (!cards?.length) {
       return (
         <div className=" grid place-content-center">
@@ -59,39 +59,14 @@ export const AccountCards: NextPage = () => {
         </div>
       );
     }
-    return cards?.map((card) => {
-      const links = card.links || { github: '', website: '' };
-      return (
-        <div key={uuidv4()} className="w-11/12 sm:w-1/4 mt-12">
-          <Link href={`/card/${card.id}`}>
-            <a>
-              <Card
-                cardId={card.id}
-                projectType={card.projectType}
-                creatorId={card.creatorId}
-                privateStatus={card.private}
-                name={card.name}
-                likes={card.likedBy}
-                level={card.level}
-                openSource={card.openSource}
-                description={card.description}
-                uses={card.uses}
-                stateStatus={false}
-                links={links}
-                tags={card.tags}
-              />
-            </a>
-          </Link>
-        </div>
-      );
-    });
+    return mapCardsLink(cards, false);
   }
 
   return (
     <div className="min-h-screen mb-20">
       <Options />
       <div className="flex flex-wrap justify-center w-screen sm:w-11/12 mx-auto">
-        {mapCards()}
+        {mapCards(cards)}
       </div>
     </div>
   );
