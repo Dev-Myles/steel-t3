@@ -7,7 +7,6 @@ const cardLinks = z.object({
 });
 
 export const createCardSchema = z.object({
-  creatorId: z.string(),
   private: z.string(),
   name: z.string().min(2),
   projectType: z.nativeEnum(ProjectType),

@@ -6,22 +6,26 @@ import { createProtectedRouter } from './protected-router';
 export const accountRouter = createProtectedRouter()
   .query('get-profile-id', {
     async resolve({ ctx }) {
-      const userId = ctx.session.user.id as string;
       try {
-        const profileId = await ctx.prisma?.profile.findUnique({
-          where: {
-            userId,
-          },
-          select: {
-            id: true,
-            userName: true,
-          },
-        });
-        await ctx.prisma.$disconnect();
-        if (profileId) {
-          return profileId;
-        } else {
+        if (!ctx.session.user.id) {
           return null;
+        } else {
+          const userId = ctx.session.user.id as string;
+          const profileId = await ctx.prisma?.profile.findUnique({
+            where: {
+              userId,
+            },
+            select: {
+              id: true,
+              userName: true,
+            },
+          });
+          await ctx.prisma.$disconnect();
+          if (profileId) {
+            return profileId;
+          } else {
+            return null;
+          }
         }
       } catch (error) {
         console.log(error);

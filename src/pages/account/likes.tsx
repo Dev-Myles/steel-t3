@@ -5,7 +5,7 @@ import { useSessionCheck } from '../../utils/session/checkSession';
 import { trpc } from '../../utils/trpc';
 
 export const AccountLikes: NextPage = () => {
-  const sess = useSessionCheck();
+  const sess = useSessionCheck(true);
   const { data, isLoading } = trpc.useQuery(['account.get-liked-cards'], {
     staleTime: Infinity,
     cacheTime: Infinity,

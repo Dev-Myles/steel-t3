@@ -64,7 +64,8 @@ export const Card: React.FC<{
   links,
 }) => {
   const [state, dispatch] = useReducer(reducer, initalState);
-  const { isLoading, data } = trpc.useQuery(['account.get-profile-id'], {
+
+  const { isLoading, data } = trpc.useQuery(['search.get-profile-id'], {
     staleTime: Infinity,
     cacheTime: Infinity,
   });
@@ -80,7 +81,7 @@ export const Card: React.FC<{
     }
   }
 
-  const sess = useSessionCheck();
+  const sess = useSessionCheck(false);
 
   if (isLoading) {
     return <LoadingGif />;

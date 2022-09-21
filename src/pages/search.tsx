@@ -30,8 +30,6 @@ const SearchPage: NextPage = () => {
   } = trpc.useMutation(['search.search-profile']);
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data.filterTypes === 'cards');
-
     if (data.filterTypes === 'cards') {
       cardSearch(data);
     }
@@ -43,7 +41,12 @@ const SearchPage: NextPage = () => {
     }
   });
 
-  console.log(cardData);
+  let isLoading =
+    profileStatus === 'loading' ||
+    cardStatus === 'loading' ||
+    tagStatus === 'loading'
+      ? true
+      : false;
 
   return (
     <div className="min-h-screen">
@@ -62,6 +65,7 @@ const SearchPage: NextPage = () => {
               </div>
               <input
                 type="text"
+                required={true}
                 placeholder="search..."
                 {...register('searchString', {
                   maxLength: {
@@ -98,9 +102,9 @@ const SearchPage: NextPage = () => {
                 {...register('filterTypes')}
                 className="ring-none m-1 bg-panel rounded-none border-main checked:bg-main outline-none"
                 type="radio"
-                name="filterType"
-                checked={true}
+                name="filterTypes"
                 value="cards"
+                required={true}
               />
               <span>Cards</span>
             </label>
@@ -108,9 +112,10 @@ const SearchPage: NextPage = () => {
               <input
                 {...register('filterTypes')}
                 className="ring-none m-1 bg-panel rounded-none border-main checked:bg-main outline-none"
-                name="filterType"
+                name="filterTypes"
                 type="radio"
                 value="profiles"
+                required={true}
               />
               <span>Profiles</span>
             </label>
@@ -119,20 +124,26 @@ const SearchPage: NextPage = () => {
                 {...register('filterTypes')}
                 className="ring-none m-1 bg-panel rounded-none border-main checked:bg-main outline-none"
                 type="radio"
-                name="filterType"
+                name="filterTypes"
                 value="tags"
+                required={true}
               />
               <span>Tags</span>
             </label>
+            <div className="text-center h-4">
+              <span className="text-red-500">
+                {errors?.filterTypes?.message}
+              </span>
+            </div>
           </div>
         </form>
+      </div>
 
-        <div>
-          <SearchResults
-            results={{ card: cardData, profiles: profileData, tags: tagData }}
-            isLoading={false}
-          />
-        </div>
+      <div>
+        <SearchResults
+          results={{ card: cardData, profiles: profileData, tags: tagData }}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );

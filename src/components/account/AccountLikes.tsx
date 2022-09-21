@@ -44,8 +44,8 @@ export const AccountLikes: React.FC = () => {
     <div className="rounded-lg shadow bg-panel h-fit p-4 pr-2">
       <div className="flex justify-between">
         <h3 className="text-2xl">
-          Liked Cards -{' '}
-          <span className="text-gray-400 font-thin text-sm">
+          Liked Cards
+          <span className="text-gray-400 block font-thin text-sm">
             total likes: {totalLikes}
           </span>
         </h3>

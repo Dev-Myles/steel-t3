@@ -9,7 +9,7 @@ import { useSessionCheck } from '../utils/session/checkSession';
 import { trpc } from '../utils/trpc';
 
 const Account: NextPage = () => {
-  const sess = useSessionCheck();
+  const sess = useSessionCheck(true);
 
   const { isLoading, data } = trpc.useQuery(['account.get-profile'], {
     staleTime: Infinity,

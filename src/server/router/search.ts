@@ -1,3 +1,4 @@
+import { Card } from '@prisma/client';
 import { searchSchema } from '../../schema/search-schema';
 import { createRouter } from './context';
 
@@ -6,15 +7,18 @@ export const searchRouter = createRouter()
     input: searchSchema,
     async resolve({ ctx, input }) {
       try {
-        const cards = await ctx.prisma.card.findMany({
+        const cards: Card[] = await ctx.prisma.card.findMany({
           where: {
-            name: {
-              search: input.searchString,
-            },
+            private: false,
           },
         });
+        const filteredCards = cards?.filter((card) =>
+          card.name.includes(input.searchString)
+        );
+
+        const message = !filteredCards.length ? 'No cards found.' : null;
         await ctx.prisma.$disconnect();
-        return cards;
+        return { cardData: filteredCards, message };
       } catch (error) {
         console.log(error);
       }
@@ -26,13 +30,25 @@ export const searchRouter = createRouter()
       try {
         const profiles = await ctx.prisma.profile.findMany({
           where: {
-            userName: {
-              search: input.searchString,
+            private: false,
+          },
+          include: {
+            cards: true,
+            links: true,
+            user: {
+              select: {
+                image: true,
+              },
             },
           },
         });
+        const filteredProfiles = profiles.filter((profile) =>
+          profile.userName.includes(input.searchString)
+        );
+        const message = filteredProfiles.length ? null : 'No profiles found.';
+
         await ctx.prisma.$disconnect();
-        return profiles;
+        return { profileData: filteredProfiles, message };
       } catch (error) {
         console.log(error);
       }
@@ -42,15 +58,45 @@ export const searchRouter = createRouter()
     input: searchSchema,
     async resolve({ ctx, input }) {
       try {
-        const cards = await ctx.prisma.card.findMany({
+        const cards: Card[] = await ctx.prisma.card.findMany({
           where: {
-            tags: {
-              has: input.searchString,
-            },
+            private: false,
           },
         });
+        const filteredCards = cards.filter(
+          (card) => card.tags.includes(input.searchString) === true
+        );
+        const message = filteredCards.length ? null : 'No tags found.';
         await ctx.prisma.$disconnect();
-        return cards;
+        return { cardData: filteredCards, message };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
+  .query('get-profile-id', {
+    async resolve({ ctx }) {
+      try {
+        if (!ctx.session?.user?.id) {
+          return null;
+        } else {
+          const userId = ctx.session.user.id as string;
+          const profileId = await ctx.prisma?.profile.findUnique({
+            where: {
+              userId,
+            },
+            select: {
+              id: true,
+              userName: true,
+            },
+          });
+          await ctx.prisma.$disconnect();
+          if (profileId) {
+            return profileId;
+          } else {
+            return null;
+          }
+        }
       } catch (error) {
         console.log(error);
       }

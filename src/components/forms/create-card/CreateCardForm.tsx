@@ -16,13 +16,13 @@ import {
 import { useSessionCheck } from '../../../utils/session/checkSession';
 import { trpc } from '../../../utils/trpc';
 
-const CreateCardForm: React.FC = () => {
+const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateCardSchema>();
-  const sess = useSessionCheck();
+  const sess = useSessionCheck(true);
   const router = useRouter();
 
   const { data } = trpc.useQuery(['account.get-profile-id']);
@@ -39,7 +39,6 @@ const CreateCardForm: React.FC = () => {
       projectType,
       level,
       openSource,
-      creatorId,
       description,
       uses,
       tags,
@@ -49,7 +48,7 @@ const CreateCardForm: React.FC = () => {
     const filterTags = tags.filter((tag) => tag.length > 0);
 
     const moddedData: CreateCardDataSchema = {
-      creatorId,
+      creatorId: userName,
       description,
       name,
       projectType,
@@ -72,11 +71,6 @@ const CreateCardForm: React.FC = () => {
       ) : null}
       <h1 className="text-2xl font-bold">Create Card:</h1>
       <form className="sm:w-2/3 w-full flex flex-col" onSubmit={onSubmit}>
-        <input
-          type="hidden"
-          {...register('creatorId', { required: true })}
-          value={data?.userName}
-        />
         <label className="relative  my-2 ">
           <div className="absolute text-2xl top-9 right-2">
             <AiOutlineFundProjectionScreen />
@@ -88,7 +82,7 @@ const CreateCardForm: React.FC = () => {
             {...register('name', {
               required: 'Name is required',
               pattern: {
-                value: /^[A-Za-z0-9]+$/i,
+                value: /^[A-Za-z0-9 ]+$/i,
                 message: 'can only contain letters or numbers',
               },
               maxLength: {
@@ -117,7 +111,7 @@ const CreateCardForm: React.FC = () => {
             {...register('description', {
               required: 'Description is required',
               pattern: {
-                value: /^[A-Za-z0-9]+$/i,
+                value: /^[A-Za-z0-9 ]+$/i,
                 message: 'can only contain letters',
               },
               maxLength: {
@@ -217,7 +211,7 @@ const CreateCardForm: React.FC = () => {
             {...register('uses', {
               required: 'Uses is required',
               pattern: {
-                value: /^[A-Za-z0-9]+$/i,
+                value: /^[A-Za-z0-9 ]+$/i,
                 message: 'Can only contain letters and numbers',
               },
               maxLength: {

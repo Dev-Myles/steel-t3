@@ -1,7 +1,11 @@
-import { NextPage } from 'next';
+import { PrismaClient } from '@prisma/client';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/react';
 import CreateCardForm from '../../components/forms/create-card/CreateCardForm';
 
-export const CreateCard: NextPage = () => {
+export const CreateCard: NextPage<{
+  profileUsername: { userName: string };
+}> = ({ profileUsername }) => {
   const FormHelper: React.FC = () => {
     return (
       <div className="bg-panel rounded-xl p-2 w-full shadow sm:w-1/4 h-fit mt-8 sm:ml-4">
@@ -66,9 +70,34 @@ export const CreateCard: NextPage = () => {
   return (
     <div className="flex flex-col justify-center sm:flex-row-reverse min-h-screen">
       <FormHelper />
-      <CreateCardForm />
+      <CreateCardForm userName={profileUsername.userName} />
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const sess = await getSession(ctx);
+  const userId = sess?.user?.id;
+  let profileUsername;
+  const prisma = new PrismaClient();
+
+  if (userId) {
+    profileUsername = await prisma?.profile.findUnique({
+      where: {
+        userId,
+      },
+      select: {
+        userName: true,
+      },
+    });
+  }
+  await prisma.$disconnect();
+
+  return {
+    props: {
+      profileUsername,
+    },
+  };
 };
 
 export default CreateCard;

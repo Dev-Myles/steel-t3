@@ -1,12 +1,14 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-export function useSessionCheck() {
+export function useSessionCheck(redirect: boolean) {
   const router = useRouter();
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
-      return router.push('/auth/signin');
+      if (redirect) {
+        return router.push('/auth/signin');
+      }
     },
   });
   return {

@@ -48,8 +48,8 @@ export const AccountCards: React.FC<{
     <div className="bg-panel shadow rounded-lg h-fit p-4 pr-2">
       <div className="flex justify-between">
         <h3 className=" text-2xl">
-          Your Cards -{' '}
-          <span className="text-gray-400 text-sm font-thin">
+          Your Cards
+          <span className="text-gray-400 block text-sm font-thin">
             total cards: {totalCards}
           </span>
         </h3>
