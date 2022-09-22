@@ -8,7 +8,7 @@ const SignIn: NextPage<{ providers: object; session: object }> = ({
   return <SignInForm providers={providers} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const providers = await getProviders();
 
   return {

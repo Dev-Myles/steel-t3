@@ -22,10 +22,9 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<CreateCardSchema>();
-  const sess = useSessionCheck(true);
+  useSessionCheck(true);
   const router = useRouter();
 
-  const { data } = trpc.useQuery(['account.get-profile-id']);
   const { mutate, error } = trpc.useMutation(['card.create-card'], {
     onSuccess: (data) => {
       router.push(`/card/${data}`);

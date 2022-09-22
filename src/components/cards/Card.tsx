@@ -51,7 +51,6 @@ export const Card: React.FC<{
 }> = ({
   projectType,
   creatorId,
-  privateStatus,
   name,
   cardId,
   likes,
@@ -217,7 +216,7 @@ export const Card: React.FC<{
     name: string;
     icon: ReactElement;
     color: string;
-  }> = ({ type, name, color, stateStatus, icon }) => {
+  }> = ({ type, color, stateStatus, icon }) => {
     return (
       <div
         className="flex items-center hover:cursor-pointer"

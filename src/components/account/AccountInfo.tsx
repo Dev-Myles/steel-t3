@@ -15,7 +15,6 @@ const AccountInfo: React.FC<{
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<UserNameSchema>({
     resolver: zodResolver(userNameSchema),

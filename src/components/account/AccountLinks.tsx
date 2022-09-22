@@ -14,12 +14,7 @@ export const AccountLinks: React.FC<{
   profileId: any | undefined;
 }> = ({ links, isLoading, profileId }) => {
   const [isEdit, setEdit] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<LinksSchema>({
+  const { register, handleSubmit } = useForm<LinksSchema>({
     resolver: zodResolver(linksSchema),
   });
   const { mutate } = trpc.useMutation(['account.edit-links']);
