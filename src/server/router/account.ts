@@ -49,9 +49,29 @@ export const accountRouter = createProtectedRouter()
             },
           },
         });
-        await ctx.prisma.$disconnect();
 
-        return profile;
+        if (!profile) {
+          const profile = await ctx.prisma?.profile
+            .create({
+              data: {
+                userId,
+              },
+            })
+            .then(async (profile) => {
+              const profileId = profile?.id;
+              await ctx.prisma?.links.create({
+                data: {
+                  profileId,
+                },
+              });
+            });
+          await ctx.prisma.$disconnect();
+          return profile;
+        } else {
+          await ctx.prisma.$disconnect();
+
+          return profile;
+        }
       } catch (error) {
         console.log(error);
       }
@@ -91,21 +111,30 @@ export const accountRouter = createProtectedRouter()
     async resolve({ ctx }) {
       const userId = ctx.session.user.id as string;
       try {
-        await ctx.prisma?.profile
-          .create({
-            data: {
-              userId,
-            },
-          })
-          .then(async (profile) => {
-            const profileId = profile?.id;
-            await ctx.prisma?.links.create({
+        const userProfile = await ctx.prisma.profile.findUnique({
+          where: {
+            userId,
+          },
+        });
+        if (!userProfile) {
+          await ctx.prisma?.profile
+            .create({
               data: {
-                profileId,
+                userId,
               },
+            })
+            .then(async (profile) => {
+              const profileId = profile?.id;
+              await ctx.prisma?.links.create({
+                data: {
+                  profileId,
+                },
+              });
+              await ctx.prisma.$disconnect();
             });
-            await ctx.prisma.$disconnect();
-          });
+        } else {
+          null;
+        }
       } catch (error) {
         console.log(error);
       }

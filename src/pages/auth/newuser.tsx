@@ -1,35 +1,37 @@
-import { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { trpc } from '../../utils/trpc';
+// import { useEffect } from 'react';
 
-const NewUser: NextPage = () => {
-  const router = useRouter();
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      router.push('/auth/signin');
-    },
-  });
-  const name = session?.user?.name;
-  const pic = session?.user?.image;
-  const id = session?.user?.id;
-  const imageSrc = pic || '/images/user/default-user.png';
-  const userId = id;
+import { useSessionCheck } from '../../utils/session/checkSession';
+// import { trpc } from '../../utils/trpc';
 
-  const { mutate, error } = trpc.useMutation(['account.create-profile'], {
-    onError: (error) => {
-      console.log(error);
-    },
-    onSuccess: () => {},
-  });
+const NewUser: NextPage<{
+  user:
+    | ({
+        id?: string | undefined;
+      } & {
+        name?: string | null | undefined;
+        email?: string | null | undefined;
+        image?: string | null | undefined;
+      })
+    | undefined;
+}> = ({ user }) => {
+  const imageSrc = user?.image || '/images/user/default-user.png';
+  // const userId = user?.id;
+  useSessionCheck(true);
 
-  useEffect(() => {
-    if (userId) mutate();
-  }, [userId]);
+  // const { mutate, error } = trpc.useMutation(['account.create-profile'], {
+  //   onError: (error) => {
+  //     console.log(error);
+  //   },
+  //   onSuccess: () => {},
+  // });
+
+  // useEffect(() => {
+  //   if (userId) mutate();
+  // }, [userId]);
 
   const userPic = (
     <Image
@@ -42,40 +44,40 @@ const NewUser: NextPage = () => {
     />
   );
 
-  if (error) {
-    return (
-      <div className="h-screen grid place-items-center">
-        <div className="text-red-300">
-          <span className="text-red-400 font-bold text-3xl">
-            Error has occured while creating your profile
-          </span>
-          <span>{error.message}</span>
-        </div>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="h-screen grid place-items-center">
+  //       <div className="text-red-300">
+  //         <span className="text-red-400 font-bold text-3xl">
+  //           Error has occured while creating your profile
+  //         </span>
+  //         <span>{error.message}</span>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div className="h-screen grid place-items-center">
+    <div className="h-screen grid place-items-center bg-background">
       <div className="text-center">
-        <h1 className="text-cyan-700 text-5xl">Thank you for signing up,</h1>
+        <h1 className=" text-5xl">Thank you for joining</h1>
 
         <Link href="/account">
           <a>
             <div
-              className="flex justify-center items-center duration-300  text-cyan-700 border-2 p-2 
-          rounded-full border-gray-300 w-fit mx-auto my-4 hover:border-cyan-700 hover: cursor-pointer"
+              className="flex justify-center items-center duration-300   border-2 p-2 
+          rounded-full border-gray-300 w-fit mx-auto my-4 hover:border-main hover: cursor-pointer"
             >
-              <span className="h-fit text-4xl m-4">{name}</span>
+              <span className="h-fit text-2xl truncate m-4">{user?.name}</span>
               {userPic}
             </div>
           </a>
         </Link>
 
-        <p className="text-cyan-600 text-3xl mt-3">
-          You can now have full user access to the website
+        <p className=" text-3xl mt-3">
+          You can now have full user access to the website -{' '}
           <Link href="/">
-            <a className="underline">Home</a>
+            <a className="underline text-second">Home</a>
           </Link>
         </p>
       </div>
@@ -84,3 +86,14 @@ const NewUser: NextPage = () => {
 };
 
 export default NewUser;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const sess = await getSession(ctx);
+  const user = sess?.user;
+
+  return {
+    props: {
+      user,
+    },
+  };
+};

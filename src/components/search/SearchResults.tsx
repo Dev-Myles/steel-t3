@@ -8,7 +8,11 @@ const SearchResults: React.FC<{
   isLoading: boolean;
 }> = ({ results, isLoading }) => {
   if (isLoading) {
-    return <LoadingGif />;
+    return (
+      <div className="h-[200px]">
+        <LoadingGif />
+      </div>
+    );
   }
 
   const Content: React.FC = () => {

@@ -29,14 +29,34 @@ const SearchPage: NextPage = () => {
     mutate: profileSearch,
   } = trpc.useMutation(['search.search-profile']);
 
+  function resetData() {
+    if (cardData) {
+      cardData.cardData = [];
+      cardData.message = '';
+    }
+    if (tagData) {
+      tagData.cardData = [];
+      tagData.message = '';
+    }
+    if (profileData) {
+      profileData.profileData = [];
+      profileData.message = '';
+    }
+  }
+
   const onSubmit = handleSubmit((data) => {
     if (data.filterTypes === 'cards') {
+      resetData();
       cardSearch(data);
     }
     if (data.filterTypes === 'profiles') {
+      resetData();
+
       profileSearch(data);
     }
     if (data.filterTypes === 'tags') {
+      resetData();
+
       tagSearch(data);
     }
   });

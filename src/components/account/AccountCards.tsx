@@ -19,7 +19,7 @@ export const AccountCards: React.FC<{
 
   if (!totalCards) {
     return (
-      <div className="bg-white h-40 grid place-content-center shadow rounded-lg p-4 pr-2 ">
+      <div className="bg-panel h-40 grid place-content-center shadow rounded-lg p-4 pr-2 ">
         <h3>You have not created any Cards</h3>
         <Link href="/card/create-card">
           <a className="w-fit mx-auto">

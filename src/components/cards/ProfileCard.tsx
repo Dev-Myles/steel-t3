@@ -49,103 +49,138 @@ const ProfileCard: React.FC<{
       return null;
     }
 
+    if (!active) {
+      return (
+        <div
+          className={`${color} text-white rounded-full mx-2 p-3 border-[1px] border-silver`}
+        >
+          {icon}
+        </div>
+      );
+    }
+
     return (
-      <a href={link} className={`${active ? null : 'pointer-events-none'}`}>
-        <div className={`${color} text-white rounded-full p-2`}>{icon}</div>
+      <a
+        href={`//${link}`}
+        className={`${active ? null : 'pointer-events-none'}`}
+      >
+        <div
+          className={`${color} hover:scale-105 ease-in-out duration-200 text-white rounded-full mx-2 p-3 border-[1px] border-silver`}
+        >
+          {icon}
+        </div>
       </a>
     );
   };
 
-  return (
-    <Link href={`/profile/${userName}`}>
-      <a>
-        <div className="bg-black p-3 rounded-2xl">
-          <div className="flex border-b-[1px] p-1 justify-center items-center border-second">
-            {imageSrc ? (
-              <Image
-                className="rounded-full"
-                src={imageSrc}
-                alt="Profile image"
-                height={40}
-                width={40}
-                layout="fixed"
-              />
-            ) : null}
-
-            <div className="h-fit ml-2 font-Poppins">
-              <span>
-                {userName} - {totalCards} Cards
-              </span>
-            </div>
-          </div>
-          <div className="flex mt-2 justify-around">
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.github}
-              color={colors.github}
-              icon={<AiFillGithub />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.facebook}
-              color={colors.facebook}
-              icon={<AiFillFacebook />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.portfolio}
-              color={colors.portfolio}
-              icon={<AiOutlineProfile />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.instagram}
-              color={colors.instagram}
-              icon={<AiOutlineInstagram />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.youtube}
-              color={colors.youtube}
-              icon={<AiOutlineYoutube />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.discord}
-              color={colors.discord}
-              icon={<TbBrandDiscord />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.twitter}
-              color={colors.twitter}
-              icon={<AiFillTwitterCircle />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.company}
-              color={colors.company}
-              icon={<MdBusiness />}
-              active={active}
-            />
-            <LinkBubble
-              key={uuidv4()}
-              link={links?.linkedin}
-              color={colors.linkedin}
-              icon={<AiOutlineLinkedin />}
-              active={active}
-            />
-          </div>
+  const CardLink: React.FC<{ active: boolean }> = ({ active }) => {
+    if (!active) {
+      return (
+        <div>
+          <span>{totalCards} Cards</span>
         </div>
-      </a>
-    </Link>
+      );
+    }
+
+    return (
+      <Link href={`/profile/${userName}/cards`}>
+        <a>
+          <div>
+            <span className="underline hover:text-second">
+              View {totalCards} Cards
+            </span>
+          </div>
+        </a>
+      </Link>
+    );
+  };
+
+  return (
+    <div className="bg-black p-3 m-1  sm:w-fit rounded-2xl border-[1px] border-second">
+      <div className="flex border-b-[1px] pb-2 justify-between  items-center border-second">
+        <div className="h-fit ml-2 font-Poppins flex items-center">
+          {imageSrc ? (
+            <Image
+              className="rounded-full"
+              src={imageSrc}
+              alt="Profile image"
+              height={40}
+              width={40}
+              layout="fixed"
+            />
+          ) : null}
+
+          <span className="pl-2">{userName}</span>
+        </div>
+
+        <CardLink active={active} />
+      </div>
+      <div className="flex mt-2 flex-wrap justify-center">
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.github}
+          color={colors.github}
+          icon={<AiFillGithub />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.facebook}
+          color={colors.facebook}
+          icon={<AiFillFacebook />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.portfolio}
+          color={colors.portfolio}
+          icon={<AiOutlineProfile />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.instagram}
+          color={colors.instagram}
+          icon={<AiOutlineInstagram />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.youtube}
+          color={colors.youtube}
+          icon={<AiOutlineYoutube />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.discord}
+          color={colors.discord}
+          icon={<TbBrandDiscord />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.twitter}
+          color={colors.twitter}
+          icon={<AiFillTwitterCircle />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.company}
+          color={colors.company}
+          icon={<MdBusiness />}
+          active={active}
+        />
+        <LinkBubble
+          key={uuidv4()}
+          link={links?.linkedin}
+          color={colors.linkedin}
+          icon={<AiOutlineLinkedin />}
+          active={active}
+        />
+      </div>
+    </div>
   );
 };
 
