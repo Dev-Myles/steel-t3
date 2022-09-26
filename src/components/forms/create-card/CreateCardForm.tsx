@@ -110,7 +110,7 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
             {...register('description', {
               required: 'Description is required',
               pattern: {
-                value: /^[A-Za-z0-9 ]+$/i,
+                value: /^[A-Za-z0-9 _.,!"'/$]+$/i,
                 message: 'can only contain letters',
               },
               maxLength: {
@@ -210,7 +210,7 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
             {...register('uses', {
               required: 'Uses is required',
               pattern: {
-                value: /^[A-Za-z0-9 ]+$/i,
+                value: /^[A-Za-z0-9 _.,!"'/$]+$/i,
                 message: 'Can only contain letters and numbers',
               },
               maxLength: {
@@ -222,6 +222,7 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
                 message: 'Min of 2 characters',
               },
             })}
+            spellCheck={true}
           />
           <div className="text-center h-4">
             <span className="text-red-500">{errors?.uses?.message}</span>
@@ -238,11 +239,11 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
             placeholder="www.github.com"
             {...register('links.github', {
               required: false,
-              pattern: {
-                value:
-                  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%. ~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_.~#?&=]*)$/,
-                message: 'Must be a vaild url',
-              },
+              // pattern: {
+              //   value:
+              //     /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%. ~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_.~#?&=]*)$/,
+              //   message: 'Must be a vaild url',
+              // },
               maxLength: {
                 value: 150,
                 message: 'Max of 25 characters',
@@ -270,12 +271,12 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
             placeholder="www.mysite.com"
             {...register('links.website', {
               required: false,
-              pattern: {
-                value:
-                  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%. ~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_.~#?&=]*)$/,
+              // pattern: {
+              //   value:
+              //     /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%. ~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_.~#?&=]*)$/,
 
-                message: 'Must be a vaild url',
-              },
+              //   message: 'Must be a vaild url',
+              // },
               maxLength: {
                 value: 150,
                 message: 'Max of 150 characters',

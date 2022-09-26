@@ -1,4 +1,4 @@
-import { Card, Links, Profile } from '@prisma/client';
+import { Card, CardLinks, Links, Profile } from '@prisma/client';
 
 interface ISearchData {
   profiles?: {
@@ -12,11 +12,15 @@ interface ISearchData {
     })[];
   };
   card?: {
-    cardData: Card[];
+    cardData: (Card & {
+      links: CardLinks | null;
+    })[];
     message: string | null;
   };
   tags?: {
-    cardData: Card[];
+    cardData: (Card & {
+      links: CardLinks | null;
+    })[];
     message: string | null;
   };
 }

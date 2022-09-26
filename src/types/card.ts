@@ -1,4 +1,4 @@
-import { CardLinks } from '@prisma/client';
+import { Card, CardLinks, Profile } from '@prisma/client';
 
 interface ICard {
   id: string;
@@ -13,6 +13,28 @@ interface ICard {
   uses: string;
   links: CardLinks | { github: string; website: string };
   tags: string[];
+}
+
+export interface IProfileCards {
+  data:
+    | (Profile & {
+        cards: (Card & {
+          links: CardLinks | null;
+        })[];
+        user: {
+          image: string | null;
+        };
+      })
+    | null
+    | undefined;
+}
+
+export interface ICards {
+  cards:
+    | (Card & {
+        links: CardLinks | null;
+      })[]
+    | undefined;
 }
 
 export default ICard;

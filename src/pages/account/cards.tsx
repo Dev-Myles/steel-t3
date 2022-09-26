@@ -1,4 +1,3 @@
-import { Card } from '@prisma/client';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { LoadingGif } from '../../components/util/LoadingGif';
@@ -12,7 +11,7 @@ export const AccountCards: NextPage = () => {
     staleTime: Infinity,
     cacheTime: Infinity,
   });
-  const cards = data?.cards;
+  const cardData = data?.cards;
 
   const Options: React.FC = () => {
     return (
@@ -49,7 +48,7 @@ export const AccountCards: NextPage = () => {
     );
   }
 
-  function mapCards(cards?: Card[]) {
+  function mapCards(cards: any) {
     if (!cards?.length) {
       return (
         <div className=" grid place-content-center">
@@ -66,7 +65,7 @@ export const AccountCards: NextPage = () => {
     <div className="min-h-screen mb-20">
       <Options />
       <div className="flex flex-wrap justify-center w-screen sm:w-11/12 mx-auto">
-        {mapCards(cards)}
+        {mapCards(cardData)}
       </div>
     </div>
   );

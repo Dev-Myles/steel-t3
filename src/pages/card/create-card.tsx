@@ -77,6 +77,15 @@ export const CreateCard: NextPage<{
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const sess = await getSession(ctx);
+  if (!sess) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+      },
+      props: {},
+    };
+  }
+
   const userId = sess?.user?.id;
   let profileUsername;
   const prisma = new PrismaClient();

@@ -10,13 +10,14 @@ module.exports = {
       colors: {
         background: '#0a0a0c',
         text: '#8d8d8d',
-        panel: '#121314',
+        panel: '#0c0d0d',
         main: 'rgb(16 185 129)',
         second: 'rgb(99 102 241)',
       },
       fontFamily: {
         Poppins: ['Poppins-Medium'],
         Hind: ['HindSiliguri-Regular'],
+        HindThin: ['HindSiliguri-Light'],
         PTMono: ['PTMono-Regular'],
       },
     },

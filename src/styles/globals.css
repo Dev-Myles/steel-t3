@@ -51,6 +51,11 @@ body {
 }
 
 @font-face {
+  font-family: 'HindSiliguri-Light';
+  src: url('/fonts/HindSiliguri-Light.ttf');
+}
+
+@font-face {
   font-family: 'PTMono-Regular';
   src: url('/fonts/PTMono-Regular.ttf');
 }

@@ -1,4 +1,3 @@
-import { Card } from '@prisma/client';
 import { searchSchema } from '../../schema/search-schema';
 import { createRouter } from './context';
 
@@ -7,9 +6,12 @@ export const searchRouter = createRouter()
     input: searchSchema,
     async resolve({ ctx, input }) {
       try {
-        const cards: Card[] = await ctx.prisma.card.findMany({
+        const cards = await ctx.prisma.card.findMany({
           where: {
             private: false,
+          },
+          include: {
+            links: true,
           },
         });
         const filteredCards = cards?.filter((card) =>
@@ -58,9 +60,12 @@ export const searchRouter = createRouter()
     input: searchSchema,
     async resolve({ ctx, input }) {
       try {
-        const cards: Card[] = await ctx.prisma.card.findMany({
+        const cards = await ctx.prisma.card.findMany({
           where: {
             private: false,
+          },
+          include: {
+            links: true,
           },
         });
         const filteredCards = cards.filter(

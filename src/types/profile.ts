@@ -1,14 +1,17 @@
-import { Card, Links, User } from '@prisma/client';
+import { Card, CardLinks, Profile } from '@prisma/client';
 
 interface IProfile {
-  id: string;
-  userName: string;
-  userId: string;
-  links: Links;
-  private: boolean;
-  user: User;
-  liked: String[];
-  cards: Card[];
+  profile:
+    | (Profile & {
+        cards: (Card & {
+          links: CardLinks | null;
+        })[];
+        user: {
+          image: string | null;
+        };
+      })
+    | null
+    | undefined;
 }
 
 export default IProfile;

@@ -1,11 +1,18 @@
-import { Card as CardType } from '@prisma/client';
+import { Card as CardType, CardLinks } from '@prisma/client';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
 import Card from '../cards/Card';
 
-export function mapCardsLink(cards: CardType[], account: boolean) {
+export function mapCardsLink(
+  cards:
+    | (CardType & {
+        links: CardLinks | null;
+      })[]
+    | undefined,
+  account: boolean
+) {
   return cards?.map((card) => {
-    const links = { github: '', website: '' };
+    const links = card?.links ? card.links : { github: '', website: '' };
     return (
       <div key={uuidv4()} className="w-11/12 sm:w-1/4 mt-12">
         <Link href={`/card/${card.id}`}>

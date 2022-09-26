@@ -1,18 +1,21 @@
-import { PrismaClient } from '@prisma/client';
+import { Card, CardLinks, PrismaClient, Profile } from '@prisma/client';
 import { GetServerSideProps, NextPage } from 'next';
 import { mapCardsLink } from '../../../components/util/mapCards';
-import IProfile from '../../../types/profile';
 
-const ProfileCards: NextPage<{ profile: IProfile }> = ({ profile }) => {
-  const cards = profile.cards;
-
+const ProfileCards: NextPage<{
+  data:
+    | (Profile & {
+        user: { image: string | null };
+        cards: (Card & { links: CardLinks | null })[];
+      })
+    | null;
+}> = ({ data }) => {
+  const cards = data?.cards;
   function mapCards() {
-    if (!cards.length) {
+    if (!cards?.length) {
       return (
         <div className=" grid place-content-center">
-          <h3 className="text-2xl p-2 text-center">
-            You have not created any cards
-          </h3>
+          <h3 className="text-2xl p-2 text-center">User has no Cards</h3>
         </div>
       );
     }
@@ -23,7 +26,7 @@ const ProfileCards: NextPage<{ profile: IProfile }> = ({ profile }) => {
     <div className="min-h-screen">
       <div className="my-8">
         <h1 className=" mx-2 mt-3 sm:mx-8  text-xl sm:text-2xl">
-          {profile.userName}&apos;s Cards
+          {data?.userName}&apos;s Cards
         </h1>
 
         <div className="flex flex-wrap justify-center">{mapCards()}</div>
@@ -35,11 +38,11 @@ const ProfileCards: NextPage<{ profile: IProfile }> = ({ profile }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const pid = context.params;
   const userName = pid?.pid as string;
-  let profile;
+  let data;
   const prisma = new PrismaClient();
 
   if (userName) {
-    profile = await prisma?.profile.findUnique({
+    data = await prisma?.profile.findUnique({
       where: {
         userName,
       },
@@ -64,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      profile,
+      data,
     },
   };
 };
