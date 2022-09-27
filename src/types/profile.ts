@@ -1,4 +1,4 @@
-import { Card, CardLinks, Profile } from '@prisma/client';
+import { Card, CardLinks, Links, Profile } from '@prisma/client';
 
 interface IProfile {
   profile:
@@ -6,6 +6,7 @@ interface IProfile {
         cards: (Card & {
           links: CardLinks | null;
         })[];
+        links: Links;
         user: {
           image: string | null;
         };

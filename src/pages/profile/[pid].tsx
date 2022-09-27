@@ -3,10 +3,8 @@ import type { GetServerSideProps, NextPage } from 'next';
 import ProfileCard from '../../components/cards/ProfileCard';
 import IProfile from '../../types/profile';
 
-const ProfilePage: NextPage<{ profile: IProfile }> = ({ profile }) => {
-  const cards = profile.cards.length ? profile.cards : [];
-
-  if (!profile) {
+const ProfilePage: NextPage<{ data: IProfile }> = ({ data }) => {
+  if (!data.profile) {
     return (
       <div className="min-h-screen grid place-content-center">
         <div className="text-center rounded-lg bg-panel p-4">
@@ -16,7 +14,7 @@ const ProfilePage: NextPage<{ profile: IProfile }> = ({ profile }) => {
     );
   }
 
-  if (profile.private) {
+  if (data.profile?.private) {
     return (
       <div className="min-h-screen grid place-content-center">
         <div className="text-center rounded-lg bg-panel p-4">
@@ -31,10 +29,10 @@ const ProfilePage: NextPage<{ profile: IProfile }> = ({ profile }) => {
       <div className="w-fit mx-auto my-32">
         <ProfileCard
           active={true}
-          userName={profile.userName}
-          imageSrc={profile.user.image}
-          cards={profile.cards}
-          links={profile.links}
+          userName={data.profile?.userName}
+          imageSrc={data.profile?.user.image}
+          cards={data.profile?.cards}
+          links={data.profile?.links}
         />
       </div>
     </div>
@@ -44,11 +42,11 @@ const ProfilePage: NextPage<{ profile: IProfile }> = ({ profile }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const pid = context.params;
   const userName = pid?.pid as string;
-  let profile;
+  let data;
   const prisma = new PrismaClient();
 
   if (userName) {
-    profile = await prisma?.profile.findUnique({
+    data = await prisma?.profile.findUnique({
       where: {
         userName,
       },
@@ -67,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      profile,
+      data,
     },
   };
 };
