@@ -45,14 +45,17 @@ const SearchResults: React.FC<{
     }
     if (results?.card?.cardData.length) {
       return (
-        <div className="flex justify-center">
+        <div className="flex  flex-wrap justify-center">
           {mapCardsLink(results.card.cardData, false)}
         </div>
       );
     }
     if (results?.tags?.cardData.length) {
       return (
-        <div className="flex flex-wrap justify-center">
+        <div className="flex  flex-wrap justify-center">
+          {mapCardsLink(results.tags.cardData, false)}
+          {mapCardsLink(results.tags.cardData, false)}
+
           {mapCardsLink(results.tags.cardData, false)}
         </div>
       );
@@ -60,7 +63,7 @@ const SearchResults: React.FC<{
 
     if (results.profiles?.profileData.length) {
       return (
-        <div className="flex justify-center">
+        <div className="flex flex-wrap justify-center">
           {mapProfilesLink(results, false)}
         </div>
       );

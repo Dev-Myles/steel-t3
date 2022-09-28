@@ -15,7 +15,9 @@ const ProfileCards: NextPage<{
     if (!cards?.length) {
       return (
         <div className=" grid place-content-center">
-          <h3 className="text-2xl p-2 text-center">User has no Cards</h3>
+          <h3 className="text-2xl p-2 text-center mt-32 text-red-400">
+            User has no Cards
+          </h3>
         </div>
       );
     }
@@ -24,8 +26,8 @@ const ProfileCards: NextPage<{
 
   return (
     <div className="min-h-screen">
-      <div className="my-8">
-        <h1 className=" mx-2 mt-3 sm:mx-8  text-xl sm:text-2xl">
+      <div className="my-8 border-b-[1px] border-slate-700 pb-8">
+        <h1 className=" mx-auto mt-3 lg:mx-16 shadow-md shadow-second/80 w-fit p-3 border-t-[1px] rounded-lg text-second border-slate-900 text-xl sm:text-2xl">
           {data?.userName}&apos;s Cards
         </h1>
 

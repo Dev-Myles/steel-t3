@@ -14,7 +14,7 @@ export function mapCardsLink(
   return cards?.map((card) => {
     const links = card?.links ? card.links : { github: '', website: '' };
     return (
-      <div key={uuidv4()} className="w-11/12 sm:w-1/4 mt-12">
+      <div key={uuidv4()} className="w-11/12 sm:w-fit mx-2 mt-12">
         <Link href={`/card/${card.id}`}>
           <a>
             <Card

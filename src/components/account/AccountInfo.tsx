@@ -50,16 +50,20 @@ const AccountInfo: React.FC<{
 
   const activeStyle = {
     private: {
-      backgroundColor: privateStatus ? 'rgb(16 185 129)' : '',
+      backgroundColor: privateStatus ? 'rgb(99 102 241 )' : '',
+      pointerEvents: privateStatus ? 'none' : '',
     },
     public: {
-      backgroundColor: !privateStatus ? 'rgb(16 185 129)' : '',
+      backgroundColor: !privateStatus ? 'rgb(99 102 241 )' : '',
+      pointerEvents: !privateStatus ? 'none' : '',
     },
   };
 
   return (
-    <div className="w-full bg-panel  p-2 rounded-lg shadow h-fit">
-      <h1 className="text-center font-bold text-5xl ">Account Info</h1>
+    <div className="w-full   p-2  h-fit">
+      <h1 className="text-center font-bold text-5xl text-second">
+        Account Info
+      </h1>
       {isLoading ? (
         <LoadingGif />
       ) : (
@@ -69,13 +73,13 @@ const AccountInfo: React.FC<{
           </div>
           <div>
             <div className="m-3">
-              <span className=" font-bold text-4xl text-main">Name</span>
+              <span className=" font-bold text-4xl text-second">Name</span>
               <span className="block font-semibold text-xl truncate">
                 {name}
               </span>
             </div>
-            <div className="m-3 border-b-2 border-gray-400 pb-5">
-              <span className=" font-bold text-4xl text-main">Email</span>
+            <div className="m-3 border-b-[1px] border-slate-900 pb-5">
+              <span className=" font-bold text-4xl text-second">Email</span>
               <span className="block font-semibold text-xl truncate">
                 {email}
               </span>
@@ -83,7 +87,7 @@ const AccountInfo: React.FC<{
 
             <div className="lg:flex lg:justify-between [&>*]:inline-block [&>*]:m-3 [&>*]:text-start ">
               <div className="font-bold w-72">
-                <span className=" text-xl text-main">
+                <span className=" text-xl text-second">
                   Username <EditFieldButton editFn={editName} />
                 </span>
                 <br />
@@ -119,13 +123,13 @@ const AccountInfo: React.FC<{
                 ) : null}
               </div>
               <div className="font-bold">
-                <span className=" text-xl text-main">Profile Visability</span>
+                <span className=" text-xl text-second">Profile Visability</span>
                 <br />
 
                 <div className="flex justify-around">
                   <button
                     style={activeStyle.public}
-                    className="px-2 active:bg-red-500"
+                    className="px-2 active:bg-red-500 border-second hover:bg-red-500 hover:border-red-500 hover:text-white hover:shadow"
                     onClick={() => visability(false)}
                     disabled={!privateStatus}
                   >
@@ -133,7 +137,7 @@ const AccountInfo: React.FC<{
                   </button>
                   <button
                     style={activeStyle.private}
-                    className="px-2 active:bg-red-500"
+                    className="px-2 active:bg-red-500 border-second hover:bg-red-500 hover:border-red-500 hover:text-white hover:shadow"
                     onClick={() => visability(true)}
                     disabled={privateStatus}
                   >

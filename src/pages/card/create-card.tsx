@@ -8,7 +8,7 @@ export const CreateCard: NextPage<{
 }> = ({ profileUsername }) => {
   const FormHelper: React.FC = () => {
     return (
-      <div className="bg-panel rounded-xl p-2 w-full shadow sm:w-1/4 h-fit mt-8 sm:ml-4">
+      <div className="bg-panel rounded-xl  p-2 shadow lg:w-1/4 h-fit mt-8 sm:ml-4">
         <h3 className="text-center text-2xl">Tips & How to</h3>
         <p className="mt-2">
           <span className="block text-xl font-bold text-main">Name-</span>
@@ -68,7 +68,7 @@ export const CreateCard: NextPage<{
     );
   };
   return (
-    <div className="flex flex-col justify-center sm:flex-row-reverse min-h-screen">
+    <div className="flex flex-col justify-center lg:flex-row-reverse min-h-screen">
       <FormHelper />
       <CreateCardForm userName={profileUsername.userName} />
     </div>

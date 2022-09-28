@@ -62,7 +62,7 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
   });
 
   return (
-    <div className="bg-panel my-8 flex justify-center items-center flex-col w-screen sm:w-1/2 p-3 sm:p-1 sm:py-4 shadow rounded-2xl">
+    <div className="bg-panel my-8 flex justify-center items-center flex-col w-screen lg:w-1/2  p-3 sm:p-1 sm:py-4 shadow rounded-2xl">
       {error ? (
         <span className="text-xl text-red-500">
           Error creating card on server

@@ -26,11 +26,11 @@ const EditButton: React.FC<{ editFn: any }> = ({ editFn }) => {
 
 export const EditFieldButton: React.FC<{ editFn: any }> = ({ editFn }) => {
   return (
-    <div className="w-fit h-fit inline-block">
+    <div className="w-fit h-fit inline-block ">
       <div className="w-fit ">
         <button
           onClick={() => editFn()}
-          className="p-1 h-6 w-6  rounded text-sm  text-white"
+          className="p-1 h-6 w-6  rounded border-second text-sm  text-white"
         >
           <FiEdit2 />
         </button>

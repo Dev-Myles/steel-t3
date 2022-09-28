@@ -34,10 +34,10 @@ export const AccountLinks: React.FC<{
   if (isLoading) {
     return (
       <div
-        className="max-w-sm h-fit p-4 pr-2 bg-panel
-    rounded-lg shadow"
+        className="max-w-sm h-fit p-4 pr-2 
+    "
       >
-        <h2 className=" text-2xl">Links</h2>
+        <h2 className=" text-2xl text-second">Links</h2>
         <LoadingGif />
       </div>
     );
@@ -47,7 +47,7 @@ export const AccountLinks: React.FC<{
     return Object.entries(mapLinks).map((e) => {
       return (
         <div key={uuidv4()} className="truncate block m-4 text-start">
-          <span className="font-bold text-2xl text-main">{e[0]}</span>
+          <span className="text-second font-bold text-2xl ">{e[0]}</span>
           <br />
           <span className="font-bold ">{e[1]}</span>
         </div>
@@ -73,10 +73,10 @@ export const AccountLinks: React.FC<{
 
   return (
     <div
-      className=" w-full sm:w-60 h-fit p-4 pr-2 bg-panel
-      rounded-lg shadow truncate"
+      className=" w-full lg:w-60 sm:flex lg:block justify-center flex-col items-center h-fit p-4 pr-2 
+      border-l-[1px] border-slate-900  truncate"
     >
-      <h2 className=" text-2xl">
+      <h2 className=" text-2xl text-second">
         Links <EditFieldButton editFn={editLinks} />
       </h2>
       {isEdit ? (
@@ -85,7 +85,7 @@ export const AccountLinks: React.FC<{
           onSubmit={handleSubmit(onSubmit)}
         >
           <label>
-            <span className="font-bold"> GitHub </span>
+            <span className="text-second font-bold"> GitHub </span>
             <input
               className="flex flex-col "
               type="text"
@@ -97,7 +97,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold"> Company</span>
+            <span className="text-second font-bold"> Company</span>
             <input
               className="flex flex-col"
               defaultValue={mapLinks.Company}
@@ -109,7 +109,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold"> Discord</span>
+            <span className="text-second font-bold"> Discord</span>
             <input
               className="flex flex-col"
               type="text"
@@ -121,7 +121,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold">Facebook</span>
+            <span className="text-second font-bold">Facebook</span>
             <input
               className="flex flex-col"
               defaultValue={mapLinks.Facebook}
@@ -133,7 +133,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold"> Instagram</span>
+            <span className="text-second font-bold"> Instagram</span>
             <input
               className="flex flex-col"
               defaultValue={mapLinks.Instagram}
@@ -145,7 +145,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold"> LinkedIn</span>
+            <span className="text-second font-bold"> LinkedIn</span>
             <input
               className="flex flex-col"
               defaultValue={mapLinks.LinkedIn}
@@ -157,7 +157,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold">Portfolio</span>
+            <span className="text-second font-bold">Portfolio</span>
             <input
               className="flex flex-col"
               defaultValue={mapLinks.Portfolio}
@@ -169,7 +169,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold"> Twitter </span>
+            <span className="text-second font-bold"> Twitter </span>
             <input
               className="flex flex-col"
               defaultValue={mapLinks.Twitter}
@@ -181,7 +181,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <label>
-            <span className="font-bold"> Youtube</span>
+            <span className="text-second font-bold"> Youtube</span>
             <input
               className="flex flex-col"
               defaultValue={mapLinks.Youtube}
@@ -193,7 +193,7 @@ export const AccountLinks: React.FC<{
             />
           </label>
           <button
-            className="p-2 w-fit mx-auto mt-2
+            className="p-2 w-fit mx-auto mt-2 border-second hover:border-slate-700
           "
             type="submit"
           >

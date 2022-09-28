@@ -1,24 +1,37 @@
-import { PrismaClient } from '@prisma/client';
+import { Card, CardLinks, Links, PrismaClient, Profile } from '@prisma/client';
 import type { GetServerSideProps, NextPage } from 'next';
 import ProfileCard from '../../components/cards/ProfileCard';
-import IProfile from '../../types/profile';
 
-const ProfilePage: NextPage<{ data: IProfile }> = ({ data }) => {
-  if (!data.profile) {
+const ProfilePage: NextPage<{
+  data:
+    | (Profile & {
+        cards: (Card & {
+          links: CardLinks | null;
+        })[];
+        links: Links;
+        user: {
+          image: string | null;
+        };
+      })
+    | null
+    | undefined;
+}> = ({ data }) => {
+  console.log(data);
+  if (!data?.userId) {
     return (
-      <div className="min-h-screen grid place-content-center">
-        <div className="text-center rounded-lg bg-panel p-4">
+      <div className="min-h-screen flex">
+        <div className="text-center h-fit mt-28 text-3xl  shadow-md shadow-second/60 w-fit mx-auto rounded-lg  bg-panel p-3 sm:p-8">
           <h1 className="text-red-500">User not found</h1>
         </div>
       </div>
     );
   }
 
-  if (data.profile?.private) {
+  if (data?.private) {
     return (
-      <div className="min-h-screen grid place-content-center">
-        <div className="text-center rounded-lg bg-panel p-4">
-          <h1>This profile is private</h1>
+      <div className="min-h-screen  flex">
+        <div className="text-center border-t-[1px] border-slate-900 h-fit mt-28 text-3xl shadow-md shadow-second/60 w-fit mx-auto rounded-lg  bg-panel p-3 sm:p-8">
+          <h1 className="text-second">This profile is private</h1>
         </div>
       </div>
     );
@@ -29,10 +42,10 @@ const ProfilePage: NextPage<{ data: IProfile }> = ({ data }) => {
       <div className="w-fit mx-auto my-32">
         <ProfileCard
           active={true}
-          userName={data.profile?.userName}
-          imageSrc={data.profile?.user.image}
-          cards={data.profile?.cards}
-          links={data.profile?.links}
+          userName={data?.userName}
+          imageSrc={data?.user.image}
+          cards={data?.cards}
+          links={data?.links}
         />
       </div>
     </div>

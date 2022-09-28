@@ -6,18 +6,12 @@ import { z } from 'zod';
  * This way you can ensure the app isn't built with invalid env vars.
  */
 export const serverSchema = z.object({
-  DATABASE_URL: z.string(),
-  RAILWAY_DATABASE_URL: z.string(),
   SUPABASE_DATABASE_URL: z.string(),
   LOCAL_DATABASE_URL: z.string(),
-  STAGE_TYPE: z.string(),
   DATABASE_PASS: z.string(),
   NODE_ENV: z.enum(['development', 'test', 'production']),
   NEXTAUTH_SECRET: z.string(),
   NEXTAUTH_URL: z.string().url(),
-  NODEMAILER_EMAIL: z.string(),
-  NODEMAILER_PASS: z.string(),
-  NODEMAILER_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   GITHUB_ID: z.string(),

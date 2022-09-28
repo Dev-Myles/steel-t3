@@ -36,7 +36,7 @@ const Account: NextPage = () => {
     <div className="h-min-screen  w-screen mx-auto lg:w-fit h-fit flex flex-col  p-4 my-4">
       <div className="lg:flex">
         <div className="flex justify-around flex-col">
-          <div className="mt-3">
+          <div className="mt-3 ">
             <AccountInfo
               key={uuidv4()}
               session={sess.session}
@@ -45,11 +45,11 @@ const Account: NextPage = () => {
             />
           </div>
 
-          <div className="mt-3">
+          <div className="mt-3 ">
             <AccountLikes key={uuidv4()} />
           </div>
         </div>
-        <div className="mt-3 lg:ml-2">
+        <div className="mt-3  lg:ml-2">
           <AccountLinks
             key={uuidv4()}
             profileId={profileId}
@@ -58,7 +58,7 @@ const Account: NextPage = () => {
           />
         </div>
       </div>
-      <div className="mt-3">
+      <div className="mt-3 ">
         <AccountCards key={uuidv4()} isLoading={isLoading} cards={cards} />
       </div>
     </div>
