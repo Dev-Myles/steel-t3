@@ -157,9 +157,9 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col justify-between h-full"
+            className="flex flex-col  h-full"
           >
-            <ul className="w-screen h-full flex  flex-col [&>*]:p-4 [&>*]:text-3xl">
+            <ul className="w-screen h-1/2 flex  flex-col [&>*]:p-4 [&>*]:text-3xl">
               <li>
                 <Link href="/card/create-card">
                   <a onClick={() => setMenu(false)}>

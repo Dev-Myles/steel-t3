@@ -1,7 +1,7 @@
 import { CardLinks } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ReactElement, useReducer } from 'react';
+import { ReactElement, useEffect, useReducer } from 'react';
 import {
   AiFillGithub,
   AiFillHeart,
@@ -63,6 +63,10 @@ export const Card: React.FC<{
   links,
 }) => {
   const [state, dispatch] = useReducer(reducer, initalState);
+
+  useEffect(() => {
+    dispatch({ type: 'MAIN' });
+  }, [stateStatus]);
 
   const { isLoading, data } = trpc.useQuery(['search.get-profile-id'], {
     staleTime: Infinity,
