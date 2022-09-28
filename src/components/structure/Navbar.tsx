@@ -18,7 +18,8 @@ const Navbar: React.FC = () => {
   const user = session?.user;
 
   const name = user?.name;
-  const redirectUrl = 'http://localhost:3000/auth/signout';
+  // const redirectUrl = 'http://localhost:3000/auth/signout';
+  const redirectUrl = 'https://steel-t3.vercel.app/auth/signout';
 
   useEffect(() => {
     const body = document?.querySelector('body');
