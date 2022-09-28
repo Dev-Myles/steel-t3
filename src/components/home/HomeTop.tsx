@@ -32,9 +32,8 @@ const HomeTop: React.FC = () => {
         </div>
       </div>
       <h2 className="text-3xl  p-4 lg:p-2 text-center lg:text-6xl font-Poppins">
-        Share what you do courageously.
+        Present what you do courageously.
       </h2>
-      {/* <hr className="mt-16 bg-panel w-2/3 mx-auto border-dashed" /> */}
     </div>
   );
 };
