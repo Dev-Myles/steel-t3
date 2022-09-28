@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 import { FaRegIdCard } from 'react-icons/fa';
@@ -14,6 +15,7 @@ import UserImage from '../util/UserImage';
 const Navbar: React.FC = () => {
   const [isHover, setHover] = useState(false);
   const [isMenu, setMenu] = useState(false);
+
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -27,6 +29,28 @@ const Navbar: React.FC = () => {
   }, [isMenu]);
 
   const User: React.FC = () => {
+    if (isMobile) {
+      return (
+        <Link href="/account">
+          <a className=" h-fit w-fit flex mr-5 justify-center items-center">
+            <span className="text-gray-400 text-xs w-fit p-3 text-center">
+              Signed in as: <br />
+              <span className="text-main font-bold text-sm">{name}</span>
+            </span>
+            <div
+              className={
+                isHover
+                  ? 'border-2 border-main rounded-full h-fit grid place-content-center'
+                  : 'border-2 border-[#14161c]  rounded-full h-fit grid place-content-center'
+              }
+            >
+              <UserImage h={40} w={40} />
+            </div>
+          </a>
+        </Link>
+      );
+    }
+
     return (
       <div
         onMouseEnter={() => setHover(true)}
