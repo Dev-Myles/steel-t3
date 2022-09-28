@@ -51,11 +51,9 @@ const AccountInfo: React.FC<{
   const activeStyle = {
     private: {
       backgroundColor: privateStatus ? 'rgb(99 102 241 )' : '',
-      pointerEvents: privateStatus ? 'none' : '',
     },
     public: {
       backgroundColor: !privateStatus ? 'rgb(99 102 241 )' : '',
-      pointerEvents: !privateStatus ? 'none' : '',
     },
   };
 
