@@ -421,7 +421,7 @@ export const Card: React.FC<{
 
   return (
     <div
-      className={`p-2 relative rounded-3xl bg-gray-200 mx-auto w-full sm:w-96 flex flex-col shadow  sm:h-fit
+      className={`p-2 relative rounded-3xl bg-slate-100 mx-auto w-full sm:w-96 flex flex-col shadow  sm:h-fit
       `}
     >
       <div className="flex w-full justify-between items-center">

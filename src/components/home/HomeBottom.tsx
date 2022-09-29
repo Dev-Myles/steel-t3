@@ -11,7 +11,7 @@ const HomeBottom: React.FC = () => {
         </p>
         <button
           onClick={() => router.push('/auth/signin')}
-          className=" hover:from-violet-500  mx-auto my-5  lg:text-2xl hover:to-second ease-in-out duration-300 bg-gradient-to-r to-second from-violet-900  border-none p-2 px-12 font-HindThin  text-xl"
+          className=" hover:from-violet-500  mx-auto my-5  lg:text-2xl hover:to-second ease-in-out duration-300 bg-gradient-to-r to-violet-600 from-violet-900  border-none p-2 px-12 font-HindThin  text-xl"
         >
           Create an account
         </button>

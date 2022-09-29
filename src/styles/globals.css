@@ -36,7 +36,7 @@ button {
 }
 
 body {
-  @apply text-[#8d8d8d] bg-[#0a0a0c] font-HindThin;
+  @apply text-[#8d8d8d] bg-[#0a0a0c] font-Hind;
   /* @apply bg-repeat-round  bg-[url('/images/logos/logo.svg')]; */
 }
 

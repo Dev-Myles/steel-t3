@@ -71,10 +71,7 @@ const SearchPage: NextPage = () => {
   return (
     <div className="min-h-screen">
       <div className="w-screen mt-3 sm:w-3/4 lg:w-1/3 mx-auto">
-        <form
-          className=" bg-background p-5 pb-1 rounded-full border-[1px] border-panel"
-          onSubmit={onSubmit}
-        >
+        <form className="  p-5 pb-1 rounded-full " onSubmit={onSubmit}>
           <h1 className="text-3xl ml-3">
             Search - <span className="text-text text-sm">Cards/Profiles</span>
           </h1>

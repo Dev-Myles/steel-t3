@@ -26,7 +26,7 @@ const HomeMiddle: React.FC = () => {
     icon: any;
   }> = ({ title, desc, icon }) => {
     return (
-      <div className="border-[1px] border-second hover:scale-105 duration-300 ease-in-out p-3 mx-2  rounded-2xl my-5 w-[300px] shadow-[0px_0px_10px_rgba(0,0,300,1)]">
+      <div className="border-[1px] border-second hover:scale-105 duration-300 ease-in-out p-3 mx-2  rounded-2xl my-5 w-[300px] shadow-[0px_0px_10px_second]">
         <h3 className="text-text font-HindThin text-2xl border-b-2 border-second pb-2">
           {title}
         </h3>

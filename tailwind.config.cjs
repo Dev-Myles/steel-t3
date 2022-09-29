@@ -8,9 +8,9 @@ module.exports = {
         DEFAULT: '0 0 5px #141414',
       },
       colors: {
-        background: '#101010',
+        background: '#111010',
         text: '#8d8d8d',
-        panel: '#0c0d0d',
+        panel: '#140f0f',
         main: '#37af87',
         second: 'rgb(120, 122, 253)',
       },
