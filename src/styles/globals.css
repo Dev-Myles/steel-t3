@@ -36,7 +36,7 @@ button {
 }
 
 body {
-  @apply text-[#8d8d8d] bg-[#0a0a0c] font-PTMono;
+  @apply text-[#8d8d8d] bg-[#0a0a0c] font-HindThin;
   /* @apply bg-repeat-round  bg-[url('/images/logos/logo.svg')]; */
 }
 
@@ -62,8 +62,9 @@ body {
 
 :root {
   --panel: #121314;
-  --background: #1c1c1c;
-  --main: rgb(16 185 129);
+  --background: #181818;
+  --main: #37af87;
+  --second: rgb(120, 122, 253);
 }
 
 input[type='text'] {

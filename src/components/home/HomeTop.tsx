@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 const HomeTop: React.FC = () => {
   const router = useRouter();
   return (
-    <div className="h-screen">
+    <div className="min-h-screen mb-32 sm:mb-14">
       <div className="flex py-10 flex-col lg:flex-row">
         <div className="lg:w-1/3 p-5 mt-11 lg:p-12 text-lg flex flex-col">
           <h3 className="font-Poppins text-4xl lg:text-6xl mb-9 ">

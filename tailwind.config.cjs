@@ -8,11 +8,11 @@ module.exports = {
         DEFAULT: '0 0 5px #141414',
       },
       colors: {
-        background: '#0a0a0c',
+        background: '#101010',
         text: '#8d8d8d',
         panel: '#0c0d0d',
-        main: 'rgb(16 185 129)',
-        second: 'rgb(99 102 241)',
+        main: '#37af87',
+        second: 'rgb(120, 122, 253)',
       },
       fontFamily: {
         Poppins: ['Poppins-Medium'],

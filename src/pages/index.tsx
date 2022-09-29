@@ -5,7 +5,7 @@ import HomeTop from '../components/home/HomeTop';
 
 const Home: NextPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#14161c] via-[#0c0d11] to-[#0d1525]">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a1c24] via-[#14151b] to-[#0e1729]">
       <HomeTop />
       <HomeMiddle />
       <HomeBottom />

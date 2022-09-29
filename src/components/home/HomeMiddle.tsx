@@ -27,10 +27,10 @@ const HomeMiddle: React.FC = () => {
   }> = ({ title, desc, icon }) => {
     return (
       <div className="border-[1px] border-second hover:scale-105 duration-300 ease-in-out p-3 mx-2  rounded-2xl my-5 w-[300px] shadow-[0px_0px_10px_rgba(0,0,300,1)]">
-        <h3 className="text-text text-2xl border-b-2 border-second pb-2">
+        <h3 className="text-text font-HindThin text-2xl border-b-2 border-second pb-2">
           {title}
         </h3>
-        <p className="mt-2">{desc}</p>
+        <p className="mt-2  font-HindThin">{desc}</p>
         <div className="flex justify-center text-6xl my-3">{icon}</div>
       </div>
     );
@@ -51,7 +51,7 @@ const HomeMiddle: React.FC = () => {
 
   return (
     <div className="relative">
-      <div className="bg-panel z-10 relative h-full w-full  before:h-28 before:top-[-50px]  before:w-full before:skew-y-3 before:z-[-1] before:border-dashed before:bg-inherit before:border-t-[1px] before:border-white before:absolute">
+      <div className="bg-panel pb-24 z-10 relative h-full w-full  before:h-28 before:top-[-50px]  before:w-full before:skew-y-3 before:z-[-1] before:border-dashed before:bg-inherit before:border-t-[1px] before:border-white before:absolute">
         <div className="p-8 pb-16 flex items-center flex-col">
           <h1 className="text-4xl sm:text-7xl text-second font-Poppins">
             As easy as:

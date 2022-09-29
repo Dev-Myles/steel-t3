@@ -40,11 +40,11 @@ const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
         <div className="    flex sm:w-full flex-col lg:flex-row">
           <SigninGreeting />
           <div className="p-8 text-center bg-panel lg:rounded-br-2xl lg:py-16 ">
-            <h1 className="font-bold  text-text text-3xl border-b-2 border-dashed border-slate-700 pb-4 ">
+            <h1 className="font-bold font-Hind text-text text-3xl border-b-2 border-dashed border-slate-700 pb-4 ">
               Sign In/Up
             </h1>
             <div className="my-3">
-              <span className="font-bold">
+              <span className="font-Hind text-xl">
                 Create an account with one click!
               </span>
             </div>
