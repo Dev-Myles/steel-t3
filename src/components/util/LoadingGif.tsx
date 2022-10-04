@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export const LoadingGif: React.FC = () => {
   return (
-    <div className="h-screen grid bg-inherit place-items-center">
+    <div className=" grid bg-inherit place-items-center">
       <Image
         src="/gifs/785.svg"
         alt="Loading"

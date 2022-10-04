@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
 import { trpc } from '../../utils/trpc';
@@ -13,8 +14,8 @@ export const AccountLikes: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className=" rounded-lg   h-fit w-fit p-8">
-        <h3 className="text-2xl text-second">Liked Cards</h3>
+      <div className="  h-fit p-4 pr-2">
+        <h3 className="text-second text-2xl">Your Likes</h3>
         <LoadingGif />
       </div>
     );
@@ -22,8 +23,10 @@ export const AccountLikes: React.FC = () => {
 
   if (!totalLikes) {
     return (
-      <div className="  rounded-lg h-48 grid place-content-center ">
-        <h3 className="text-second">You have liked no cards...</h3>
+      <div className="  h-24 ml-3 mt-3">
+        <h3 className="text-2xl text-second">Liked Cards</h3>
+
+        <h3 className="text-second text-center">You have liked no cards...</h3>
       </div>
     );
   }
@@ -33,9 +36,20 @@ export const AccountLikes: React.FC = () => {
     return (
       <div
         key={uuidv4()}
-        className="bg-gradient-to-r font-bold  from-slate-900 rounded-lg border-2 w-32 h-36 border-slate-900 truncate flex justify-center items-center p-2 m-2"
+        className="bg-gray-200 flex flex-col items-center  m-2 w-28 h-36 p-2  sm:w-32 shadow-lg truncate  rounded-lg"
       >
-        <span className="text-sm text-second">{card?.name}</span>
+        <span className="truncate font-mono font-bold text-lg text-neutral-600">
+          {card?.name}
+        </span>
+        <div className="block w-full h-1/2">
+          <Image
+            alt="logo"
+            src={'/images/logos/logo.svg'}
+            height={3}
+            width={4}
+            layout="responsive"
+          />
+        </div>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import { Card } from '@prisma/client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
 import { LoadingGif } from '../util/LoadingGif';
@@ -10,7 +11,7 @@ export const AccountCards: React.FC<{
   if (isLoading) {
     return (
       <div className="  h-fit p-4 pr-2">
-        <h3 className=" text-2xl">Your Cards</h3>
+        <h3 className="text-second text-2xl">Your Cards</h3>
         <LoadingGif />
       </div>
     );
@@ -19,15 +20,19 @@ export const AccountCards: React.FC<{
 
   if (!totalCards) {
     return (
-      <div className=" h-40 grid place-content-center border-t-[1px] border-slate-900 p-4 pr-2 ">
-        <h3 className="text-second">You have not created any Cards</h3>
-        <Link href="/card/create-card">
-          <a className="w-fit mx-auto">
-            <button className="p-2 mt-2 border-second text-text text-xlg">
-              Create a Card
-            </button>
-          </a>
-        </Link>
+      <div className="  h-fit p-4 pr-2">
+        <h3 className="text-second text-2xl">Your Cards</h3>
+
+        <div className=" h-40 grid place-content-center border-b-[1px] border-slate-900 p-4 pr-2 ">
+          <h3 className="text-second">You have not created any Cards</h3>
+          <Link href="/card/create-card">
+            <a className="w-fit mx-auto">
+              <button className="py-2 px-4 text-second mt-2 border-second border-2 rounded-lg text-xlg">
+                Create a Card
+              </button>
+            </a>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -38,16 +43,27 @@ export const AccountCards: React.FC<{
       return (
         <div
           key={uuidv4()}
-          className="bg-gradient-to-r from-slate-900 flex items-center justify-center m-2 w-28 h-36 text-center p-2 border-2 sm:w-32 border-slate-900 shadow-lg truncate  rounded-lg"
+          className="bg-gray-200 flex flex-col items-center  m-2 w-28 h-36 p-2  sm:w-32 shadow-lg truncate  rounded-lg"
         >
-          <span className="truncate text-sm text-second">{card.name}</span>
+          <span className="truncate font-mono font-bold text-lg text-neutral-600">
+            {card.name}
+          </span>
+          <div className="block w-full h-1/2">
+            <Image
+              alt="logo"
+              src={'/images/logos/logo.svg'}
+              height={3}
+              width={4}
+              layout="responsive"
+            />
+          </div>
         </div>
       );
     });
   }
 
   return (
-    <div className="  h-fit p-4 pr-2 border-t-[1px] border-slate-900">
+    <div className="  h-fit p-4 pr-2 border-b-[1px] border-slate-900">
       <div className="flex justify-between">
         <h3 className=" text-2xl text-second">
           Your Cards

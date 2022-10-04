@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { LoadingGif } from '../../components/util/LoadingGif';
-import { mapCardsLink } from '../../components/util/mapCards';
+import { ActionType, mapCardsLink } from '../../components/util/mapCards';
 import { useSessionCheck } from '../../utils/session/checkSession';
 import { trpc } from '../../utils/trpc';
 
@@ -53,7 +53,7 @@ export const AccountLikes: NextPage = () => {
     <div className="min-h-screen">
       <Options />
       <div className="flex flex-wrap justify-center w-full sm:w-11/12 mx-auto">
-        {mapCardsLink(cards, true)}
+        {mapCardsLink(cards, ActionType.none)}
       </div>
     </div>
   );

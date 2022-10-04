@@ -32,11 +32,11 @@ h6 {
 }
 
 button {
-  @apply border-2 border-emerald-500 hover:border-emerald-700 hover:bg-black hover:text-gray-200 ease-in-out duration-200 text-white font-bold shadow rounded-full;
+  @apply ease-in-out duration-200 text-neutral-200 font-bold  rounded-full;
 }
 
 body {
-  @apply text-[#8d8d8d] bg-[#0a0a0c] font-Hind;
+  @apply text-[#8d8d8d] bg-background font-Hind;
   /* @apply bg-repeat-round  bg-[url('/images/logos/logo.svg')]; */
 }
 
@@ -67,10 +67,14 @@ body {
   --second: rgb(120, 122, 253);
 }
 
-input[type='text'] {
-  background-color: var(--panel);
+input[type='text'],
+select,
+textarea {
+  @apply bg-panel;
 }
 input[type='text']:hover,
-input[type='text']:focus {
-  border-color: var(--main);
+input[type='text']:focus,
+textarea:hover,
+textarea:focus {
+  @apply border-second;
 }

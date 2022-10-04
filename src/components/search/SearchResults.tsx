@@ -1,6 +1,6 @@
 import ISearchData from '../../types/searchData';
 import { LoadingGif } from '../util/LoadingGif';
-import { mapCardsLink } from '../util/mapCards';
+import { ActionType, mapCardsLink } from '../util/mapCards';
 import { mapProfilesLink } from '../util/mapProfiles';
 
 const SearchResults: React.FC<{
@@ -46,17 +46,17 @@ const SearchResults: React.FC<{
     if (results?.card?.cardData.length) {
       return (
         <div className="flex  flex-wrap justify-center">
-          {mapCardsLink(results.card.cardData, false)}
+          {mapCardsLink(results.card.cardData, ActionType.none)}
         </div>
       );
     }
     if (results?.tags?.cardData.length) {
       return (
         <div className="flex  flex-wrap justify-center">
-          {mapCardsLink(results.tags.cardData, false)}
-          {mapCardsLink(results.tags.cardData, false)}
+          {mapCardsLink(results.tags.cardData, ActionType.none)}
+          {mapCardsLink(results.tags.cardData, ActionType.none)}
 
-          {mapCardsLink(results.tags.cardData, false)}
+          {mapCardsLink(results.tags.cardData, ActionType.none)}
         </div>
       );
     }

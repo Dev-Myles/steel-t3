@@ -1,4 +1,5 @@
 import z from 'zod';
+import { editCardDataSchema } from '../../schema/create-card-schema';
 import { LinksSchema, linkUpdateSchema } from '../../schema/profile-schema';
 import { userNameSchema } from '../../schema/user-schema';
 import { createProtectedRouter } from './protected-router';
@@ -203,6 +204,100 @@ export const accountRouter = createProtectedRouter()
             ...links,
           },
         });
+        await ctx.prisma.$disconnect();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
+  .mutation('delete-card', {
+    input: z.string(),
+    async resolve({ ctx, input }) {
+      const id = input;
+      try {
+        await ctx.prisma.card.delete({
+          where: {
+            id,
+          },
+        });
+        await ctx.prisma.$disconnect();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
+  .mutation('edit-card', {
+    input: editCardDataSchema,
+    async resolve({ ctx, input }) {
+      const {
+        name,
+        description,
+        private: privateStatus,
+        tags,
+        openSource,
+        projectType,
+        level,
+        links,
+        uses,
+      } = input;
+      try {
+        const id = input.id;
+        const updatedCard = await ctx.prisma.card.update({
+          where: {
+            id,
+          },
+          data: {
+            name,
+            description,
+            private: privateStatus,
+            tags,
+            openSource,
+            projectType,
+            level,
+            uses,
+          },
+        });
+        const updatedLinks = await ctx.prisma.cardLinks.update({
+          where: {
+            cardId: id,
+          },
+          data: {
+            github: links.github,
+            website: links.website,
+          },
+        });
+        await ctx.prisma.$disconnect();
+        return id;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
+  .mutation('delete-account', {
+    async resolve({ ctx }) {
+      try {
+        const id = ctx.session.user.id;
+        const user = await ctx.prisma.user.findUnique({
+          where: {
+            id,
+          },
+          include: {
+            accounts: true,
+            sessions: true,
+          },
+        });
+        const account = user?.accounts[0];
+        await ctx.prisma.account.delete({
+          where: {
+            id: account?.id,
+          },
+        });
+        await ctx.prisma.user.delete({
+          where: {
+            id,
+          },
+        });
+
         await ctx.prisma.$disconnect();
       } catch (error) {
         console.log(error);

@@ -76,7 +76,7 @@ const ProfileCard: React.FC<{
   const CardLink: React.FC<{ active: boolean }> = ({ active }) => {
     if (!active) {
       return (
-        <div>
+        <div className="ml-5">
           <span>{totalCards} Cards</span>
         </div>
       );
@@ -84,7 +84,7 @@ const ProfileCard: React.FC<{
 
     return (
       <Link href={`/profile/${userName}/cards`}>
-        <a>
+        <a className="ml-5">
           <div>
             <span className="underline hover:text-second">
               View {totalCards} Cards
@@ -95,26 +95,8 @@ const ProfileCard: React.FC<{
     );
   };
 
-  return (
-    <div className="bg-black p-3 m-1  sm:w-fit rounded-2xl border-[1px] border-second">
-      <div className="flex border-b-[1px] pb-2 justify-between  items-center border-second">
-        <div className="h-fit ml-2 font-Poppins flex items-center">
-          {imageSrc ? (
-            <Image
-              className="rounded-full"
-              src={imageSrc}
-              alt="Profile image"
-              height={40}
-              width={40}
-              layout="fixed"
-            />
-          ) : null}
-
-          <span className="pl-2">{userName}</span>
-        </div>
-
-        <CardLink active={active} />
-      </div>
+  const Links: React.FC = () => {
+    return (
       <div className="flex mt-2 flex-wrap justify-center">
         <LinkBubble
           key={uuidv4()}
@@ -180,6 +162,36 @@ const ProfileCard: React.FC<{
           active={active}
         />
       </div>
+    );
+  };
+
+  return (
+    <div className="bg-black p-3 m-1  sm:w-fit rounded-2xl border-[1px] border-second">
+      <div className="flex border-b-[1px] pb-2 justify-between  items-center border-second">
+        <div className="h-fit ml-2 font-Poppins flex items-center">
+          {imageSrc ? (
+            <Image
+              className="rounded-full"
+              src={imageSrc}
+              alt="Profile image"
+              height={40}
+              width={40}
+              layout="fixed"
+            />
+          ) : null}
+
+          <span className="pl-2">{userName}</span>
+        </div>
+
+        <CardLink active={active} />
+      </div>
+      {Links.length ? (
+        <Links />
+      ) : (
+        <h3 className="text-second text-center pt-2 px-4">
+          Profile has no links
+        </h3>
+      )}
     </div>
   );
 };

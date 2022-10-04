@@ -58,91 +58,95 @@ const AccountInfo: React.FC<{
   };
 
   return (
-    <div className="w-full   p-2  h-fit">
-      <h1 className="text-center font-bold text-5xl text-second">
+    <div className="w-full  mb-2 h-fit">
+      <h3 className="text-second text-3xl mb-2 lg:mb-0 text-center sm:text-start">
         Account Info
-      </h1>
+      </h3>
       {isLoading ? (
         <LoadingGif />
       ) : (
-        <div className="flex flex-col lg:p-8 p-4 justify-around  ">
-          <div className="mx-auto">
-            <UserImage />
-          </div>
-          <div>
-            <div className="m-3">
-              <span className=" font-bold text-4xl text-second">Name</span>
-              <span className="block font-semibold text-xl truncate">
+        <div className="flex flex-col  font-HindThin lg:p-8  justify-around  ">
+          <div className="flex flex-col sm:flex-row sm:items-center flex-wrap lg:items-center ">
+            <div className="mx-auto sm:mr-3">
+              <UserImage h={100} w={100} />
+            </div>
+            <div className="truncate w-full sm:w-min sm:flex-grow my-1">
+              <span className="  text-2xl text-text">Name: </span>
+              <span className=" font-semibold text-xl truncate  text-neutral-200">
                 {name}
               </span>
             </div>
-            <div className="m-3 border-b-[1px] border-slate-900 pb-5">
-              <span className=" font-bold text-4xl text-second">Email</span>
-              <span className="block font-semibold text-xl truncate">
+            <div className="truncate w-full sm:w-min sm:flex-grow my-1">
+              <span className="  text-2xl text-text">Email: </span>
+              <span className="w-full font-semibold text-xl truncate text-neutral-200">
                 {email}
               </span>
             </div>
+          </div>
 
-            <div className="lg:flex lg:justify-between [&>*]:inline-block [&>*]:m-3 [&>*]:text-start ">
-              <div className="font-bold w-72">
-                <span className=" text-xl text-second">
-                  Username <EditFieldButton editFn={editName} />
-                </span>
-                <br />
-                <span>{userName}</span>
-                {isEdit ? (
-                  <div>
-                    <form
-                      className="flex flex-col justify-center"
-                      onSubmit={handleSubmit(onSubmit)}
+          <div className="sm:flex items-start sm:justify-around">
+            <div className="flex items-center my-1">
+              <span className="text-2xl text-text mr-1">
+                Profile Visability:{' '}
+              </span>
+
+              <div className="flex justify-around ">
+                <button
+                  style={activeStyle.public}
+                  className="px-2  mx-1 active:bg-red-500 border-second hover:bg-red-500  hover:text-white hover:shadow"
+                  onClick={() => visability(false)}
+                  disabled={!privateStatus}
+                >
+                  Public
+                </button>
+                <button
+                  style={activeStyle.private}
+                  className="px-2 mx-1 active:bg-red-500 border-second hover:bg-red-500  hover:text-white hover:shadow"
+                  onClick={() => visability(true)}
+                  disabled={privateStatus}
+                >
+                  Private
+                </button>
+              </div>
+            </div>
+            <div className="truncate w-full sm:w-1/2 my-1 ">
+              <span className=" text-2xl text-text">Username: </span>
+
+              <span className="text-neutral-200 text-xl mr-2 font-semibold  ">
+                <EditFieldButton editFn={editName} />
+                <span className="ml-2">{userName}</span>
+              </span>
+
+              {isEdit ? (
+                <div>
+                  <form
+                    className="flex flex-col justify-center"
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
+                    <input
+                      placeholder={userName}
+                      className="p-1 pl-2 "
+                      {...register('userName', {
+                        required: true,
+                        maxLength: 32,
+                        minLength: 2,
+                      })}
+                      type="text"
+                    />
+                    {errors.userName && (
+                      <span className="text-red-400 text-center">
+                        {errors.userName.message}
+                      </span>
+                    )}
+                    <button
+                      className="bg-gray-600 hover:bg-second hover:text-white px-3 py-1 mt-2 w-fit mx-auto"
+                      type="submit"
                     >
-                      <input
-                        className="w-[90%]"
-                        {...register('userName', {
-                          required: true,
-                          maxLength: 32,
-                          minLength: 2,
-                        })}
-                        type="text"
-                      />
-                      {errors.userName && (
-                        <span className="text-red-400 text-center">
-                          {errors.userName.message}
-                        </span>
-                      )}
-                      <button
-                        className="bg-gray-600 px-3 py-1 mt-2 w-fit mx-auto"
-                        type="submit"
-                      >
-                        Change
-                      </button>
-                    </form>
-                  </div>
-                ) : null}
-              </div>
-              <div className="font-bold">
-                <span className=" text-xl text-second">Profile Visability</span>
-                <br />
-
-                <div className="flex justify-around">
-                  <button
-                    style={activeStyle.public}
-                    className="px-2 active:bg-red-500 border-second hover:bg-red-500 hover:border-red-500 hover:text-white hover:shadow"
-                    onClick={() => visability(false)}
-                    disabled={!privateStatus}
-                  >
-                    Public
-                  </button>
-                  <button
-                    style={activeStyle.private}
-                    className="px-2 active:bg-red-500 border-second hover:bg-red-500 hover:border-red-500 hover:text-white hover:shadow"
-                    onClick={() => visability(true)}
-                    disabled={privateStatus}
-                  >
-                    Private
-                  </button>
+                      Change
+                    </button>
+                  </form>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>

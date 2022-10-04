@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
                 </li>
               </ul>
               <button
-                className=" flex items-center mx-auto  py-1 px-6  mt-4"
+                className=" flex items-center mx-auto border-second border-2 hover:border-indigo-600 py-1 px-6  mt-4"
                 onClick={() => signOut({ callbackUrl: `${redirectUrl}` })}
               >
                 Sign Out
@@ -130,7 +130,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-row text-main justify-between place-items-center font-mono  text-2xl">
+    <div className="flex  flex-row text-main justify-between place-items-center font-mono  text-2xl">
       {session ? (
         <div
           onClick={() => {
@@ -192,7 +192,7 @@ const Navbar: React.FC = () => {
               </li>
             </ul>
             <button
-              className="flex items-center mx-auto py-3 px-6  mb-4"
+              className="flex border-second border-2 items-center hover:border-indigo-600  mx-auto py-3 px-6  mb-4"
               onClick={() => signOut({ callbackUrl: `${redirectUrl}` })}
             >
               Sign Out

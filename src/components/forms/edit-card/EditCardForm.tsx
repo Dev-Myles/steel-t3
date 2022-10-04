@@ -1,3 +1,4 @@
+import { Level, ProjectType } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import {
@@ -10,22 +11,38 @@ import { BiPyramid, BiWrench } from 'react-icons/bi';
 import { BsPen } from 'react-icons/bs';
 import { RiEyeCloseLine, RiGitRepositoryPrivateLine } from 'react-icons/ri';
 import {
-  CreateCardDataSchema,
-  CreateCardSchema,
+  EditCardDataSchema,
+  EditCardSchema,
 } from '../../../schema/create-card-schema';
+import ICard from '../../../types/card';
 import { useSessionCheck } from '../../../utils/session/checkSession';
 import { trpc } from '../../../utils/trpc';
 
-const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
+const EditCardForm: React.FC<{ card: ICard }> = ({ card }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateCardSchema>();
+  } = useForm<EditCardSchema>({
+    defaultValues: {
+      name: card.name,
+      id: card.id,
+      description: card.description,
+      level: card.level as Level,
+      links: {
+        github: (card.links.github as string) || undefined,
+        website: (card.links.website as string) || undefined,
+      },
+      private: card.private ? 'private' : 'public',
+      tags: card.tags,
+      projectType: card.projectType as ProjectType,
+      uses: card.uses,
+    },
+  });
   useSessionCheck(true);
   const router = useRouter();
 
-  const { mutate, error } = trpc.useMutation(['card.create-card'], {
+  const { mutate, error } = trpc.useMutation(['account.edit-card'], {
     onSuccess: (data) => {
       router.push(`/card/${data}`);
     },
@@ -46,8 +63,8 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
 
     const filterTags = tags.filter((tag) => tag.length > 0);
 
-    const moddedData: CreateCardDataSchema = {
-      creatorId: userName,
+    const moddedData: EditCardDataSchema = {
+      id: card.id,
       description,
       name,
       projectType,
@@ -65,10 +82,10 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
     <div className=" my-8 flex justify-center h-fit  items-center flex-col w-screen lg:w-1/2  p-3 sm:p-1 sm:py-4 shadow rounded-2xl">
       {error ? (
         <span className="text-xl text-red-500">
-          Error creating card on server
+          Error editing card on server
         </span>
       ) : null}
-      <h1 className="text-2xl font-bold font-PTMono">Create Card:</h1>
+      <h1 className="text-2xl font-bold font-PTMono">Edit Card:</h1>
       <form className="sm:w-2/3 w-full flex flex-col" onSubmit={onSubmit}>
         <label className="relative  my-2 ">
           <div className="absolute text-2xl top-9 right-2">
@@ -469,7 +486,7 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
 
         <input
           type="submit"
-          value="Create Card!"
+          value="Submit Edits"
           className="rounded-lg w-fit mx-auto mt-5 font-bold text-xl  text-indigo-300 hover:text-indigo-500 hover:border-indigo-800 ease-in-out duration-300 hover:cursor-pointer  p-3 border-2 border-second"
         />
       </form>
@@ -477,4 +494,4 @@ const CreateCardForm: React.FC<{ userName: string }> = ({ userName }) => {
   );
 };
 
-export default CreateCardForm;
+export default EditCardForm;

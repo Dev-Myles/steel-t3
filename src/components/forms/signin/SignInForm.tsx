@@ -53,7 +53,7 @@ const SignInForm: React.FC<{ providers: object }> = ({ providers }) => {
               return (
                 <button
                   key={uuidv4()}
-                  className="flex p-2 px-10 mx-auto my-5 border-slate-700  items-center shadow-none bg-inherit hover:text-gray-300 hover:bg-inherit
+                  className="flex p-2 px-10 mx-auto my-5 border-slate-700 border-[1px] hover:border-second  items-center shadow-none bg-inherit hover:text-gray-300 hover:bg-inherit
                 "
                   onClick={() => signIn(provider.id)}
                 >

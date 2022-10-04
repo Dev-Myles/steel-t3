@@ -338,7 +338,7 @@ export const Card: React.FC<{
             <CardImage />
           </div>
           <div className="flex flex-col w-full">
-            <div className="font-bold my-3 text-2xl truncate">
+            <div className="font-bold text-start my-3 text-2xl truncate">
               {stateStatus ? (
                 <>
                   <h4 className="text-black">Created By:</h4>
@@ -425,7 +425,7 @@ export const Card: React.FC<{
       `}
     >
       <div className="flex w-full justify-between items-center">
-        <div className="w-full truncate">
+        <div className="w-full text-start truncate">
           <span className={`text-sm p-1 font-extrabold `}>
             {level.toLowerCase()} -{' '}
             {openSource ? 'open-source' : 'closed-source'} -{' '}

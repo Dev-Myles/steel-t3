@@ -1,6 +1,6 @@
 import { Card, CardLinks, PrismaClient, Profile } from '@prisma/client';
 import { GetServerSideProps, NextPage } from 'next';
-import { mapCardsLink } from '../../../components/util/mapCards';
+import { ActionType, mapCardsLink } from '../../../components/util/mapCards';
 
 const ProfileCards: NextPage<{
   data:
@@ -21,13 +21,13 @@ const ProfileCards: NextPage<{
         </div>
       );
     }
-    return mapCardsLink(cards, true);
+    return mapCardsLink(cards, ActionType.none);
   }
 
   return (
     <div className="min-h-screen">
-      <div className="my-8 border-b-[1px] border-slate-700 pb-8">
-        <h1 className=" mx-auto mt-3 lg:mx-16 shadow-md shadow-second/80 w-fit p-3 border-t-[1px] rounded-lg text-second border-slate-900 text-xl sm:text-2xl">
+      <div className="my-8 pb-8 ">
+        <h1 className="  mt-3 lg:mx-16  text-center  rounded-lg text-second  text-xl sm:text-3xl">
           {data?.userName}&apos;s Cards
         </h1>
 

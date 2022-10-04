@@ -20,15 +20,15 @@ export const AccountLinks: React.FC<{
   const { mutate } = trpc.useMutation(['account.edit-links']);
 
   const mapLinks = {
-    GitHub: links?.github,
-    Company: links?.company,
-    Discord: links?.discord,
-    Facebook: links?.facebook,
-    Instagram: links?.instagram,
-    LinkedIn: links?.linkedin,
-    Portfolio: links?.portfolio,
-    Twitter: links?.twitter,
-    Youtube: links?.youtube,
+    GitHub: links?.github ? links?.github : 'none',
+    Company: links?.company ? links?.company : 'none',
+    Discord: links?.discord ? links?.discord : 'none',
+    Facebook: links?.facebook ? links?.facebook : 'none',
+    Instagram: links?.instagram ? links?.instagram : 'none',
+    LinkedIn: links?.linkedin ? links?.linkedin : 'none',
+    Portfolio: links?.portfolio ? links?.portfolio : 'none',
+    Twitter: links?.twitter ? links?.twitter : 'none',
+    Youtube: links?.youtube ? links?.youtube : 'none',
   };
 
   if (isLoading) {
@@ -46,10 +46,10 @@ export const AccountLinks: React.FC<{
   function userLinks() {
     return Object.entries(mapLinks).map((e) => {
       return (
-        <div key={uuidv4()} className="truncate block m-4 text-start">
-          <span className="text-second font-bold text-2xl ">{e[0]}</span>
+        <div key={uuidv4()} className="truncate w-1/4 sm:w-1/6 m-3 text-start">
+          <span className="text-text  text-2xl ">{e[0]}</span>
           <br />
-          <span className="font-bold ">{e[1]}</span>
+          <span className="text-white ">{e[1]}</span>
         </div>
       );
     });
@@ -73,127 +73,120 @@ export const AccountLinks: React.FC<{
 
   return (
     <div
-      className=" w-full lg:w-60 sm:flex lg:block justify-center flex-col items-center h-fit p-4 pr-2 
-      border-l-[1px] border-slate-900  truncate"
+      className=" w-full font-HindThin  justify-center py-4 items-center h-fit 
+      border-b-[1px] border-slate-900  truncate"
     >
-      <h2 className=" text-2xl text-second">
-        Links <EditFieldButton editFn={editLinks} />
-      </h2>
+      <div className="flex items-center">
+        <h3 className="text-second text-3xl mr-3 mb-0 text-center sm:text-start">
+          Links
+        </h3>
+        <EditFieldButton editFn={editLinks} />
+      </div>
       {isEdit ? (
-        <form
-          className="flex flex-col justify-center"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <label>
-            <span className="text-second font-bold"> GitHub </span>
-            <input
-              className="flex flex-col "
-              type="text"
-              defaultValue={mapLinks.GitHub}
-              {...register('github', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold"> Company</span>
-            <input
-              className="flex flex-col"
-              defaultValue={mapLinks.Company}
-              type="text"
-              {...register('company', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold"> Discord</span>
-            <input
-              className="flex flex-col"
-              type="text"
-              defaultValue={mapLinks.Discord}
-              {...register('discord', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold">Facebook</span>
-            <input
-              className="flex flex-col"
-              defaultValue={mapLinks.Facebook}
-              type="text"
-              {...register('facebook', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold"> Instagram</span>
-            <input
-              className="flex flex-col"
-              defaultValue={mapLinks.Instagram}
-              type="text"
-              {...register('instagram', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold"> LinkedIn</span>
-            <input
-              className="flex flex-col"
-              defaultValue={mapLinks.LinkedIn}
-              type="text"
-              {...register('linkedin', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold">Portfolio</span>
-            <input
-              className="flex flex-col"
-              defaultValue={mapLinks.Portfolio}
-              type="text"
-              {...register('portfolio', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold"> Twitter </span>
-            <input
-              className="flex flex-col"
-              defaultValue={mapLinks.Twitter}
-              type="text"
-              {...register('twitter', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
-          <label>
-            <span className="text-second font-bold"> Youtube</span>
-            <input
-              className="flex flex-col"
-              defaultValue={mapLinks.Youtube}
-              type="text"
-              {...register('youtube', {
-                required: false,
-                maxLength: 100,
-              })}
-            />
-          </label>
+        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex justify-around  flex-row  [&>label>span]:text-lg [&>label>span]:font-Hind [&>label]:m-2 [&>label>input]:text-white [&>label>input]:flex [&>label>input]:flex-col flex-wrap">
+            <label>
+              <span> GitHub </span>
+              <input
+                type="text"
+                defaultValue={mapLinks.GitHub}
+                {...register('github', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span> Company</span>
+              <input
+                defaultValue={mapLinks.Company}
+                type="text"
+                {...register('company', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span> Discord</span>
+              <input
+                type="text"
+                defaultValue={mapLinks.Discord}
+                {...register('discord', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span>Facebook</span>
+              <input
+                defaultValue={mapLinks.Facebook}
+                type="text"
+                {...register('facebook', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span> Instagram</span>
+              <input
+                defaultValue={mapLinks.Instagram}
+                type="text"
+                {...register('instagram', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span> LinkedIn</span>
+              <input
+                defaultValue={mapLinks.LinkedIn}
+                type="text"
+                {...register('linkedin', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span>Portfolio</span>
+              <input
+                defaultValue={mapLinks.Portfolio}
+                type="text"
+                {...register('portfolio', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span> Twitter </span>
+              <input
+                defaultValue={mapLinks.Twitter}
+                type="text"
+                {...register('twitter', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+            <label>
+              <span> Youtube</span>
+              <input
+                defaultValue={mapLinks.Youtube}
+                type="text"
+                {...register('youtube', {
+                  required: false,
+                  maxLength: 100,
+                })}
+              />
+            </label>
+          </div>
           <button
-            className="p-2 w-fit mx-auto mt-2 border-second hover:border-slate-700
+            className="p-2 mx-auto mt-2 bg-second text-neutral-200 font-Hind text-xl hover:bg-slate-700
           "
             type="submit"
           >
@@ -201,7 +194,9 @@ export const AccountLinks: React.FC<{
           </button>
         </form>
       ) : (
-        userLinks()
+        <div className="flex-row flex-wrap  flex justify-start sm:justify-center">
+          {userLinks()}
+        </div>
       )}
     </div>
   );

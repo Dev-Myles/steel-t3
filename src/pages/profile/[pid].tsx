@@ -16,7 +16,6 @@ const ProfilePage: NextPage<{
     | null
     | undefined;
 }> = ({ data }) => {
-  console.log(data);
   if (!data?.userId) {
     return (
       <div className="min-h-screen flex">

@@ -30,7 +30,7 @@ export const EditFieldButton: React.FC<{ editFn: any }> = ({ editFn }) => {
       <div className="w-fit ">
         <button
           onClick={() => editFn()}
-          className="p-1 h-6 w-6  rounded border-second text-sm  text-white"
+          className="p-1 h-6 w-6  rounded border-[1px] hover:border-white border-second text-sm  text-white"
         >
           <FiEdit2 />
         </button>
