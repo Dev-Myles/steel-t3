@@ -15,6 +15,15 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    async signIn() {
+      const isAllowedToSignIn = true;
+      if (!isAllowedToSignIn) {
+        return true;
+      } else {
+        // Return false to display a default error message
+        return '/error/signin';
+      }
+    },
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),

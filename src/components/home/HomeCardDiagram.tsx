@@ -23,7 +23,7 @@ const HomeCardDiagram: React.FC = () => {
             <li>Likes</li>
           </ul>
 
-          <div className=" w-full sm:w-1/2 lg:w-1/3 block">
+          <div className=" w-full sm:w-1/2 my-3 lg:w-[27%] block">
             <Image
               alt="card diagram"
               src={'/images/home/carddiagramr.svg'}
