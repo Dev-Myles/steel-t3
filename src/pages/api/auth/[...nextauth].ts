@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
     },
     async signIn() {
       const isAllowedToSignIn = true;
-      if (!isAllowedToSignIn) {
+      if (isAllowedToSignIn) {
         return true;
       } else {
         // Return false to display a default error message
