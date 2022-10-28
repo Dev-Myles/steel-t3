@@ -95,6 +95,10 @@ const ProfileCard: React.FC<{
     );
   };
 
+  const linksArray = Object.values({ ...links })
+    .slice(2)
+    .filter((e) => e !== 'none' || '');
+
   const Links: React.FC = () => {
     return (
       <div className="flex mt-2 flex-wrap justify-center">
@@ -185,7 +189,7 @@ const ProfileCard: React.FC<{
 
         <CardLink active={active} />
       </div>
-      {Links.length ? (
+      {linksArray.length ? (
         <Links />
       ) : (
         <h3 className="text-second text-center pt-2 px-4">

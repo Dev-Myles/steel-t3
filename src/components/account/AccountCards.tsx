@@ -43,11 +43,13 @@ export const AccountCards: React.FC<{
       return (
         <div
           key={uuidv4()}
-          className="bg-gray-200 flex flex-col items-center  m-2 w-28 h-36 p-2  sm:w-32 shadow-lg truncate  rounded-lg"
+          className="bg-gray-200 flex flex-col items-center  m-2 w-28 h-36 p-2 sm:w-32 shadow-lg  rounded-lg"
         >
-          <span className="truncate font-mono font-bold text-lg text-neutral-600">
-            {card.name}
-          </span>
+          <div className="inline-block w-full">
+            <span className=" block font-mono truncate font-bold text-lg text-neutral-600">
+              {card.name}
+            </span>
+          </div>
           <div className="block w-full h-1/2">
             <Image
               alt="logo"
